@@ -22,6 +22,9 @@
 #include <stdbool.h>
 
 struct ubpf_vm;
+struct ubpf_map;
+struct ubpf_func_proto;
+
 typedef uint64_t (*ubpf_jit_fn)(void *mem, size_t mem_len);
 
 struct ubpf_vm *ubpf_create(void);
@@ -47,7 +50,16 @@ bool toggle_bounds_check(struct ubpf_vm *vm, bool enable);
  *
  * Returns 0 on success, -1 on error.
  */
-int ubpf_register(struct ubpf_vm *vm, unsigned int idx, const char *name, void *fn);
+int ubpf_register_function(struct ubpf_vm *vm, unsigned int idx, const char *name, struct ubpf_func_proto proto);
+
+/*
+ * Register an external variable.
+ *
+ * 'name' should be a string with a lifetime longer than the VM.
+ *
+ * Returns 0 on success, -1 on error.
+ */
+int ubpf_register_map(struct ubpf_vm *vm, const char *name, struct ubpf_map *map);
 
 /*
  * Load code into a VM

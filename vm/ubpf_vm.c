@@ -25,6 +25,7 @@
 #include "ubpf_int.h"
 
 #define MAX_EXT_FUNCS 64
+#define MAX_EXT_MAPS 64
 
 static bool validate(const struct ubpf_vm *vm, const struct ebpf_inst *insts, uint32_t num_insts, char **errmsg);
 static bool bounds_check(const struct ubpf_vm *vm, void *addr, int size, const char *type, uint16_t cur_pc, void *mem, size_t mem_len, void *stack);
@@ -72,6 +73,7 @@ ubpf_destroy(struct ubpf_vm *vm)
     free(vm);
 }
 
+/*
 int
 ubpf_register(struct ubpf_vm *vm, unsigned int idx, const char *name, void *fn)
 {
@@ -82,6 +84,33 @@ ubpf_register(struct ubpf_vm *vm, unsigned int idx, const char *name, void *fn)
     vm->ext_funcs[idx] = (ext_func)fn;
     vm->ext_func_names[idx] = name;
     return 0;
+}
+*/
+
+int
+ubpf_register_function(struct ubpf_vm *vm, unsigned int idx, const char *name,
+                       struct ubpf_func_proto proto)
+{
+  if (idx >= MAX_EXT_FUNCS) {
+    return -1;
+  }
+
+  vm->ext_funcs[idx] = proto;
+  vm->ext_func_names[idx] = name;
+  return 0;
+}
+
+int
+ubpf_register_map(struct ubpf_vm *vm, const char *name, struct ubpf_map *map)
+{
+  unsigned int idx = vm->nb_maps;
+  if (idx >= MAX_EXT_MAPS) {
+    return -1;
+  }
+  vm->ext_maps[idx] = map;
+  vm->ext_map_names[idx] = name;
+  vm->nb_maps++;
+  return 0;
 }
 
 unsigned int
@@ -95,6 +124,19 @@ ubpf_lookup_registered_function(struct ubpf_vm *vm, const char *name)
         }
     }
     return -1;
+}
+
+struct ubpf_map *
+ubpf_lookup_registered_map(struct ubpf_vm *vm, const char *name)
+{
+  int i;
+  for (i = 0; i < MAX_EXT_MAPS; i++) {
+    const char *other = vm->ext_map_names[i];
+    if (other && !strcmp(other, name)) {
+      return vm->ext_maps[i];
+    }
+  }
+  return NULL;
 }
 
 int
@@ -558,7 +600,7 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
         case EBPF_OP_EXIT:
             return reg[0];
         case EBPF_OP_CALL:
-            reg[0] = vm->ext_funcs[inst.imm](reg[1], reg[2], reg[3], reg[4], reg[5]);
+            reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
             break;
         }
     }
@@ -703,7 +745,7 @@ validate(const struct ubpf_vm *vm, const struct ebpf_inst *insts, uint32_t num_i
                 *errmsg = ubpf_error("invalid call immediate at PC %d", i);
                 return false;
             }
-            if (!vm->ext_funcs[inst.imm]) {
+            if (!vm->ext_funcs[inst.imm].func) {
                 *errmsg = ubpf_error("call to nonexistent function %u at PC %d", inst.imm, i);
                 return false;
             }

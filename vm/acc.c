@@ -27,6 +27,7 @@
 #include <elf.h>
 #include <math.h>
 #include "ubpf.h"
+#include "ubpf_hashmap.h"
 
 void ubpf_set_register_offset(int x);
 static void *readfile(const char *path, size_t maxlen, size_t *len);
@@ -191,46 +192,206 @@ static void *readfile(const char *path, size_t maxlen, size_t *len)
     }
     return data;
 }
+void *
+ubpf_map_lookup(const struct ubpf_map *map, void *key)
+{
+  if (!map) {
+    return NULL;
+  }
+  if (!map->ops.map_lookup) {
+    return NULL;
+  }
+  if (!key) {
+    return NULL;
+  }
+  return map->ops.map_lookup(map, key);
+}
+
+struct ubpf_func_proto ubpf_map_lookup_proto = {
+        .func = (ext_func)ubpf_map_lookup,
+        .arg_types = {
+                MAP_PTR,
+                PKT_PTR | MAP_VALUE_PTR | STACK_PTR | UNKNOWN,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .arg_sizes = {
+                0xff,
+                SIZE_MAP_KEY,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .ret = MAP_VALUE_PTR | NULL_VALUE,
+};
+
+int
+ubpf_map_update(struct ubpf_map *map, const void *key, void *item)
+{
+  if (!map) {
+    return -1;
+  }
+  if (!map->ops.map_update) {
+    return -2;
+  }
+  if (!key) {
+    return -3;
+  }
+  if (!item) {
+    return -4;
+  }
+  return map->ops.map_update(map, key, item);
+}
+
+struct ubpf_func_proto ubpf_map_update_proto = {
+        .func = (ext_func)ubpf_map_update,
+        .arg_types = {
+                MAP_PTR,
+                PKT_PTR | MAP_VALUE_PTR | STACK_PTR,
+                PKT_PTR | MAP_VALUE_PTR | STACK_PTR,
+                0xff,
+                0xff,
+        },
+        .arg_sizes = {
+                0xff,
+                SIZE_MAP_KEY,
+                SIZE_MAP_VALUE,
+                0xff,
+                0xff,
+        },
+        .ret = UNKNOWN,
+};
+
+static int
+ubpf_map_add(struct ubpf_map *map, void *item)
+{
+  if (!map) {
+    return -1;
+  }
+  if (!map->ops.map_add) {
+    return -2;
+  }
+  if (!item) {
+    return -3;
+  }
+  return map->ops.map_add(map, item);
+}
+
+struct ubpf_func_proto ubpf_map_add_proto = {
+        .func = (ext_func)ubpf_map_add,
+        .arg_types = {
+                MAP_PTR,
+                PKT_PTR | MAP_VALUE_PTR | STACK_PTR,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .arg_sizes = {
+                0xff,
+                SIZE_MAP_VALUE,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .ret = UNKNOWN,
+};
+
+static int
+ubpf_map_delete(struct ubpf_map *map, const void *key)
+{
+  if (!map) {
+    return -1;
+  }
+  if (!map->ops.map_delete) {
+    return -2;
+  }
+  if (!key) {
+    return -3;
+  }
+  return map->ops.map_delete(map, key);
+}
+
+struct ubpf_func_proto ubpf_map_delete_proto = {
+        .func = (ext_func)ubpf_map_delete,
+        .arg_types = {
+                MAP_PTR,
+                PKT_PTR | MAP_VALUE_PTR | STACK_PTR,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .arg_sizes = {
+                0xff,
+                SIZE_MAP_KEY,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .ret = UNKNOWN,
+};
 
 static uint64_t
-gather_bytes(uint8_t a, uint8_t b, uint8_t c, uint8_t d, uint8_t e)
+ubpf_time_get_ns(void)
 {
-    return ((uint64_t)a << 32) |
-        ((uint32_t)b << 24) |
-        ((uint32_t)c << 16) |
-        ((uint16_t)d << 8) |
-        e;
+  struct timespec curr_time = {0, 0};
+  uint64_t curr_time_ns = 0;
+  clock_gettime(CLOCK_REALTIME, &curr_time);
+  curr_time_ns = curr_time.tv_nsec + curr_time.tv_sec * 1.0e9;
+  return curr_time_ns;
 }
 
-static void
-trash_registers(void)
-{
-    /* Overwrite all caller-save registers */
-    asm(
-        "mov $0xf0, %rax;"
-        "mov $0xf1, %rcx;"
-        "mov $0xf2, %rdx;"
-        "mov $0xf3, %rsi;"
-        "mov $0xf4, %rdi;"
-        "mov $0xf5, %r8;"
-        "mov $0xf6, %r9;"
-        "mov $0xf7, %r10;"
-        "mov $0xf8, %r11;"
-    );
-}
+struct ubpf_func_proto ubpf_time_get_ns_proto = {
+        .func = (ext_func)ubpf_time_get_ns,
+        .arg_types = {
+                0xff,
+                0xff,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .arg_sizes = {
+                0xff,
+                0xff,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .ret = UNKNOWN,
+};
 
 static uint32_t
-sqrti(uint32_t x)
+ubpf_hash(void *item, uint64_t size)
 {
-    return sqrt(x);
+  return hashlittle(item, (uint32_t)size, 0);
 }
+
+struct ubpf_func_proto ubpf_hash_proto = {
+        .func = (ext_func)ubpf_hash,
+        .arg_types = {
+                PKT_PTR | MAP_VALUE_PTR | STACK_PTR,
+                IMM,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .arg_sizes = {
+                SIZE_PTR_MAX,
+                SIZE_64,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .ret = UNKNOWN,
+};
 
 static void
 register_functions(struct ubpf_vm *vm)
 {
-    ubpf_register(vm, 0, "gather_bytes", gather_bytes);
-    ubpf_register(vm, 1, "memfrob", memfrob);
-    ubpf_register(vm, 2, "trash_registers", trash_registers);
-    ubpf_register(vm, 3, "sqrti", sqrti);
-    ubpf_register(vm, 4, "strcmp_ext", strcmp);
+  ubpf_register_function(vm, 1, "ubpf_map_lookup", ubpf_map_lookup_proto);
+  ubpf_register_function(vm, 2, "ubpf_map_update", ubpf_map_update_proto);
+  ubpf_register_function(vm, 3, "ubpf_map_delete", ubpf_map_delete_proto);
+  ubpf_register_function(vm, 4, "ubpf_map_add", ubpf_map_add_proto);
+  ubpf_register_function(vm, 5, "ubpf_time_get_ns", ubpf_time_get_ns_proto);
+  ubpf_register_function(vm, 6, "ubpf_hash", ubpf_hash_proto);
 }

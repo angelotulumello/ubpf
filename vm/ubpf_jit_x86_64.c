@@ -360,7 +360,7 @@ translate(struct ubpf_vm *vm, struct jit_state *state, char **errmsg)
         case EBPF_OP_CALL:
             /* We reserve RCX for shifts */
             emit_mov(state, R9, RCX);
-            emit_call(state, vm->ext_funcs[inst.imm]);
+            emit_call(state, vm->ext_funcs[inst.imm].func);
             break;
         case EBPF_OP_EXIT:
             if (i != vm->num_insts - 1) {
