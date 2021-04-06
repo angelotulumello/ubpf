@@ -154,6 +154,8 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
         const uint16_t cur_pc = pc;
         struct ebpf_inst inst = insts[pc++];
 
+        printf("PC: %d, inst=%d\n", pc, inst.opcode);
+
         switch (inst.opcode) {
         case EBPF_OP_ADD_IMM:
             reg[inst.dst] += inst.imm;

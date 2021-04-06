@@ -26,6 +26,39 @@
 struct ebpf_inst;
 typedef uint64_t (*ext_func)(uint64_t arg0, uint64_t arg1, uint64_t arg2, uint64_t arg3, uint64_t arg4);
 
+enum ubpf_map_type {
+  UBPF_MAP_TYPE_ARRAY = 1,
+  UBPF_MAP_TYPE_HASHMAP = 2
+};
+
+struct ubpf_map_def {
+  enum ubpf_map_type type;
+  unsigned int key_size;
+  unsigned int value_size;
+  unsigned int max_entries;
+  unsigned int nb_hash_functions;
+};
+
+struct ubpf_map;
+
+struct ubpf_map_ops {
+  unsigned int (*map_size)(const struct ubpf_map *map);
+  unsigned int (*map_dump)(const struct ubpf_map *map, void *data);
+  void *(*map_lookup)(const struct ubpf_map *map, const void *key);
+  int (*map_update)(struct ubpf_map *map, const void *key, void *value);
+  int (*map_delete)(struct ubpf_map *map, const void *key);
+  int (*map_add)(struct ubpf_map *map, void *value);
+};
+
+struct ubpf_map {
+  enum ubpf_map_type type;
+  struct ubpf_map_ops ops;
+  unsigned int key_size;
+  unsigned int value_size;
+  unsigned int max_entries;
+  void *data;
+};
+
 struct ubpf_vm {
     struct ebpf_inst *insts;
     uint16_t num_insts;

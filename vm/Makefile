@@ -33,10 +33,18 @@ all: libubpf.a test
 
 ubpf_jit_x86_64.o: ubpf_jit_x86_64.c ubpf_jit_x86_64.h
 
-libubpf.a: ubpf_vm.o ubpf_jit_x86_64.o ubpf_loader.o
+lookup3.o: lookup3.c lookup3.h
+
+ubpf_array.o: ubpf_array.c
+
+ubpf_hashmap.o: ubpf_hashmap.c ubpf_hashmap.h
+
+libubpf.a: ubpf_vm.o ubpf_jit_x86_64.o ubpf_loader.o lookup3.o ubpf_array.o ubpf_hashmap.o
 	ar rc $@ $^
 
 test: test.o libubpf.a
+
+acc: acc.o libubpf.a
 
 install:
 	$(INSTALL) -d $(DESTDIR)$(PREFIX)/lib
