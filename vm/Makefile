@@ -13,7 +13,7 @@
 # limitations under the License.
 
 CFLAGS := -Wall -Werror -Iinc -O0 -g -Wunused-parameter
-LDLIBS := -lm
+LDLIBS := -lm -lpcap
 
 INSTALL ?= install
 DESTDIR =

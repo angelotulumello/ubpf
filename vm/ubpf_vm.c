@@ -222,12 +222,6 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
         const uint16_t cur_pc = pc;
         struct ebpf_inst inst = insts[pc++];
 
-        printf("PC: %d, inst=0x%x\n", pc, inst.opcode);
-        printf("------- R0: %lx | R1: %lx | R2: %lx\n", reg[0], reg[1], reg[2]);
-        printf("------- R3: %lx | R4: %lx | R5: %lx\n", reg[3], reg[4], reg[5]);
-        printf("------- R6: %lx | R7: %lx | R8: %lx\n", reg[6], reg[7], reg[8]);
-        printf("------- R9: %lx | R10: %lx\n\n", reg[9], reg[10]);
-
         switch (inst.opcode) {
         case EBPF_OP_ADD_IMM:
             reg[inst.dst] += inst.imm;
@@ -639,8 +633,16 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
         case EBPF_OP_CALL:
             reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
             printf("Calling %d, reg[0]=%lx\n", inst.imm, reg[0] );
+            if (reg[0])
+                printf("There's a match\n");
             break;
         }
+
+        printf("PC: %d, inst=0x%x\n", pc, inst.opcode);
+        printf("------- R0: %016lx | R1: %016lx | R2: %016lx\n", reg[0], reg[1], reg[2]);
+        printf("------- R3: %016lx | R4: %016lx | R5: %016lx\n", reg[3], reg[4], reg[5]);
+        printf("------- R6: %016lx | R7: %016lx | R8: %016lx\n", reg[6], reg[7], reg[8]);
+        printf("------- R9: %016lx | R10: %016lx\n\n", reg[9], reg[10]);
     }
 }
 

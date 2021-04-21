@@ -24,6 +24,8 @@
 #include <string.h>
 #include <getopt.h>
 #include <errno.h>
+#include <pcap.h>
+
 #include "jsmn.h"
 
 #include "ubpf.h"
@@ -44,9 +46,13 @@ static const unsigned char udp_pkt[] = {
 
 static void usage(const char *name)
 {
-    fprintf(stderr, "usage: %s [-h] [-j|--jit] [-m|--mem PATH] BINARY\n", name);
+    fprintf(stderr, "usage: %s [-h] [-j|--jit] [-m|--mem PATH] [-M|--maps MAP_FILE] [-p|--pcap PATH] BINARY\n", name);
     fprintf(stderr, "\nExecutes the eBPF code in BINARY and prints the result to stdout.\n");
     fprintf(stderr, "If --mem is given then the specified file will be read and a pointer\nto its data passed in r1.\n");
+    fprintf(stderr, "\nIf --pcap is given then the specified trace will be read and the ubpf \nprogram is "
+                    "executed for each packet in the trace\n");
+    fprintf(stderr, "\nIf --maps is given then the specified file will be read and the encoded\nmaps will "
+                    "be created in the ubpf VM\n");
     fprintf(stderr, "\nOther options:\n");
     fprintf(stderr, "  -r, --register-offset NUM: Change the mapping from eBPF to x86 registers\n");
 }
@@ -59,74 +65,9 @@ static int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
     return -1;
 }
 
-int main(int argc, char **argv)
+static inline int
+parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
 {
-    struct option longopts[] = {
-        { .name = "help", .val = 'h', },
-        { .name = "mem", .val = 'm', .has_arg=1 },
-        { .name = "register-offset", .val = 'r', .has_arg=1 },
-        { .name = "maps", .val = 'M', .has_arg=1},
-        { }
-    };
-
-    const char *mem_filename = NULL;
-    const char *json_filename = NULL;
-
-    int opt;
-    while ((opt = getopt_long(argc, argv, "hmM:r:", longopts, NULL)) != -1) {
-        switch (opt) {
-        case 'm':
-            mem_filename = optarg;
-            break;
-        case 'r':
-            ubpf_set_register_offset(atoi(optarg));
-            break;
-        case 'M':
-            json_filename = optarg;
-            break;
-        case 'h':
-            usage(argv[0]);
-            return 0;
-        default:
-            usage(argv[0]);
-            return 1;
-        }
-    }
-
-    if (argc != optind + 1) {
-        usage(argv[0]);
-        return 1;
-    }
-
-    const char *code_filename = argv[optind];
-    size_t code_len;
-    void *code = readfile(code_filename, 1024*1024, &code_len);
-    if (code == NULL) {
-        return 1;
-    }
-
-    size_t mem_len = 0;
-    void *mem = NULL;
-    if (mem_filename != NULL) {
-        mem = readfile(mem_filename, 1024*1024, &mem_len);
-        if (mem == NULL) {
-            return 1;
-        }
-    } else {
-        mem = (void *) udp_pkt;
-        mem_len = 64;
-    }
-
-    struct ubpf_vm *vm = ubpf_create();
-    if (!vm) {
-        fprintf(stderr, "Failed to create VM\n");
-        return 1;
-    }
-
-    register_functions(vm);
-
-    uint64_t ret;
-
     /*
      * Maps parsing from json
      */
@@ -151,16 +92,16 @@ int main(int argc, char **argv)
 
     jsmn_init(&jparser);
     jret = jsmn_parse(&jparser, json_str, jsize,
-                        toks, sizeof(toks)/sizeof(toks[0]));
+                      toks, sizeof(toks)/sizeof(toks[0]));
 
     if (jret < 0) {
-      fprintf(stderr, "Failed to parse JSON: %d\n", jret);
-      return 1;
+        fprintf(stderr, "Failed to parse JSON: %d\n", jret);
+        return 1;
     }
 
     if (jret < 1 || toks[0].type != JSMN_ARRAY) {
-      printf("Array expected\n");
-      return 1;
+        printf("Array expected\n");
+        return 1;
     }
 
     nb_maps = toks[0].size;
@@ -190,17 +131,17 @@ int main(int argc, char **argv)
                 i++;
             } else if (jsoneq(json_str, &toks[i], "key_size") == 0) {
                 key_size = strtol(json_str + toks[i+1].start,
-                              (char **) json_str + toks[i+1].end, 10);
+                                  (char **) json_str + toks[i+1].end, 10);
                 printf("key_size: %ld\n", key_size);
                 i++;
             } else if (jsoneq(json_str, &toks[i], "value_size") == 0) {
                 value_size = strtol(json_str + toks[i+1].start,
-                                  (char **) json_str + toks[i+1].end, 10);
+                                    (char **) json_str + toks[i+1].end, 10);
                 printf("value_size: %ld\n", value_size);
                 i++;
             } else if (jsoneq(json_str, &toks[i], "max_entries") == 0) {
                 max_entries = strtol(json_str + toks[i+1].start,
-                                  (char **) json_str + toks[i+1].end, 10);
+                                     (char **) json_str + toks[i+1].end, 10);
                 printf("max_entries: %ld\n", max_entries);
                 i++;
             } else if (toks[i].type == JSMN_OBJECT) {
@@ -252,6 +193,89 @@ int main(int argc, char **argv)
 
     free(json_str);
 
+    return 0;
+}
+
+int main(int argc, char **argv)
+{
+    struct option longopts[] = {
+        { .name = "help", .val = 'h', },
+        { .name = "mem", .val = 'm', .has_arg=1 },
+        { .name = "register-offset", .val = 'r', .has_arg=1 },
+        { .name = "maps", .val = 'M', .has_arg=1},
+        { .name = "pcap", .val = 'p', .has_arg=1},
+        { }
+    };
+
+    const char *mem_filename = NULL;
+    const char *json_filename = NULL;
+    const char *pcap_filename = NULL;
+
+    int opt;
+    while ((opt = getopt_long(argc, argv, "hmp:M:r:", longopts, NULL)) != -1) {
+        switch (opt) {
+        case 'm':
+            mem_filename = optarg;
+            break;
+        case 'r':
+            ubpf_set_register_offset(atoi(optarg));
+            break;
+        case 'M':
+            json_filename = optarg;
+            break;
+        case 'p':
+            pcap_filename = optarg;
+            break;
+        case 'h':
+            usage(argv[0]);
+            return 0;
+        default:
+            usage(argv[0]);
+            return 1;
+        }
+    }
+
+    if (argc != optind + 1) {
+        usage(argv[0]);
+        return 1;
+    }
+
+    const char *code_filename = argv[optind];
+    size_t code_len;
+    void *code = readfile(code_filename, 1024*1024, &code_len);
+    if (code == NULL) {
+        return 1;
+    }
+
+    size_t mem_len = 0;
+    void *mem = NULL;
+    if (mem_filename != NULL) {
+        mem = readfile(mem_filename, 1024*1024, &mem_len);
+        if (mem == NULL) {
+            return 1;
+        }
+    } else {
+        mem = (void *) udp_pkt;
+        mem_len = 64;
+    }
+
+    struct ubpf_vm *vm = ubpf_create();
+    if (!vm) {
+        fprintf(stderr, "Failed to create VM\n");
+        return 1;
+    }
+
+    register_functions(vm);
+
+    uint64_t ret;
+
+    ret = parse_prog_maps(json_filename, vm, code);
+    if (ret != 0) {
+        fprintf(stderr,"Error in parsing maps and bpf code\n");
+        ubpf_destroy(vm);
+        return ret;
+    }
+
     /*
      * Load program
      */
@@ -269,10 +293,13 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    /*
+     * Create an entry in the hashmap
+     */
     void *key, *value;
 
     key = malloc(16);
-    *(uint64_t *)key = 0xca8006408080808;
+    *(uint64_t *)key = 0xc0a8006408080808;
     *(uint32_t *)(key+8) = 0x49194904;
     *(uint8_t *)(key+12) = 0x11;
 
@@ -281,19 +308,46 @@ int main(int argc, char **argv)
 
     ubpf_hashmap_update(vm->ext_maps[0], key, value);
 
+    // ip.dst | ip.src | udp.sport | udp.dport | ip.proto
+    *(uint64_t *)key = 0x0808080801010101;
+    *(uint32_t *)(key+8) = 0xbbaabbaa;
+    *(uint8_t *)(key+12) = 0x11;
+
+    *(uint32_t *)value = 3;
+
+    ubpf_hashmap_update(vm->ext_maps[0], key, value);
+
+
     /*
-     * Execute the program
+     * Pcap parsing
      */
-    ret = ubpf_exec(vm, mem, mem_len);
+    if (pcap_filename) {
+        pcap_t *p;
+        char errbuf[PCAP_ERRBUF_SIZE];
+        const u_char *pkt_ptr;
+        struct pcap_pkthdr *hdr;
+        int npkts = 1;
 
-    printf("0x%"PRIx64"\n", ret);
+        p = pcap_open_offline(pcap_filename, errbuf);
 
-    /*
-     * Execute the program the second time
-     */
-    ret = ubpf_exec(vm, mem, mem_len);
+        if (p == NULL) {
+            fprintf(stderr, "pcap_open_offline failed: %s\n", errbuf);
+            return -1;
+        }
 
-    printf("0x%"PRIx64"\n", ret);
+        while (pcap_next_ex(p, &hdr, &pkt_ptr) > 0) {
+            /*
+             * Execute the program
+             */
+
+            printf( "\n--------- Packet #%d\n\n", npkts);
+
+            ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len);
+
+            printf("return 0x%"PRIx64"\n\n", ret);
+            npkts++;
+        }
+    }
 
     ubpf_destroy(vm);
 
