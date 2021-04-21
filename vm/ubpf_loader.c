@@ -136,6 +136,7 @@ ubpf_load_elf(struct ubpf_vm *vm, const void *elf, size_t elf_size, char **errms
       break;
     }
   }
+
   if (!text_shndx) {
     *errmsg = ubpf_error("text section not found");
     goto error;

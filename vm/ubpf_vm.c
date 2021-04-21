@@ -57,7 +57,11 @@ ubpf_create(void)
         return NULL;
     }
 
-    vm->bounds_check_enabled = true;
+    vm->ext_maps = calloc(MAX_EXT_MAPS, sizeof(*vm->ext_maps));
+    vm->ext_map_names = calloc(MAX_EXT_MAPS, sizeof(*vm->ext_map_names));
+    vm->nb_maps = 0;
+
+    vm->bounds_check_enabled = false;
     return vm;
 }
 
@@ -176,6 +180,24 @@ u32(uint64_t x)
     return x;
 }
 
+struct xdp_md {
+  uintptr_t data;
+  uintptr_t data_end;
+};
+
+static inline void
+dump_stack(uint64_t *stack)
+{
+    for (int i=0; i < (STACK_SIZE+7)/8; i++) {
+        printf("%016lx ", stack[i]);
+        if (i%4 == 0) {
+            printf("\n%04x:\t", i*8);
+        }
+    }
+
+    printf("\n");
+}
+
 uint64_t
 ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
 {
@@ -183,20 +205,28 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
     const struct ebpf_inst *insts = vm->insts;
     uint64_t reg[16];
     uint64_t stack[(STACK_SIZE+7)/8];
+    struct xdp_md xdp_md = {};
 
     if (!insts) {
         /* Code must be loaded before we can execute */
         return UINT64_MAX;
     }
 
-    reg[1] = (uintptr_t)mem;
+    xdp_md.data = (uintptr_t) mem;
+    xdp_md.data_end = (uintptr_t) mem + mem_len;
+
+    reg[1] = (uintptr_t) &xdp_md;
     reg[10] = (uintptr_t)stack + sizeof(stack);
 
     while (1) {
         const uint16_t cur_pc = pc;
         struct ebpf_inst inst = insts[pc++];
 
-        printf("PC: %d, inst=%d\n", pc, inst.opcode);
+        printf("PC: %d, inst=0x%x\n", pc, inst.opcode);
+        printf("------- R0: %lx | R1: %lx | R2: %lx\n", reg[0], reg[1], reg[2]);
+        printf("------- R3: %lx | R4: %lx | R5: %lx\n", reg[3], reg[4], reg[5]);
+        printf("------- R6: %lx | R7: %lx | R8: %lx\n", reg[6], reg[7], reg[8]);
+        printf("------- R9: %lx | R10: %lx\n\n", reg[9], reg[10]);
 
         switch (inst.opcode) {
         case EBPF_OP_ADD_IMM:
@@ -431,7 +461,13 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
 
         case EBPF_OP_LDXW:
             BOUNDS_CHECK_LOAD(4);
-            reg[inst.dst] = *(uint32_t *)(uintptr_t)(reg[inst.src] + inst.offset);
+            if ((uintptr_t)(reg[inst.src] + inst.offset) == (uintptr_t)&xdp_md) {
+                reg[inst.dst] = (uintptr_t)(xdp_md.data);
+            } else if ((uintptr_t)(reg[inst.src] + inst.offset) == (uintptr_t)&xdp_md + 4) {
+                reg[inst.dst] = (xdp_md.data_end);
+            } else {
+                reg[inst.dst] = *(uint32_t *)(uintptr_t)(reg[inst.src] + inst.offset);
+            }
             break;
         case EBPF_OP_LDXH:
             BOUNDS_CHECK_LOAD(2);
@@ -598,9 +634,11 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
             }
             break;
         case EBPF_OP_EXIT:
+            dump_stack(stack);
             return reg[0];
         case EBPF_OP_CALL:
             reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
+            printf("Calling %d, reg[0]=%lx\n", inst.imm, reg[0] );
             break;
         }
     }

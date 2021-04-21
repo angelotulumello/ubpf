@@ -24,23 +24,39 @@
 #include <string.h>
 #include <getopt.h>
 #include <errno.h>
-#include <elf.h>
-#include <math.h>
+#include "jsmn.h"
+
 #include "ubpf.h"
 #include "ubpf_hashmap.h"
+#include "ubpf_array.c"
 
 void ubpf_set_register_offset(int x);
 static void *readfile(const char *path, size_t maxlen, size_t *len);
 static void register_functions(struct ubpf_vm *vm);
+
+static const unsigned char udp_pkt[] = {
+        0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3c, 0xec, 0xef, 0x0c, 0xde, 0x60, 0x08, 0x00,
+        0x45, 0x00, 0x00, 0x32, 0x00, 0x01, 0x00, 0x00, 0x40, 0x11, 0xa9, 0x9e, 0x08, 0x08,
+        0x08, 0x08, 0xc0, 0xa8, 0x00, 0x64, 0x19, 0x49, 0x04, 0x49, 0x00, 0x1e, 0xb4, 0x9b,
+        0x73, 0x75, 0x62, 0x73, 0x70, 0x61, 0x63, 0x65, 0x73, 0x75, 0x62, 0x73, 0x70, 0x61,
+        0x63, 0x65, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58
+};
 
 static void usage(const char *name)
 {
     fprintf(stderr, "usage: %s [-h] [-j|--jit] [-m|--mem PATH] BINARY\n", name);
     fprintf(stderr, "\nExecutes the eBPF code in BINARY and prints the result to stdout.\n");
     fprintf(stderr, "If --mem is given then the specified file will be read and a pointer\nto its data passed in r1.\n");
-    fprintf(stderr, "If --jit is given then the JIT compiler will be used.\n");
     fprintf(stderr, "\nOther options:\n");
     fprintf(stderr, "  -r, --register-offset NUM: Change the mapping from eBPF to x86 registers\n");
+}
+
+static int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
+    if (tok->type == JSMN_STRING && (int)strlen(s) == tok->end - tok->start &&
+        strncmp(json + tok->start, s, tok->end - tok->start) == 0) {
+        return 0;
+    }
+    return -1;
 }
 
 int main(int argc, char **argv)
@@ -48,25 +64,25 @@ int main(int argc, char **argv)
     struct option longopts[] = {
         { .name = "help", .val = 'h', },
         { .name = "mem", .val = 'm', .has_arg=1 },
-        { .name = "jit", .val = 'j' },
         { .name = "register-offset", .val = 'r', .has_arg=1 },
+        { .name = "maps", .val = 'M', .has_arg=1},
         { }
     };
 
     const char *mem_filename = NULL;
-    bool jit = false;
+    const char *json_filename = NULL;
 
     int opt;
-    while ((opt = getopt_long(argc, argv, "hm:jr:", longopts, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hmM:r:", longopts, NULL)) != -1) {
         switch (opt) {
         case 'm':
             mem_filename = optarg;
             break;
-        case 'j':
-            jit = true;
-            break;
         case 'r':
             ubpf_set_register_offset(atoi(optarg));
+            break;
+        case 'M':
+            json_filename = optarg;
             break;
         case 'h':
             usage(argv[0]);
@@ -96,6 +112,9 @@ int main(int argc, char **argv)
         if (mem == NULL) {
             return 1;
         }
+    } else {
+        mem = (void *) udp_pkt;
+        mem_len = 64;
     }
 
     struct ubpf_vm *vm = ubpf_create();
@@ -106,19 +125,140 @@ int main(int argc, char **argv)
 
     register_functions(vm);
 
-    /* 
-     * The ELF magic corresponds to an RSH instruction with an offset,
-     * which is invalid.
-     */
-    bool elf = code_len >= SELFMAG && !memcmp(code, ELFMAG, SELFMAG);
+    uint64_t ret;
 
+    /*
+     * Maps parsing from json
+     */
+    jsmn_parser jparser;
+    jsmntok_t toks[128];
+    int jret;
+    FILE *jfile;
+    long jsize;
+    char *json_str;
+
+    int nb_maps;
+
+    jfile = fopen(json_filename, "r");
+    fseek(jfile, 0, SEEK_END);
+    jsize = ftell(jfile);
+    rewind(jfile);
+
+    json_str = malloc(jsize + 1);
+    fread(json_str, 1, jsize, jfile);
+
+    fclose(jfile);
+
+    jsmn_init(&jparser);
+    jret = jsmn_parse(&jparser, json_str, jsize,
+                        toks, sizeof(toks)/sizeof(toks[0]));
+
+    if (jret < 0) {
+      fprintf(stderr, "Failed to parse JSON: %d\n", jret);
+      return 1;
+    }
+
+    if (jret < 1 || toks[0].type != JSMN_ARRAY) {
+      printf("Array expected\n");
+      return 1;
+    }
+
+    nb_maps = toks[0].size;
+
+    int start = 2;
+    int next = toks[1].end;
+
+    for (int j=0; j<nb_maps; j++) {
+        long offset, type, key_size, value_size, max_entries;
+        struct ubpf_map *map;
+        const char *hname = "hashmap";
+        const char *aname = "arraymap";
+        const char *sym_name;
+        int i;
+
+        for (i = start; i < next; i++) {
+            if (jsoneq(json_str, &toks[i], "offset") == 0) {
+                offset = strtol(json_str + toks[i+1].start,
+                                &json_str + toks[i+1].end, 10);
+                printf("offset: %ld\n", offset);
+
+                i++;
+            } else if (jsoneq(json_str, &toks[i], "type") == 0) {
+                type = strtol(json_str + toks[i+1].start,
+                              (char **) json_str + toks[i+1].end, 10);
+                printf("type: %ld\n", type);
+                i++;
+            } else if (jsoneq(json_str, &toks[i], "key_size") == 0) {
+                key_size = strtol(json_str + toks[i+1].start,
+                              (char **) json_str + toks[i+1].end, 10);
+                printf("key_size: %ld\n", key_size);
+                i++;
+            } else if (jsoneq(json_str, &toks[i], "value_size") == 0) {
+                value_size = strtol(json_str + toks[i+1].start,
+                                  (char **) json_str + toks[i+1].end, 10);
+                printf("value_size: %ld\n", value_size);
+                i++;
+            } else if (jsoneq(json_str, &toks[i], "max_entries") == 0) {
+                max_entries = strtol(json_str + toks[i+1].start,
+                                  (char **) json_str + toks[i+1].end, 10);
+                printf("max_entries: %ld\n", max_entries);
+                i++;
+            } else if (toks[i].type == JSMN_OBJECT) {
+                break;
+            } else {
+                fprintf(stderr,"Key not recognized\n");
+                continue;
+            }
+        }
+        map = malloc(sizeof(struct ubpf_map));
+
+        map->type = type;
+        map->key_size = key_size;
+        map->value_size = value_size;
+        map->max_entries = max_entries;
+
+        switch (map->type) {
+            case UBPF_MAP_TYPE_ARRAY:
+                map->ops = ubpf_array_ops;
+                map->data = ubpf_array_create(map);
+                sym_name = aname;
+                break;
+            case UBPF_MAP_TYPE_HASHMAP:
+                map->ops = ubpf_hashmap_ops;
+                map->data = ubpf_hashmap_create(map);
+                sym_name = hname;
+                break;
+            default:
+                ubpf_error("unrecognized map type: %d", map->type);
+                free(map);
+                return 1;
+        }
+
+        int result = ubpf_register_map(vm, sym_name, map);
+        if (result == -1) {
+            ubpf_error("failed to register variable '%s'", sym_name);
+            free(map);
+            return 1;
+        }
+
+        *(uint32_t *)((uint64_t)code + offset*8 + 4) = (uint32_t)((uint64_t)map);
+        *(uint32_t *)((uint64_t)code + offset*8 + sizeof(struct ebpf_inst) + 4) = (uint32_t)((uint64_t)map >> 32);
+
+        printf("map: %lx\n", (uint64_t) map);
+
+        start = i + 1;
+        next = i + 1 + toks[i].size*2;
+    }
+
+    free(json_str);
+
+    /*
+     * Load program
+     */
     char *errmsg;
     int rv;
-    if (elf) {
-	rv = ubpf_load_elf(vm, code, code_len, &errmsg);
-    } else {
-	rv = ubpf_load(vm, code, code_len, &errmsg);
-    }
+
+    rv = ubpf_load(vm, code, code_len, &errmsg);
 
     free(code);
 
@@ -129,19 +269,29 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    uint64_t ret;
+    void *key, *value;
 
-    if (jit) {
-        ubpf_jit_fn fn = ubpf_compile(vm, &errmsg);
-        if (fn == NULL) {
-            fprintf(stderr, "Failed to compile: %s\n", errmsg);
-            free(errmsg);
-            return 1;
-        }
-        ret = fn(mem, mem_len);
-    } else {
-        ret = ubpf_exec(vm, mem, mem_len);
-    }
+    key = malloc(16);
+    *(uint64_t *)key = 0xca8006408080808;
+    *(uint32_t *)(key+8) = 0x49194904;
+    *(uint8_t *)(key+12) = 0x11;
+
+    value=malloc(4);
+    *(uint32_t *)value = 2;
+
+    ubpf_hashmap_update(vm->ext_maps[0], key, value);
+
+    /*
+     * Execute the program
+     */
+    ret = ubpf_exec(vm, mem, mem_len);
+
+    printf("0x%"PRIx64"\n", ret);
+
+    /*
+     * Execute the program the second time
+     */
+    ret = ubpf_exec(vm, mem, mem_len);
 
     printf("0x%"PRIx64"\n", ret);
 

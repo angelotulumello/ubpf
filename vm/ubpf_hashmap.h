@@ -37,7 +37,7 @@
     v |= v >> 16;              \
     ++v; })
 
-void *ubpf_hashmap_create(const struct ubpf_map_def *map_def);
+void *ubpf_hashmap_create(const struct ubpf_map *map);
 unsigned int ubpf_hashmap_size(const struct ubpf_map *map);
 unsigned int ubpf_hashmap_dump(const struct ubpf_map *map, void *data);
 void *ubpf_hashmap_lookup(const struct ubpf_map *map, const void *key);

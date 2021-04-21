@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CFLAGS := -Wall -Werror -Iinc -O2 -g -Wunused-parameter
+CFLAGS := -Wall -Werror -Iinc -O0 -g -Wunused-parameter
 LDLIBS := -lm
 
 INSTALL ?= install
@@ -29,7 +29,7 @@ CFLAGS += -fsanitize=address
 LDFLAGS += -fsanitize=address
 endif
 
-all: libubpf.a test
+all: clean libubpf.a acc
 
 ubpf_jit_x86_64.o: ubpf_jit_x86_64.c ubpf_jit_x86_64.h
 
@@ -39,7 +39,7 @@ ubpf_array.o: ubpf_array.c
 
 ubpf_hashmap.o: ubpf_hashmap.c ubpf_hashmap.h
 
-libubpf.a: ubpf_vm.o ubpf_jit_x86_64.o ubpf_loader.o lookup3.o ubpf_array.o ubpf_hashmap.o
+libubpf.a: ubpf_vm.o ubpf_jit_x86_64.o lookup3.o ubpf_array.o ubpf_hashmap.o
 	ar rc $@ $^
 
 test: test.o libubpf.a

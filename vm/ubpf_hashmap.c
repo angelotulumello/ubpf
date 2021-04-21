@@ -20,22 +20,28 @@
 //#include <config.h>
 #include "ubpf_hashmap.h"
 
+static inline void
+dl_list_init(struct dl_list *list)
+{
+    list->next = list->prev = list;
+}
+
 void *
-ubpf_hashmap_create(const struct ubpf_map_def *map_def)
+ubpf_hashmap_create(const struct ubpf_map *map)
 {
     struct hashmap *hmap = malloc(sizeof(*hmap));
 
-    hmap->nb_buckets = round_up_pow_of_two(map_def->max_entries);
+    hmap->nb_buckets = round_up_pow_of_two(map->max_entries);
     hmap->count = 0;
-    hmap->elem_size = sizeof(struct hmap_elem) + round_up(map_def->key_size, 8)
-                             + map_def->value_size;
+    hmap->elem_size = sizeof(struct hmap_elem) + round_up(map->key_size, 8)
+                             + map->value_size;
 
     hmap->buckets = malloc(sizeof(struct dl_list) * hmap->nb_buckets);
-    /*
+
     for (int i = 0; i < hmap->nb_buckets; i++) {
         dl_list_init(&hmap->buckets[i]);
     }
-    */
+
     return hmap;
 }
 
@@ -56,6 +62,8 @@ static inline struct hmap_elem* lookup_elem_raw(struct dl_list *head,
 {
     struct hmap_elem *l;
     LIST_FOR_EACH(l, hash_node, head) {
+        if (l == NULL)
+            return NULL;
         if (l->hash == hash && !memcmp(&l->key, key, key_size)) {
             return l;
         }
