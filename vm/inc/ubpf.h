@@ -25,6 +25,14 @@ struct ubpf_vm;
 struct ubpf_map;
 struct ubpf_func_proto;
 
+enum xdp_action {
+  XDP_ABORTED = 0,
+  XDP_DROP,
+  XDP_PASS,
+  XDP_TX,
+  XDP_REDIRECT,
+};
+
 typedef uint64_t (*ubpf_jit_fn)(void *mem, size_t mem_len);
 
 struct ubpf_vm *ubpf_create(void);

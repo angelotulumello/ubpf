@@ -44,6 +44,36 @@ static const unsigned char udp_pkt[] = {
         0x63, 0x65, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58
 };
 
+typedef struct pcap_hdr_s {
+  uint32_t magic_number;   /* magic number */
+  uint16_t version_major;  /* major version number */
+  uint16_t version_minor;  /* minor version number */
+  int32_t  thiszone;       /* GMT to local correction */
+  uint32_t sigfigs;        /* accuracy of timestamps */
+  uint32_t snaplen;        /* max length of captured packets, in octets */
+  uint32_t network;        /* data link type */
+} pcap_hdr_t;
+
+typedef struct pcaprec_hdr_s {
+  uint32_t ts_sec;         /* timestamp seconds */
+  uint32_t ts_usec;        /* timestamp microseconds */
+  uint32_t incl_len;       /* number of octets of packet saved in file */
+  uint32_t orig_len;       /* actual length of packet */
+} pcaprec_hdr_t;
+
+pcap_hdr_t pcap_global_hdr = {
+        .magic_number = 0xa1b2c3d4,
+        .version_major = 2,
+        .version_minor = 4,
+        .thiszone = 0,
+        .sigfigs = 0,
+        .snaplen = 0xffff,
+        .network = 0x0001
+};
+
+pcaprec_hdr_t pcaprec_hdr = {0};
+
+
 static void usage(const char *name)
 {
     fprintf(stderr, "usage: %s [-h] [-j|--jit] [-m|--mem PATH] [-M|--maps MAP_FILE] [-p|--pcap PATH] BINARY\n", name);
@@ -317,7 +347,6 @@ int main(int argc, char **argv)
 
     ubpf_hashmap_update(vm->ext_maps[0], key, value);
 
-
     /*
      * Pcap parsing
      */
@@ -326,6 +355,7 @@ int main(int argc, char **argv)
         char errbuf[PCAP_ERRBUF_SIZE];
         const u_char *pkt_ptr;
         struct pcap_pkthdr *hdr;
+        FILE *out_pass; //, *out_drop, *out_cache;
         int npkts = 1;
 
         p = pcap_open_offline(pcap_filename, errbuf);
@@ -334,6 +364,9 @@ int main(int argc, char **argv)
             fprintf(stderr, "pcap_open_offline failed: %s\n", errbuf);
             return -1;
         }
+
+        out_pass = fopen("pass.pcap", "wb");
+        fwrite(&pcap_global_hdr, 1, sizeof(pcap_hdr_t), out_pass);
 
         while (pcap_next_ex(p, &hdr, &pkt_ptr) > 0) {
             /*
@@ -346,7 +379,17 @@ int main(int argc, char **argv)
 
             printf("return 0x%"PRIx64"\n\n", ret);
             npkts++;
+
+            // update length of the packet
+            pcaprec_hdr.incl_len = hdr->len;
+            pcaprec_hdr.orig_len = hdr->len;
+
+            // write packet to output file
+            fwrite(&pcaprec_hdr, 1, sizeof(pcaprec_hdr_t), out_pass);
+            fwrite(pkt_ptr, 1, hdr->len, out_pass);
         }
+
+        fclose(out_pass);
     }
 
     ubpf_destroy(vm);
