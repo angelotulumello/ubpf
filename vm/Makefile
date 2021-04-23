@@ -42,9 +42,13 @@ ubpf_hashmap.o: ubpf_hashmap.c ubpf_hashmap.h
 libubpf.a: ubpf_vm.o ubpf_jit_x86_64.o lookup3.o ubpf_array.o ubpf_hashmap.o
 	ar rc $@ $^
 
+cJSON.o: cJSON.c
+
+match_unit.o: match_unit.c
+
 test: test.o libubpf.a
 
-acc: acc.o libubpf.a
+acc: acc.o cJSON.o match_unit.o libubpf.a
 
 install:
 	$(INSTALL) -d $(DESTDIR)$(PREFIX)/lib

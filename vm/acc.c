@@ -31,6 +31,7 @@
 #include "ubpf.h"
 #include "ubpf_hashmap.h"
 #include "ubpf_array.c"
+#include "match_unit.h"
 
 void ubpf_set_register_offset(int x);
 static void *readfile(const char *path, size_t maxlen, size_t *len);
@@ -76,7 +77,8 @@ pcaprec_hdr_t pcaprec_hdr = {0};
 
 static void usage(const char *name)
 {
-    fprintf(stderr, "usage: %s [-h] [-j|--jit] [-m|--mem PATH] [-M|--maps MAP_FILE] [-p|--pcap PATH] BINARY\n", name);
+    fprintf(stderr, "usage: %s [-h] [-j|--jit] [-M|--maps MAP_FILE] [-p|--pcap PATH]"
+                    " [-m|--mat MAT_FILE] BINARY\n", name);
     fprintf(stderr, "\nExecutes the eBPF code in BINARY and prints the result to stdout.\n");
     fprintf(stderr, "If --mem is given then the specified file will be read and a pointer\nto its data passed in r1.\n");
     fprintf(stderr, "\nIf --pcap is given then the specified trace will be read and the ubpf \nprogram is "
@@ -230,22 +232,22 @@ int main(int argc, char **argv)
 {
     struct option longopts[] = {
         { .name = "help", .val = 'h', },
-        { .name = "mem", .val = 'm', .has_arg=1 },
+        { .name = "mat", .val = 'm', .has_arg=1 },
         { .name = "register-offset", .val = 'r', .has_arg=1 },
         { .name = "maps", .val = 'M', .has_arg=1},
         { .name = "pcap", .val = 'p', .has_arg=1},
         { }
     };
 
-    const char *mem_filename = NULL;
+    const char *mat_filename = NULL;
     const char *json_filename = NULL;
     const char *pcap_filename = NULL;
 
     int opt;
-    while ((opt = getopt_long(argc, argv, "hmp:M:r:", longopts, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hm:p:M:r:", longopts, NULL)) != -1) {
         switch (opt) {
         case 'm':
-            mem_filename = optarg;
+            mat_filename = optarg;
             break;
         case 'r':
             ubpf_set_register_offset(atoi(optarg));
@@ -277,17 +279,14 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    /*
     size_t mem_len = 0;
     void *mem = NULL;
-    if (mem_filename != NULL) {
-        mem = readfile(mem_filename, 1024*1024, &mem_len);
-        if (mem == NULL) {
-            return 1;
-        }
-    } else {
-        mem = (void *) udp_pkt;
-        mem_len = 64;
-    }
+    mem = (void *) udp_pkt;
+    mem_len = 64;
+     */
+
+    (void) *udp_pkt;
 
     struct ubpf_vm *vm = ubpf_create();
     if (!vm) {
@@ -321,6 +320,29 @@ int main(int argc, char **argv)
         free(errmsg);
         ubpf_destroy(vm);
         return 1;
+    }
+
+    /*
+     * Parse the json of the MAT
+     */
+    if(mat_filename) {
+        FILE *mat_file;
+        size_t mat_size;
+        char *mat_string;
+
+        mat_file = fopen(mat_filename, "r");
+        fseek(mat_file, 0, SEEK_END);
+        mat_size = ftell(mat_file);
+        rewind(mat_file);
+
+        mat_string = malloc(mat_size + 1);
+        fread(mat_string, 1, mat_size, mat_file);
+
+        fclose(mat_file);
+
+        struct match_table *mat = malloc(sizeof(struct match_table));
+
+        parse_mat_json(mat_string, mat_size, mat);
     }
 
     /*
