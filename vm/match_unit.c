@@ -295,6 +295,7 @@ parse_pkt_header(const u_char *pkt, struct match_table *mat)
 
         fld_len_in_bytes = round_up_to_8(fld_def->len)/8;
 
+        // TODO handle bigger fields like IPv6 addresses
         switch (fld_def->op) {
             case ALU_OPS_AND:
                 mask = fld_def->imm;
@@ -351,4 +352,40 @@ parse_pkt_header(const u_char *pkt, struct match_table *mat)
     } // end fields loop
 
     return ext_flds;
+}
+
+static inline bool
+match_field(struct pkt_field *parsed_field, struct pkt_field *entry_field, int size)
+{
+    if (entry_field->dontcare) {
+        return true;
+    } else {
+        if (memcmp(parsed_field->value, entry_field->value, size) == 0)
+            return true;
+        else
+            return false;
+    }
+}
+
+struct action_entry *
+lookup_entry(struct match_table *mat, struct pkt_field *parsed_fields)
+{
+    for (int i=0; i<mat->nb_entries; i++) {
+        bool found = false;
+        for (int j=0; j<mat->entries[i].nb_pkt_fields; j++) {
+            struct pkt_field *entry_field = &mat->entries[i].fields[j];
+            int field_size = round_up_to_8(mat->field_defs[j].len)/8;
+
+            if (match_field(&parsed_fields[j], entry_field, field_size)) {
+                if (j == mat->entries[i].nb_pkt_fields - 1)
+                    found = true;
+                continue;
+            } else
+                break;
+        }
+        if (found)
+            return mat->entries[i].act;
+    }
+
+    return NULL;
 }

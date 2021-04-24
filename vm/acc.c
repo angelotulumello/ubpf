@@ -397,13 +397,18 @@ int main(int argc, char **argv)
          */
         while (pcap_next_ex(p, &hdr, &pkt_ptr) > 0) {
             struct pkt_field *extracted_fields;
+            struct action_entry *act;
 
             printf( "\n--------- Packet #%d\n\n", npkts);
 
             if (mat) {
                 extracted_fields = parse_pkt_header(pkt_ptr, mat);
 
-                (void)extracted_fields;
+                act = lookup_entry(mat, extracted_fields);
+
+                if (act) {
+                    //generate_key();
+                }
             }
 
             ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len);

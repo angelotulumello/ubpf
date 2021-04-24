@@ -76,8 +76,8 @@ create_match_entry (struct pkt_field *fields,
                         uint8_t nb_pkt_fields,
                         uint8_t nb_key_fields);
 
-int
-lookup_entry(struct match_entry *entry);
+struct action_entry *
+lookup_entry(struct match_table *mat, struct pkt_field *parsed_fields);
 
 enum action_ops
 execute_action(struct match_entry *entry, void *pkt_data, void *key);
