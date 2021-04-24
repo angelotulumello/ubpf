@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
+#include <arpa/inet.h>
 #include "cJSON.h"
 
 #include "match_unit.h"
@@ -133,8 +134,8 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
 
                 if (strcmp(op1_type->valuestring, "Immediate") == 0) {
                     fld->dontcare = false;
-                    fld->value = malloc(pkt_field_defs[i].len/8);
-                    memcpy(fld->value, &val->valueint, pkt_field_defs[i].len/8);
+                    fld->value = malloc(round_up_to_8(pkt_field_defs[i].len)/8);
+                    memcpy(fld->value, &val->valueint, round_up_to_8(pkt_field_defs[i].len)/8);
                 } else {
                     fprintf(stderr, "Operand 1 type not supported\n");
                     return -1;
@@ -276,4 +277,78 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
     } // end match entries
 
     return 0;
+}
+
+struct pkt_field *
+parse_pkt_header(const u_char *pkt, struct match_table *mat)
+{
+    struct pkt_field_def *fld_def;
+    struct pkt_field *ext_flds;
+
+    ext_flds = malloc(sizeof(struct pkt_field) * mat->entries->nb_pkt_fields);
+
+    for (int i=0; i < mat->entries->nb_pkt_fields; i++) {
+        int fld_len_in_bytes;
+        uint64_t mask, value;
+
+        fld_def = &mat->field_defs[i];
+
+        fld_len_in_bytes = round_up_to_8(fld_def->len)/8;
+
+        switch (fld_def->op) {
+            case ALU_OPS_AND:
+                mask = fld_def->imm;
+
+                if (fld_len_in_bytes == 1) {
+                    value = (*(uint8_t *)(pkt + fld_def->offset)) & mask;
+                } else {
+                    value = (*(uint64_t *) (pkt + fld_def->offset) >>
+                                    (64 - round_up_to_8(fld_def->len))) & mask;
+                }
+                break;
+            case ALU_OPS_LE:
+                switch (fld_len_in_bytes) {
+                    case 4:
+                        value = ntohl(*(uint32_t *)(pkt + fld_def->offset));
+                        break;
+                    case 2:
+                        value = ntohs(*(uint16_t *)(pkt + fld_def->offset));
+                        break;
+                    default:
+                        fprintf(stderr, "Cannot perform le on this field length\n");
+                        break;
+                }
+                break;
+            case ALU_OPS_BE:
+                switch (fld_len_in_bytes) {
+                    case 4:
+                        value = htonl(*(uint32_t *)(pkt + fld_def->offset));
+                        break;
+                    case 2:
+                        value = htons(*(uint16_t *)(pkt + fld_def->offset));
+                        break;
+                    default:
+                        fprintf(stderr, "Cannot perform be on this field length\n");
+                        break;
+                }
+                break;
+            case ALU_OPS_NULL:
+                if (fld_len_in_bytes == 1) {
+                    value = *(uint8_t *)(pkt + fld_def->offset);
+                } else {
+                    value = *(uint64_t *) (pkt + fld_def->offset) >>
+                                    (64 - round_up_to_8(fld_def->len));
+                }
+                break;
+            default:
+                fprintf(stderr, "Unrecognized operation on pkt field\n");
+                break;
+        }
+
+        ext_flds[i].dontcare = false;
+        ext_flds[i].value = malloc(fld_len_in_bytes);
+        memcpy(ext_flds[i].value, &value, fld_len_in_bytes);
+    } // end fields loop
+
+    return ext_flds;
 }

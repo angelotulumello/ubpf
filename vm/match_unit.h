@@ -8,6 +8,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define round_up_to_8(x) ((x+7) & (-8))
+
 enum alu_ops {
   ALU_OPS_NULL,
   ALU_OPS_LE,
@@ -74,10 +76,6 @@ create_match_entry (struct pkt_field *fields,
                         uint8_t nb_pkt_fields,
                         uint8_t nb_key_fields);
 
-void *
-parse_field(void *pkt_data, struct pkt_field_def *fdef,
-                    struct pkt_field *field);
-
 int
 lookup_entry(struct match_entry *entry);
 
@@ -86,6 +84,9 @@ execute_action(struct match_entry *entry, void *pkt_data, void *key);
 
 int
 parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat);
+
+struct pkt_field *
+parse_pkt_header(const u_char *pkt, struct match_table *mat);
 
 
 #endif //UBPF_MATCH_UNIT_H

@@ -325,6 +325,8 @@ int main(int argc, char **argv)
     /*
      * Parse the json of the MAT
      */
+    struct match_table *mat = NULL;
+
     if(mat_filename) {
         FILE *mat_file;
         size_t mat_size;
@@ -340,7 +342,7 @@ int main(int argc, char **argv)
 
         fclose(mat_file);
 
-        struct match_table *mat = malloc(sizeof(struct match_table));
+        mat = malloc(sizeof(struct match_table));
 
         parse_mat_json(mat_string, mat_size, mat);
     }
@@ -390,12 +392,19 @@ int main(int argc, char **argv)
         out_pass = fopen("pass.pcap", "wb");
         fwrite(&pcap_global_hdr, 1, sizeof(pcap_hdr_t), out_pass);
 
+        /*
+         * Execute the program for each packet
+         */
         while (pcap_next_ex(p, &hdr, &pkt_ptr) > 0) {
-            /*
-             * Execute the program
-             */
+            struct pkt_field *extracted_fields;
 
             printf( "\n--------- Packet #%d\n\n", npkts);
+
+            if (mat) {
+                extracted_fields = parse_pkt_header(pkt_ptr, mat);
+
+                (void)extracted_fields;
+            }
 
             ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len);
 
