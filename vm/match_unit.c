@@ -185,7 +185,7 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
 
             nb_key_fields = cJSON_GetArraySize(keys);
 
-            mat->entries[pri].nb_key_fields = nb_key_fields;
+            act->nb_key_fields = nb_key_fields;
 
             act->key_len = key_len->valueint;
             act->op = MAP_ACCESS;
@@ -300,12 +300,14 @@ parse_pkt_header(const u_char *pkt, struct match_table *mat)
             case ALU_OPS_AND:
                 mask = fld_def->imm;
 
-                if (fld_len_in_bytes == 1) {
+                /*if (fld_len_in_bytes == 1) {
                     value = (*(uint8_t *)(pkt + fld_def->offset)) & mask;
                 } else {
                     value = (*(uint64_t *) (pkt + fld_def->offset) >>
                                     (64 - round_up_to_8(fld_def->len))) & mask;
-                }
+                }*/
+
+                value = (*(uint64_t *) (pkt + fld_def->offset)) & mask;
                 break;
             case ALU_OPS_LE:
                 switch (fld_len_in_bytes) {
@@ -334,12 +336,7 @@ parse_pkt_header(const u_char *pkt, struct match_table *mat)
                 }
                 break;
             case ALU_OPS_NULL:
-                if (fld_len_in_bytes == 1) {
-                    value = *(uint8_t *)(pkt + fld_def->offset);
-                } else {
-                    value = *(uint64_t *) (pkt + fld_def->offset) >>
-                                    (64 - round_up_to_8(fld_def->len));
-                }
+                value = *(uint64_t *) (pkt + fld_def->offset);
                 break;
             default:
                 fprintf(stderr, "Unrecognized operation on pkt field\n");
@@ -388,4 +385,75 @@ lookup_entry(struct match_table *mat, struct pkt_field *parsed_fields)
     }
 
     return NULL;
+}
+
+u_char *
+generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len)
+{
+    u_char *key = NULL;
+
+    *key_len = act->key_len;
+    key = malloc(act->key_len);
+
+    for (int i = 0; i < act->nb_key_fields; i++) {
+        size_t start, end, offset, fld_len_in_bytes;
+        enum alu_ops op;
+        uint64_t mask, value;
+
+        start = act->key_fields[i].kstart;
+        end = act->key_fields[i].kend;
+
+        if (act->key_fields[i].has_imm) {
+            memcpy(&key[start], &act->key_fields[i].imm, end - start);
+            continue;
+        }
+
+        fld_len_in_bytes = round_up_to_8(act->key_fields[i].pkt_fld.len)/8;
+        offset = act->key_fields[i].pkt_fld.offset;
+        op = act->key_fields[i].pkt_fld.op;
+
+        switch (op) {
+            case ALU_OPS_AND:
+                mask = act->key_fields[i].imm;
+
+                value = (*(uint64_t *)(pkt + offset)) & mask;
+                break;
+            case ALU_OPS_LE:
+                switch (fld_len_in_bytes) {
+                    case 4:
+                        value = ntohl(*(uint32_t *)(pkt + offset));
+                        break;
+                    case 2:
+                        value = ntohs(*(uint16_t *)(pkt + offset));
+                        break;
+                    default:
+                        fprintf(stderr, "Cannot perform le on this field length\n");
+                        break;
+                }
+                break;
+            case ALU_OPS_BE:
+                switch (fld_len_in_bytes) {
+                    case 4:
+                        value = htonl(*(uint32_t *)(pkt + offset));
+                        break;
+                    case 2:
+                        value = htons(*(uint16_t *)(pkt + offset));
+                        break;
+                    default:
+                        fprintf(stderr, "Cannot perform be on this field length\n");
+                        break;
+                }
+                break;
+            case ALU_OPS_NULL:
+                value = (*(uint64_t *)(pkt + offset));
+                break;
+            default:
+                fprintf(stderr, "Unrecognized operation on pkt field\n");
+                break;
+        }
+
+        memcpy(&key[start], &value, end - start);
+    }
+
+    return key;
 }

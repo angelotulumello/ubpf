@@ -50,6 +50,7 @@ struct action_entry {
     enum action_ops op;
     uint8_t map_id;
     uint8_t key_len;
+    uint8_t nb_key_fields;
     struct key_field *key_fields;
 };
 
@@ -57,7 +58,6 @@ struct match_entry {
   struct pkt_field *fields;
   struct action_entry *act;
   uint8_t nb_pkt_fields;
-  uint8_t nb_key_fields;
 };
 
 struct match_table {
@@ -66,27 +66,17 @@ struct match_table {
   struct pkt_field_def *field_defs;
 };
 
-struct match_table *
-create_match_table (struct match_entry *entries,
-                            uint8_t nb_entries);
-
-struct match_entry *
-create_match_entry (struct pkt_field *fields,
-                        struct action_entry *act,
-                        uint8_t nb_pkt_fields,
-                        uint8_t nb_key_fields);
-
 struct action_entry *
 lookup_entry(struct match_table *mat, struct pkt_field *parsed_fields);
-
-enum action_ops
-execute_action(struct match_entry *entry, void *pkt_data, void *key);
 
 int
 parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat);
 
 struct pkt_field *
 parse_pkt_header(const u_char *pkt, struct match_table *mat);
+
+u_char *
+generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len);
 
 
 #endif //UBPF_MATCH_UNIT_H

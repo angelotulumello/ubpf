@@ -350,26 +350,26 @@ int main(int argc, char **argv)
     /*
      * Create an entry in the hashmap
      */
-    void *key, *value;
+    void *tmp_key, *value;
 
-    key = malloc(16);
-    *(uint64_t *)key = 0xc0a8006408080808;
-    *(uint32_t *)(key+8) = 0x49194904;
-    *(uint8_t *)(key+12) = 0x11;
+    tmp_key = malloc(16);
+    *(uint64_t *)tmp_key = 0xc0a8006408080808;
+    *(uint32_t *)(tmp_key + 8) = 0x49194904;
+    *(uint8_t *)(tmp_key + 12) = 0x11;
 
     value=malloc(4);
     *(uint32_t *)value = 2;
 
-    ubpf_hashmap_update(vm->ext_maps[0], key, value);
+    ubpf_hashmap_update(vm->ext_maps[0], tmp_key, value);
 
     // ip.dst | ip.src | udp.sport | udp.dport | ip.proto
-    *(uint64_t *)key = 0x0808080801010101;
-    *(uint32_t *)(key+8) = 0xbbaabbaa;
-    *(uint8_t *)(key+12) = 0x11;
+    *(uint64_t *)tmp_key = 0x0808080801010101;
+    *(uint32_t *)(tmp_key + 8) = 0xbbaabbaa;
+    *(uint8_t *)(tmp_key + 12) = 0x11;
 
     *(uint32_t *)value = 3;
 
-    ubpf_hashmap_update(vm->ext_maps[0], key, value);
+    ubpf_hashmap_update(vm->ext_maps[0], tmp_key, value);
 
     /*
      * Pcap parsing
@@ -379,7 +379,7 @@ int main(int argc, char **argv)
         char errbuf[PCAP_ERRBUF_SIZE];
         const u_char *pkt_ptr;
         struct pcap_pkthdr *hdr;
-        FILE *out_pass; //, *out_drop, *out_cache;
+        FILE *out_pass; //, *out_drop, *out_map, *out_tx;
         int npkts = 1;
 
         p = pcap_open_offline(pcap_filename, errbuf);
@@ -398,6 +398,8 @@ int main(int argc, char **argv)
         while (pcap_next_ex(p, &hdr, &pkt_ptr) > 0) {
             struct pkt_field *extracted_fields;
             struct action_entry *act;
+            u_char *key = NULL;
+            size_t key_len = 0;
 
             printf( "\n--------- Packet #%d\n\n", npkts);
 
@@ -407,7 +409,24 @@ int main(int argc, char **argv)
                 act = lookup_entry(mat, extracted_fields);
 
                 if (act) {
-                    //generate_key();
+                    switch (act->op) {
+                        case XDP_ABORTED:
+                            break;
+                        case XDP_DROP:
+                            break;
+                        case XDP_PASS:
+                            break;
+                        case XDP_TX:
+                            break;
+                        case XDP_REDIRECT:
+                            break;
+                        case MAP_ACCESS:
+                            key = generate_key(act, pkt_ptr, &key_len);
+                            if (key) {
+                                (void) key;
+                            }
+                            break;
+                    }
                 }
             }
 
