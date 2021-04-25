@@ -36,6 +36,10 @@
 void ubpf_set_register_offset(int x);
 static void *readfile(const char *path, size_t maxlen, size_t *len);
 static void register_functions(struct ubpf_vm *vm);
+static inline void
+init_output_pcap (FILE *fp, const char *filename);
+static inline void
+write_pkt(const u_char *pkt_ptr, size_t len, FILE *fp);
 
 static const unsigned char udp_pkt[] = {
         0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3c, 0xec, 0xef, 0x0c, 0xde, 0x60, 0x08, 0x00,
@@ -62,7 +66,7 @@ typedef struct pcaprec_hdr_s {
   uint32_t orig_len;       /* actual length of packet */
 } pcaprec_hdr_t;
 
-pcap_hdr_t pcap_global_hdr = {
+const pcap_hdr_t pcap_global_hdr = {
         .magic_number = 0xa1b2c3d4,
         .version_major = 2,
         .version_minor = 4,
@@ -89,7 +93,8 @@ static void usage(const char *name)
     fprintf(stderr, "  -r, --register-offset NUM: Change the mapping from eBPF to x86 registers\n");
 }
 
-static int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
+static int
+jsoneq(const char *json, jsmntok_t *tok, const char *s) {
     if (tok->type == JSMN_STRING && (int)strlen(s) == tok->end - tok->start &&
         strncmp(json + tok->start, s, tok->end - tok->start) == 0) {
         return 0;
@@ -279,13 +284,6 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    /*
-    size_t mem_len = 0;
-    void *mem = NULL;
-    mem = (void *) udp_pkt;
-    mem_len = 64;
-     */
-
     (void) *udp_pkt;
 
     struct ubpf_vm *vm = ubpf_create();
@@ -323,7 +321,7 @@ int main(int argc, char **argv)
     }
 
     /*
-     * Parse the json of the MAT
+     * Parse the json of the MAT if any
      */
     struct match_table *mat = NULL;
 
@@ -344,7 +342,13 @@ int main(int argc, char **argv)
 
         mat = malloc(sizeof(struct match_table));
 
-        parse_mat_json(mat_string, mat_size, mat);
+        if (parse_mat_json(mat_string, mat_size, mat) < 0){
+            fprintf(stderr, "error in parsing MAT\n");
+            free(mat);
+            free(mat_string);
+            return -1;
+        }
+        free(mat_string);
     }
 
     /*
@@ -371,15 +375,18 @@ int main(int argc, char **argv)
 
     ubpf_hashmap_update(vm->ext_maps[0], tmp_key, value);
 
+    free(tmp_key);
+    free(value);
+
     /*
-     * Pcap parsing
+     * Pcap trace parsing and main processing loop
      */
     if (pcap_filename) {
         pcap_t *p;
         char errbuf[PCAP_ERRBUF_SIZE];
         const u_char *pkt_ptr;
         struct pcap_pkthdr *hdr;
-        FILE *out_pass; //, *out_drop, *out_map, *out_tx;
+        FILE *out_pass, *out_drop, *out_map, *out_tx, *out_redirect;
         int npkts = 1;
 
         p = pcap_open_offline(pcap_filename, errbuf);
@@ -389,8 +396,12 @@ int main(int argc, char **argv)
             return -1;
         }
 
-        out_pass = fopen("pass.pcap", "wb");
-        fwrite(&pcap_global_hdr, 1, sizeof(pcap_hdr_t), out_pass);
+        // Init the output pcap with the pcap header
+        init_output_pcap(out_pass, "pass.pcap");
+        init_output_pcap(out_drop, "drop.pcap");
+        init_output_pcap(out_map, "map_access.pcap");
+        init_output_pcap(out_tx, "tx.pcap");
+        init_output_pcap(out_redirect, "redirect.pcap");
 
         /*
          * Execute the program for each packet
@@ -411,14 +422,17 @@ int main(int argc, char **argv)
                 if (act) {
                     switch (act->op) {
                         case XDP_ABORTED:
-                            break;
                         case XDP_DROP:
+                            write_pkt(pkt_ptr, hdr->len, out_drop);
                             break;
                         case XDP_PASS:
+                            write_pkt(pkt_ptr, hdr->len, out_pass);
                             break;
                         case XDP_TX:
+                            write_pkt(pkt_ptr, hdr->len, out_tx);
                             break;
                         case XDP_REDIRECT:
+                            write_pkt(pkt_ptr, hdr->len, out_redirect);
                             break;
                         case MAP_ACCESS:
                             key = generate_key(act, pkt_ptr, &key_len);
@@ -428,28 +442,42 @@ int main(int argc, char **argv)
                             break;
                     }
                 }
+            } else {  // no MAT, standard processing
+                ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len);
             }
-
-            ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len);
 
             printf("return 0x%"PRIx64"\n\n", ret);
             npkts++;
-
-            // update length of the packet
-            pcaprec_hdr.incl_len = hdr->len;
-            pcaprec_hdr.orig_len = hdr->len;
-
-            // write packet to output file
-            fwrite(&pcaprec_hdr, 1, sizeof(pcaprec_hdr_t), out_pass);
-            fwrite(pkt_ptr, 1, hdr->len, out_pass);
         }
 
         fclose(out_pass);
+        fclose(out_drop);
+        fclose(out_tx);
+        fclose(out_map);
+        fclose(out_redirect);
     }
 
     ubpf_destroy(vm);
 
     return 0;
+}
+
+
+static inline void
+init_output_pcap (FILE *fp, const char *filename) {
+    fp = fopen(filename, "wb");
+    fwrite(&pcap_global_hdr, 1, sizeof(pcap_hdr_t), fp);
+}
+
+static inline void
+write_pkt(const u_char *pkt_ptr, size_t len, FILE *fp) {
+    // update length of the packet
+    pcaprec_hdr.incl_len = len;
+    pcaprec_hdr.orig_len = len;
+
+    // write packet to output file
+    fwrite(&pcaprec_hdr, 1, sizeof(pcaprec_hdr_t), fp);
+    fwrite(pkt_ptr, 1, len, fp);
 }
 
 static void *readfile(const char *path, size_t maxlen, size_t *len)
