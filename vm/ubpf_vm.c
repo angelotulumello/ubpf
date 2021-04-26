@@ -199,12 +199,15 @@ dump_stack(uint64_t *stack)
 }
 
 uint64_t
-ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
+ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len,
+            struct map_context *in_ctx, struct map_context *out_ctx,
+            uint16_t map_id)
 {
-    uint16_t pc = 0;
+    uint16_t pc = 0, pc_tmp = 0;
     const struct ebpf_inst *insts = vm->insts;
-    uint64_t reg[16];
-    uint64_t stack[(STACK_SIZE+7)/8];
+    uint64_t *reg, *reg_tmp;
+    uint64_t *stack, *stack_tmp;
+    size_t stack_size;
     struct xdp_md xdp_md = {};
 
     if (!insts) {
@@ -212,15 +215,35 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
         return UINT64_MAX;
     }
 
-    xdp_md.data = (uintptr_t) mem;
-    xdp_md.data_end = (uintptr_t) mem + mem_len;
+    stack_size = ((STACK_SIZE+7)/8) * sizeof(uint64_t);
 
-    reg[1] = (uintptr_t) &xdp_md;
-    reg[10] = (uintptr_t)stack + sizeof(stack);
+    if (in_ctx) {
+        pc = in_ctx->pc;
+        reg = in_ctx->reg;
+        stack = in_ctx->stack;
+
+        memcpy(in_ctx->reg, in_ctx->old_reg, sizeof(uint64_t) * 64);
+        memcpy(in_ctx->stack, in_ctx->old_stack, stack_size);
+
+    } else {
+        reg = malloc(16 * sizeof(uint64_t));
+        stack = malloc(stack_size);
+
+        reg_tmp = malloc(16 * sizeof(uint64_t));
+        stack_tmp = malloc(stack_size);
+
+        xdp_md.data = (uintptr_t) mem;
+        xdp_md.data_end = (uintptr_t) mem + mem_len;
+
+        reg[1] = (uintptr_t) &xdp_md;
+        reg[10] = (uintptr_t)stack + stack_size;
+    }
 
     while (1) {
         const uint16_t cur_pc = pc;
         struct ebpf_inst inst = insts[pc++];
+
+        printf("PC: %d, inst=0x%x\n", pc, inst.opcode);
 
         switch (inst.opcode) {
         case EBPF_OP_ADD_IMM:
@@ -629,16 +652,38 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len)
             break;
         case EBPF_OP_EXIT:
             dump_stack(stack);
+
+            if (out_ctx) {
+                out_ctx->pc = pc_tmp;
+                out_ctx->reg = reg;
+                out_ctx->stack = stack;
+
+                memcpy(out_ctx->reg, reg_tmp, sizeof(uint64_t) * 16);
+                memcpy(out_ctx->stack, stack_tmp, stack_size);
+            }
+
             return reg[0];
         case EBPF_OP_CALL:
             reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
             printf("Calling %d, reg[0]=%lx\n", inst.imm, reg[0] );
+
+            if (out_ctx && inst.imm == MAP_LOOKUP &&
+                    reg[1] == (uintptr_t)vm->ext_maps[map_id]) {
+                pc_tmp = pc - 1;
+                memcpy(reg_tmp, reg, sizeof(uint64_t) * 16);
+                memcpy(stack_tmp, stack, stack_size);
+
+                out_ctx->old_reg = reg_tmp;
+                out_ctx->old_stack = stack_tmp;
+
+                printf("\nSaving state...\n\n");
+            }
+
             if (reg[0])
                 printf("There's a match\n");
             break;
         }
 
-        printf("PC: %d, inst=0x%x\n", pc, inst.opcode);
         printf("------- R0: %016lx | R1: %016lx | R2: %016lx\n", reg[0], reg[1], reg[2]);
         printf("------- R3: %016lx | R4: %016lx | R5: %016lx\n", reg[3], reg[4], reg[5]);
         printf("------- R6: %016lx | R7: %016lx | R8: %016lx\n", reg[6], reg[7], reg[8]);

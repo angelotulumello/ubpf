@@ -4,6 +4,7 @@
 
 #include <stdbool.h>
 #include "flow_cache.h"
+#include "ubpf_int.h"
 
 static inline struct cache_entry *
 add_cache_entry_to_hash(struct cache_entry** flows,
@@ -15,6 +16,8 @@ add_cache_entry_to_hash(struct cache_entry** flows,
     cache_entry->key_len = key_len;
 
     memcpy(cache_entry->key, key, key_len);
+
+    cache_entry->ctx = malloc(sizeof(struct map_context));
 
     cache_entry->prev = NULL;
     cache_entry->next = NULL;
@@ -98,15 +101,20 @@ enqueue(struct cache_queue *cache, struct cache_entry *req_entry)
 enum cache_result
 reference_cache(struct cache_queue *cache,
                     struct cache_entry **flows,
-                    u_char *key, size_t key_len)
+                    u_char *key, size_t key_len,
+                    struct cache_entry **out)
 {
     struct cache_entry *req_entry = NULL;
 
     req_entry = find_cache_entry_in_hash(*flows, key, key_len);
 
+    *out = req_entry;
+
     // If requested entry is not in hash
     if (!req_entry) {
         req_entry = add_cache_entry_to_hash(flows, key, key_len);
+
+        *out = req_entry;
 
         enqueue(cache, req_entry);
 

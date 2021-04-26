@@ -29,6 +29,15 @@
 struct ebpf_inst;
 typedef uint64_t (*ext_func)(uint64_t arg0, uint64_t arg1, uint64_t arg2, uint64_t arg3, uint64_t arg4);
 
+enum ubfp_func_id {
+  MAP_LOOKUP = 1,
+  MAP_UPDATE,
+  MAP_DELETE,
+  MAP_ADD,
+  TIME_GET_NS,
+  HASH,
+};
+
 enum ubpf_reg_type {
   UNINIT        = 0,
   UNKNOWN       = 1,

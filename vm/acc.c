@@ -358,8 +358,8 @@ int main(int argc, char **argv)
     void *tmp_key, *value;
 
     tmp_key = malloc(16);
-    *(uint64_t *)tmp_key = 0xc0a8006408080808;
-    *(uint32_t *)(tmp_key + 8) = 0x49194904;
+    *(uint64_t *)tmp_key = 0x0101010102020202;
+    *(uint32_t *)(tmp_key + 8) = 0x35003500;
     *(uint8_t *)(tmp_key + 12) = 0x11;
 
     value=malloc(4);
@@ -368,8 +368,8 @@ int main(int argc, char **argv)
     ubpf_hashmap_update(vm->ext_maps[0], tmp_key, value);
 
     // ip.dst | ip.src | udp.sport | udp.dport | ip.proto
-    *(uint64_t *)tmp_key = 0x0808080801010101;
-    *(uint32_t *)(tmp_key + 8) = 0xbbaabbaa;
+    *(uint64_t *)tmp_key = 0x0a0a0a0a02020202;
+    *(uint32_t *)(tmp_key + 8) = 0x35003500;
     *(uint8_t *)(tmp_key + 12) = 0x11;
 
     *(uint32_t *)value = 3;
@@ -447,30 +447,50 @@ int main(int argc, char **argv)
                             key = generate_key(act, pkt_ptr, &key_len);
                             if (key) {
                                 enum cache_result res;
-                                res = reference_cache(cache, &map_entries, key, key_len);
+                                struct cache_entry *entry;
+                                struct map_context *in_ctx, *out_ctx;
+                                uint16_t map_id;
+
+                                res = reference_cache(cache, &map_entries, key, key_len, &entry);
 
                                 switch (res) {
                                     case NOT_IN_HASH:
-                                        printf("NOTINHASH\n");
+                                        printf("NOT_IN_HASH\n");
+                                        in_ctx = NULL;
+                                        out_ctx = entry->ctx;
                                         break;
                                     case NOT_IN_CACHE:
-                                        printf("NOTINCACHE\n");
+                                        printf("NOT_IN_CACHE\n");
+
+                                        in_ctx = entry->ctx;
+                                        out_ctx = NULL;
                                         break;
                                     case NOT_IN_CACHE_FRONT:
-                                        printf("NOTINCACHEFRONT\n");
+                                        printf("NOT_IN_CACHE_FRONT\n");
+
+                                        in_ctx = entry->ctx;
+                                        out_ctx = NULL;
                                         break;
                                     case IN_CACHE_FRONT:
-                                        printf("INCACHEFRONT\n");
+                                        printf("IN_CACHE_FRONT\n");
+
+                                        in_ctx = entry->ctx;
+                                        out_ctx = NULL;
                                         break;
                                     default:
                                         break;
                                 }
+
+                                map_id = (uint8_t) key[key_len - 1] - 1;
+
+                                ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len, in_ctx, out_ctx, map_id);
+                                write_pkt(pkt_ptr, hdr->len, out_map);
                             }
                             break;
                     }
                 }
             } else {  // no MAT, standard processing
-                ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len);
+                ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len, NULL, NULL, 0);
             }
 
             printf("return 0x%"PRIx64"\n\n", ret);
