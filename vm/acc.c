@@ -32,12 +32,13 @@
 #include "ubpf_hashmap.h"
 #include "ubpf_array.c"
 #include "match_unit.h"
+#include "flow_cache.h"
 
 void ubpf_set_register_offset(int x);
 static void *readfile(const char *path, size_t maxlen, size_t *len);
 static void register_functions(struct ubpf_vm *vm);
 static inline void
-init_output_pcap (FILE *fp, const char *filename);
+init_output_pcap (FILE **fp, const char *filename);
 static inline void
 write_pkt(const u_char *pkt_ptr, size_t len, FILE *fp);
 
@@ -388,6 +389,8 @@ int main(int argc, char **argv)
         struct pcap_pkthdr *hdr;
         FILE *out_pass, *out_drop, *out_map, *out_tx, *out_redirect;
         int npkts = 1;
+        struct cache_queue *cache = NULL;
+        struct cache_entry *map_entries = NULL;
 
         p = pcap_open_offline(pcap_filename, errbuf);
 
@@ -396,12 +399,18 @@ int main(int argc, char **argv)
             return -1;
         }
 
+        out_pass = out_drop = out_map = out_tx = out_redirect = NULL;
         // Init the output pcap with the pcap header
-        init_output_pcap(out_pass, "pass.pcap");
-        init_output_pcap(out_drop, "drop.pcap");
-        init_output_pcap(out_map, "map_access.pcap");
-        init_output_pcap(out_tx, "tx.pcap");
-        init_output_pcap(out_redirect, "redirect.pcap");
+        init_output_pcap(&out_pass, "pass.pcap");
+        init_output_pcap(&out_drop, "drop.pcap");
+        init_output_pcap(&out_map, "map_access.pcap");
+        init_output_pcap(&out_tx, "tx.pcap");
+        init_output_pcap(&out_redirect, "redirect.pcap");
+
+        /*
+         * Create the flow cache
+         */
+        cache = create_cache(CACHE_SIZE);
 
         /*
          * Execute the program for each packet
@@ -437,7 +446,25 @@ int main(int argc, char **argv)
                         case MAP_ACCESS:
                             key = generate_key(act, pkt_ptr, &key_len);
                             if (key) {
-                                (void) key;
+                                enum cache_result res;
+                                res = reference_cache(cache, &map_entries, key, key_len);
+
+                                switch (res) {
+                                    case NOT_IN_HASH:
+                                        printf("NOTINHASH\n");
+                                        break;
+                                    case NOT_IN_CACHE:
+                                        printf("NOTINCACHE\n");
+                                        break;
+                                    case NOT_IN_CACHE_FRONT:
+                                        printf("NOTINCACHEFRONT\n");
+                                        break;
+                                    case IN_CACHE_FRONT:
+                                        printf("INCACHEFRONT\n");
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                             break;
                     }
@@ -463,13 +490,18 @@ int main(int argc, char **argv)
 }
 
 
-static inline void
-init_output_pcap (FILE *fp, const char *filename) {
-    fp = fopen(filename, "wb");
-    fwrite(&pcap_global_hdr, 1, sizeof(pcap_hdr_t), fp);
+static void
+init_output_pcap (FILE **fp, const char *filename) {
+    *fp = fopen(filename, "wb");
+    fwrite(&pcap_global_hdr, 1, sizeof(pcap_hdr_t), *fp);
+
+    if(!*fp) {
+        printf("Error cannot open\n");
+        exit(-1);
+    }
 }
 
-static inline void
+static void
 write_pkt(const u_char *pkt_ptr, size_t len, FILE *fp) {
     // update length of the packet
     pcaprec_hdr.incl_len = len;
