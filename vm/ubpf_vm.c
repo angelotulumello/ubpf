@@ -651,7 +651,12 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len,
             }
             break;
         case EBPF_OP_EXIT:
-            dump_stack(stack);
+            printf("------- R0: %016lx | R1: %016lx | R2: %016lx\n", reg[0], reg[1], reg[2]);
+            printf("------- R3: %016lx | R4: %016lx | R5: %016lx\n", reg[3], reg[4], reg[5]);
+            printf("------- R6: %016lx | R7: %016lx | R8: %016lx\n", reg[6], reg[7], reg[8]);
+            printf("------- R9: %016lx | R10: %016lx\n\n", reg[9], reg[10]);
+
+            uint64_t reg0_tmp = reg[0];
 
             if (out_ctx) {
                 out_ctx->pc = pc_tmp;
@@ -661,8 +666,9 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len,
                 memcpy(out_ctx->reg, reg_tmp, sizeof(uint64_t) * 16);
                 memcpy(out_ctx->stack, stack_tmp, stack_size);
             }
+            dump_stack(stack);
 
-            return reg[0];
+            return reg0_tmp;
         case EBPF_OP_CALL:
             reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
             printf("Calling %d, reg[0]=%lx\n", inst.imm, reg[0] );
