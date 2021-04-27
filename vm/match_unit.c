@@ -268,9 +268,9 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
                         }
                         key_field->pkt_fld.nb_ops = nb_ops;
                     } else {
-                        pkt_field_defs[i].op[0] = ALU_OPS_NULL;
-                        pkt_field_defs[i].nb_ops = 1;
-                        pkt_field_defs[i].imm[0] = 0;
+                        key_field->pkt_fld.op[0] = ALU_OPS_NULL;
+                        key_field->pkt_fld.nb_ops = 1;
+                        key_field->pkt_fld.imm[0] = 0;
                     }
                 } else if (strcmp(fld_type->valuestring, "Immediate") == 0) {
                     const cJSON *val = NULL;
@@ -302,6 +302,62 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
     return 0;
 }
 
+static uint64_t
+field_manipulation(enum alu_ops op, uint64_t imm,
+                   uint64_t value,
+                   uint8_t fld_len_in_bytes)
+{
+    uint64_t out_value;
+
+    switch (op) {
+        case ALU_OPS_LE:
+            switch (fld_len_in_bytes) {
+                case 4:
+                    out_value = ntohl(value);
+                    break;
+                case 2:
+                    out_value = ntohs(value);
+                    break;
+                default:
+                    fprintf(stderr, "Cannot perform le on this field length\n");
+                    return 0xdeafbeefcafebabe;
+            }
+            break;
+        case ALU_OPS_BE:
+            switch (fld_len_in_bytes) {
+                case 4:
+                    out_value = htonl(value);
+                    break;
+                case 2:
+                    out_value = htons(value);
+                    break;
+                default:
+                    fprintf(stderr, "Cannot perform be on this field length\n");
+                    return 0xdeafbeefcafebabe;
+            }
+            break;
+        case ALU_OPS_AND:
+            out_value = (value) & imm;
+            break;
+        case ALU_OPS_OR:
+            out_value = (value) | imm;
+            break;
+        case ALU_OPS_LSH:
+            out_value = (value) << imm;
+            break;
+        case ALU_OPS_RSH:
+            out_value = (value) >> imm;
+            break;
+        case ALU_OPS_NULL:
+            out_value = value;
+            break;
+        default:
+            fprintf(stderr, "Unrecognized operation on pkt field\n");
+            break;
+    }
+    return out_value;
+}
+
 struct pkt_field *
 parse_pkt_header(const u_char *pkt, struct match_table *mat)
 {
@@ -311,8 +367,8 @@ parse_pkt_header(const u_char *pkt, struct match_table *mat)
     ext_flds = malloc(sizeof(struct pkt_field) * mat->entries->nb_pkt_fields);
 
     for (int i=0; i < mat->entries->nb_pkt_fields; i++) {
-        int fld_len_in_bytes;
-        uint64_t mask, value;
+        uint8_t fld_len_in_bytes;
+        uint64_t value;
 
         fld_def = &mat->field_defs[i];
 
@@ -322,55 +378,8 @@ parse_pkt_header(const u_char *pkt, struct match_table *mat)
 
         // Iterate over configured operations
         for (int j=0; j<fld_def->nb_ops; j++) {
-            switch (fld_def->op[j]) {
-                case ALU_OPS_LE:
-                    switch (fld_len_in_bytes) {
-                        case 4:
-                            value = ntohl(*(uint32_t *) &value);
-                            break;
-                        case 2:
-                            value = ntohs(*(uint16_t *) &value);
-                            break;
-                        default:
-                            fprintf(stderr, "Cannot perform le on this field length\n");
-                            break;
-                    }
-                    break;
-                case ALU_OPS_BE:
-                    switch (fld_len_in_bytes) {
-                        case 4:
-                            value = htonl(*(uint32_t *) &value);
-                            break;
-                        case 2:
-                            value = htons(*(uint16_t *) &value);
-                            break;
-                        default:
-                            fprintf(stderr, "Cannot perform be on this field length\n");
-                            break;
-                    }
-                    break;
-                case ALU_OPS_AND:
-                    mask = fld_def->imm[j];
-
-                    value = (*(uint64_t *) &value) & mask;
-                    break;
-                case ALU_OPS_OR:
-                    mask = fld_def->imm[j];
-
-                    value = (*(uint64_t *) &value) | mask;
-                    break;
-                case ALU_OPS_LSH:
-                    value = (*(uint64_t *) &value) << fld_def->imm[j];
-                    break;
-                case ALU_OPS_RSH:
-                    value = (*(uint64_t *) &value) >> fld_def->imm[j];
-                    break;
-                case ALU_OPS_NULL:
-                    break;
-                default:
-                    fprintf(stderr, "Unrecognized operation on pkt field\n");
-                    break;
-            }
+            value = field_manipulation(fld_def->op[j], fld_def->imm[j],
+                                       value, fld_len_in_bytes);
         }
 
         ext_flds[i].dontcare = false;
@@ -430,7 +439,7 @@ generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len)
     for (int i = 0; i < act->nb_key_fields; i++) {
         size_t start, end, offset, fld_len_in_bytes, nb_ops;
         enum alu_ops op;
-        uint64_t imm = 0, value = 0;
+        uint64_t imm, value;
 
         start = act->key_fields[i].kstart;
         end = act->key_fields[i].kend;
@@ -450,51 +459,7 @@ generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len)
             op = act->key_fields[i].pkt_fld.op[j];
             imm = act->key_fields[i].pkt_fld.imm[j];
 
-            switch (op) {
-                case ALU_OPS_LE:
-                    switch (fld_len_in_bytes) {
-                        case 4:
-                            value = ntohl(*(uint32_t *) &value);
-                            break;
-                        case 2:
-                            value = ntohs(*(uint16_t *) &value);
-                            break;
-                        default:
-                            fprintf(stderr, "Cannot perform le on this field length\n");
-                            break;
-                    }
-                    break;
-                case ALU_OPS_BE:
-                    switch (fld_len_in_bytes) {
-                        case 4:
-                            value = htonl(*(uint32_t *) &value);
-                            break;
-                        case 2:
-                            value = htons(*(uint16_t *) &value);
-                            break;
-                        default:
-                            fprintf(stderr, "Cannot perform be on this field length\n");
-                            break;
-                    }
-                    break;
-                case ALU_OPS_AND:
-                    value = (*(uint64_t *) &value) & imm;
-                    break;
-                case ALU_OPS_OR:
-                    value = (*(uint64_t *) &value) | imm;
-                    break;
-                case ALU_OPS_LSH:
-                    value = (*(uint64_t *) &value) << imm;
-                    break;
-                case ALU_OPS_RSH:
-                    value = (*(uint64_t *) &value) >> imm;
-                    break;
-                case ALU_OPS_NULL:
-                    break;
-                default:
-                    fprintf(stderr, "Unrecognized operation on pkt field\n");
-                    break;
-            }
+            value = field_manipulation(op, imm, value, fld_len_in_bytes);
         }
 
         memcpy(&key[start], &value, end - start);
