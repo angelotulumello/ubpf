@@ -516,7 +516,7 @@ init_output_pcap (FILE **fp, const char *filename) {
     fwrite(&pcap_global_hdr, 1, sizeof(pcap_hdr_t), *fp);
 
     if(!*fp) {
-        printf("Error cannot open\n");
+        printf("Error cannot open %s\n", filename);
         exit(-1);
     }
 }
@@ -770,10 +770,10 @@ struct ubpf_func_proto ubpf_hash_proto = {
 static void
 register_functions(struct ubpf_vm *vm)
 {
-  ubpf_register_function(vm, 1, "ubpf_map_lookup", ubpf_map_lookup_proto);
-  ubpf_register_function(vm, 2, "ubpf_map_update", ubpf_map_update_proto);
-  ubpf_register_function(vm, 3, "ubpf_map_delete", ubpf_map_delete_proto);
-  ubpf_register_function(vm, 4, "ubpf_map_add", ubpf_map_add_proto);
-  ubpf_register_function(vm, 5, "ubpf_time_get_ns", ubpf_time_get_ns_proto);
-  ubpf_register_function(vm, 6, "ubpf_hash", ubpf_hash_proto);
+  ubpf_register_function(vm, MAP_LOOKUP, "ubpf_map_lookup", ubpf_map_lookup_proto);
+  ubpf_register_function(vm, MAP_UPDATE, "ubpf_map_update", ubpf_map_update_proto);
+  ubpf_register_function(vm, MAP_DELETE, "ubpf_map_delete", ubpf_map_delete_proto);
+  ubpf_register_function(vm, MAP_ADD, "ubpf_map_add", ubpf_map_add_proto);
+  ubpf_register_function(vm, TIME_GET_NS, "ubpf_time_get_ns", ubpf_time_get_ns_proto);
+  ubpf_register_function(vm, HASH, "ubpf_hash", ubpf_hash_proto);
 }

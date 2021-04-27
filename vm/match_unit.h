@@ -9,19 +9,24 @@
 #include <stdbool.h>
 
 #define round_up_to_8(x) ((x+7) & (-8))
+#define MAX_OPS 8
 
 enum alu_ops {
   ALU_OPS_NULL,
   ALU_OPS_LE,
   ALU_OPS_BE,
-  ALU_OPS_AND
+  ALU_OPS_AND,
+  ALU_OPS_OR,
+  ALU_OPS_LSH,
+  ALU_OPS_RSH,
 };
 
 struct pkt_field_def {
   uint16_t offset;  // in bytes
   uint8_t len;      // in bits
-  enum alu_ops op;
-  uint64_t imm;
+  enum alu_ops op[MAX_OPS];
+  uint8_t nb_ops;
+  uint64_t imm[MAX_OPS];
 };
 
 struct pkt_field {

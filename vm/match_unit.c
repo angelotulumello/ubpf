@@ -10,7 +10,6 @@
 #include "cJSON.h"
 
 #include "match_unit.h"
-#include "ubpf_hashmap.h"
 
 int
 parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
@@ -79,33 +78,45 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
                                                          "field_manipulations");
 
                 // Process field manipulations if any
-                if (cJSON_GetArraySize(jfield_manipulations) > 1) {
-                    fprintf(stderr, "Multiple operations on fields not supported\n");
-                    return -1;
-                } else if (cJSON_GetArraySize(jfield_manipulations) == 1) {
-
+                if (cJSON_GetArraySize(jfield_manipulations) > 0) {
                     const cJSON *fld_alu_op = NULL;
                     const cJSON *fld_immediate = NULL;
                     const cJSON *fld_man = NULL;
+                    unsigned int nb_ops = 0;
 
                     cJSON_ArrayForEach(fld_man, jfield_manipulations) {
                         fld_alu_op = cJSON_GetObjectItemCaseSensitive(fld_man, "alu_op");
                         fld_immediate = cJSON_GetObjectItemCaseSensitive(fld_man, "immediate");
 
                         if (strcmp(fld_alu_op->valuestring, "AluOps.le") == 0) {
-                            pkt_field_defs[i].op = ALU_OPS_LE;
-                            pkt_field_defs[i].imm = 0;
+                            pkt_field_defs[i].op[nb_ops] = ALU_OPS_LE;
+                            pkt_field_defs[i].imm[nb_ops] = 0;
+                        } else if (strcmp(fld_alu_op->valuestring, "AluOps.be") == 0) {
+                            pkt_field_defs[i].op[nb_ops] = ALU_OPS_BE;
+                            pkt_field_defs[i].imm[nb_ops] = 0;
                         } else if (strcmp(fld_alu_op->valuestring, "AluOps.bit_and") == 0) {
-                            pkt_field_defs[i].op = ALU_OPS_AND;
-                            pkt_field_defs[i].imm = fld_immediate->valueint;
+                            pkt_field_defs[i].op[nb_ops] = ALU_OPS_AND;
+                            pkt_field_defs[i].imm[nb_ops] = fld_immediate->valueint;
+                        } else if (strcmp(fld_alu_op->valuestring, "AluOps.bit_or") == 0) {
+                            pkt_field_defs[i].op[nb_ops] = ALU_OPS_OR;
+                            pkt_field_defs[i].imm[nb_ops] = fld_immediate->valueint;
+                        } else if (strcmp(fld_alu_op->valuestring, "AluOps.lsh") == 0) {
+                            pkt_field_defs[i].op[nb_ops] = ALU_OPS_LSH;
+                            pkt_field_defs[i].imm[nb_ops] = fld_immediate->valueint;
+                        } else if (strcmp(fld_alu_op->valuestring, "AluOps.rsh") == 0) {
+                            pkt_field_defs[i].op[nb_ops] = ALU_OPS_RSH;
+                            pkt_field_defs[i].imm[nb_ops] = fld_immediate->valueint;
                         } else {
                             fprintf(stderr, "ALU operation not supported\n");
                             return -1;
                         }
+                        nb_ops++;
                     }
+                    pkt_field_defs[i].nb_ops = nb_ops;
                 } else {
-                    pkt_field_defs[i].op = ALU_OPS_NULL;
-                    pkt_field_defs[i].imm = 0;
+                    pkt_field_defs[i].op[0] = ALU_OPS_NULL;
+                    pkt_field_defs[i].nb_ops = 1;
+                    pkt_field_defs[i].imm[0] = 0;
                 }
 
                 pkt_field_defs[i].offset = joffset->valueint;
@@ -221,33 +232,45 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
                     key_field->pkt_fld.len = len->valueint;
 
                     // Process field manipulations if any
-                    if (cJSON_GetArraySize(fld_manipulations) > 1) {
-                        fprintf(stderr, "Multiple operations on key fields not supported\n");
-                        return -1;
-                    } else if (cJSON_GetArraySize(fld_manipulations) == 1) {
-
+                    if (cJSON_GetArraySize(fld_manipulations) > 0) {
                         const cJSON *fld_alu_op = NULL;
                         const cJSON *fld_immediate = NULL;
                         const cJSON *fld_man = NULL;
+                        unsigned int nb_ops = 0;
 
                         cJSON_ArrayForEach(fld_man, fld_manipulations) {
                             fld_alu_op = cJSON_GetObjectItemCaseSensitive(fld_man, "alu_op");
                             fld_immediate = cJSON_GetObjectItemCaseSensitive(fld_man, "immediate");
 
                             if (strcmp(fld_alu_op->valuestring, "AluOps.le") == 0) {
-                                key_field->pkt_fld.op = ALU_OPS_LE;
-                                key_field->pkt_fld.imm = 0;
+                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_LE;
+                                key_field->pkt_fld.imm[nb_ops] = 0;
+                            } else if (strcmp(fld_alu_op->valuestring, "AluOps.be") == 0) {
+                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_BE;
+                                key_field->pkt_fld.imm[nb_ops] = 0;
                             } else if (strcmp(fld_alu_op->valuestring, "AluOps.bit_and") == 0) {
-                                key_field->pkt_fld.op = ALU_OPS_AND;
-                                key_field->pkt_fld.imm = fld_immediate->valueint;
+                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_AND;
+                                key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                            } else if (strcmp(fld_alu_op->valuestring, "AluOps.bit_or") == 0) {
+                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_OR;
+                                key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                            } else if (strcmp(fld_alu_op->valuestring, "AluOps.lsh") == 0) {
+                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_LSH;
+                                key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                            } else if (strcmp(fld_alu_op->valuestring, "AluOps.rsh") == 0) {
+                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_RSH;
+                                key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
                             } else {
                                 fprintf(stderr, "ALU operation not supported\n");
                                 return -1;
                             }
+                            nb_ops++;
                         }
+                        key_field->pkt_fld.nb_ops = nb_ops;
                     } else {
-                        pkt_field_defs[i].op = ALU_OPS_NULL;
-                        pkt_field_defs[i].imm = 0;
+                        pkt_field_defs[i].op[0] = ALU_OPS_NULL;
+                        pkt_field_defs[i].nb_ops = 1;
+                        pkt_field_defs[i].imm[0] = 0;
                     }
                 } else if (strcmp(fld_type->valuestring, "Immediate") == 0) {
                     const cJSON *val = NULL;
@@ -295,52 +318,59 @@ parse_pkt_header(const u_char *pkt, struct match_table *mat)
 
         fld_len_in_bytes = round_up_to_8(fld_def->len)/8;
 
-        // TODO handle bigger fields like IPv6 addresses
-        switch (fld_def->op) {
-            case ALU_OPS_AND:
-                mask = fld_def->imm;
+        value = *(uint64_t *)(pkt + fld_def->offset);
 
-                /*if (fld_len_in_bytes == 1) {
-                    value = (*(uint8_t *)(pkt + fld_def->offset)) & mask;
-                } else {
-                    value = (*(uint64_t *) (pkt + fld_def->offset) >>
-                                    (64 - round_up_to_8(fld_def->len))) & mask;
-                }*/
+        // Iterate over configured operations
+        for (int j=0; j<fld_def->nb_ops; j++) {
+            switch (fld_def->op[j]) {
+                case ALU_OPS_LE:
+                    switch (fld_len_in_bytes) {
+                        case 4:
+                            value = ntohl(*(uint32_t *) &value);
+                            break;
+                        case 2:
+                            value = ntohs(*(uint16_t *) &value);
+                            break;
+                        default:
+                            fprintf(stderr, "Cannot perform le on this field length\n");
+                            break;
+                    }
+                    break;
+                case ALU_OPS_BE:
+                    switch (fld_len_in_bytes) {
+                        case 4:
+                            value = htonl(*(uint32_t *) &value);
+                            break;
+                        case 2:
+                            value = htons(*(uint16_t *) &value);
+                            break;
+                        default:
+                            fprintf(stderr, "Cannot perform be on this field length\n");
+                            break;
+                    }
+                    break;
+                case ALU_OPS_AND:
+                    mask = fld_def->imm[j];
 
-                value = (*(uint64_t *) (pkt + fld_def->offset)) & mask;
-                break;
-            case ALU_OPS_LE:
-                switch (fld_len_in_bytes) {
-                    case 4:
-                        value = ntohl(*(uint32_t *)(pkt + fld_def->offset));
-                        break;
-                    case 2:
-                        value = ntohs(*(uint16_t *)(pkt + fld_def->offset));
-                        break;
-                    default:
-                        fprintf(stderr, "Cannot perform le on this field length\n");
-                        break;
-                }
-                break;
-            case ALU_OPS_BE:
-                switch (fld_len_in_bytes) {
-                    case 4:
-                        value = htonl(*(uint32_t *)(pkt + fld_def->offset));
-                        break;
-                    case 2:
-                        value = htons(*(uint16_t *)(pkt + fld_def->offset));
-                        break;
-                    default:
-                        fprintf(stderr, "Cannot perform be on this field length\n");
-                        break;
-                }
-                break;
-            case ALU_OPS_NULL:
-                value = *(uint64_t *) (pkt + fld_def->offset);
-                break;
-            default:
-                fprintf(stderr, "Unrecognized operation on pkt field\n");
-                break;
+                    value = (*(uint64_t *) &value) & mask;
+                    break;
+                case ALU_OPS_OR:
+                    mask = fld_def->imm[j];
+
+                    value = (*(uint64_t *) &value) | mask;
+                    break;
+                case ALU_OPS_LSH:
+                    value = (*(uint64_t *) &value) << fld_def->imm[j];
+                    break;
+                case ALU_OPS_RSH:
+                    value = (*(uint64_t *) &value) >> fld_def->imm[j];
+                    break;
+                case ALU_OPS_NULL:
+                    break;
+                default:
+                    fprintf(stderr, "Unrecognized operation on pkt field\n");
+                    break;
+            }
         }
 
         ext_flds[i].dontcare = false;
@@ -398,9 +428,9 @@ generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len)
     memset(&key[act->key_len], act->map_id, 1);
 
     for (int i = 0; i < act->nb_key_fields; i++) {
-        size_t start, end, offset, fld_len_in_bytes;
+        size_t start, end, offset, fld_len_in_bytes, nb_ops;
         enum alu_ops op;
-        uint64_t mask, value;
+        uint64_t imm = 0, value = 0;
 
         start = act->key_fields[i].kstart;
         end = act->key_fields[i].kend;
@@ -412,46 +442,59 @@ generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len)
 
         fld_len_in_bytes = round_up_to_8(act->key_fields[i].pkt_fld.len)/8;
         offset = act->key_fields[i].pkt_fld.offset;
-        op = act->key_fields[i].pkt_fld.op;
+        nb_ops = act->key_fields[i].pkt_fld.nb_ops;
 
-        switch (op) {
-            case ALU_OPS_AND:
-                mask = act->key_fields[i].imm;
+        value = *(uint64_t *) (pkt + offset);
 
-                value = (*(uint64_t *)(pkt + offset)) & mask;
-                break;
-            case ALU_OPS_LE:
-                switch (fld_len_in_bytes) {
-                    case 4:
-                        value = ntohl(*(uint32_t *)(pkt + offset));
-                        break;
-                    case 2:
-                        value = ntohs(*(uint16_t *)(pkt + offset));
-                        break;
-                    default:
-                        fprintf(stderr, "Cannot perform le on this field length\n");
-                        break;
-                }
-                break;
-            case ALU_OPS_BE:
-                switch (fld_len_in_bytes) {
-                    case 4:
-                        value = htonl(*(uint32_t *)(pkt + offset));
-                        break;
-                    case 2:
-                        value = htons(*(uint16_t *)(pkt + offset));
-                        break;
-                    default:
-                        fprintf(stderr, "Cannot perform be on this field length\n");
-                        break;
-                }
-                break;
-            case ALU_OPS_NULL:
-                value = (*(uint64_t *)(pkt + offset));
-                break;
-            default:
-                fprintf(stderr, "Unrecognized operation on pkt field\n");
-                break;
+        for (int j=0; j<nb_ops; j++) {
+            op = act->key_fields[i].pkt_fld.op[j];
+            imm = act->key_fields[i].pkt_fld.imm[j];
+
+            switch (op) {
+                case ALU_OPS_LE:
+                    switch (fld_len_in_bytes) {
+                        case 4:
+                            value = ntohl(*(uint32_t *) &value);
+                            break;
+                        case 2:
+                            value = ntohs(*(uint16_t *) &value);
+                            break;
+                        default:
+                            fprintf(stderr, "Cannot perform le on this field length\n");
+                            break;
+                    }
+                    break;
+                case ALU_OPS_BE:
+                    switch (fld_len_in_bytes) {
+                        case 4:
+                            value = htonl(*(uint32_t *) &value);
+                            break;
+                        case 2:
+                            value = htons(*(uint16_t *) &value);
+                            break;
+                        default:
+                            fprintf(stderr, "Cannot perform be on this field length\n");
+                            break;
+                    }
+                    break;
+                case ALU_OPS_AND:
+                    value = (*(uint64_t *) &value) & imm;
+                    break;
+                case ALU_OPS_OR:
+                    value = (*(uint64_t *) &value) | imm;
+                    break;
+                case ALU_OPS_LSH:
+                    value = (*(uint64_t *) &value) << imm;
+                    break;
+                case ALU_OPS_RSH:
+                    value = (*(uint64_t *) &value) >> imm;
+                    break;
+                case ALU_OPS_NULL:
+                    break;
+                default:
+                    fprintf(stderr, "Unrecognized operation on pkt field\n");
+                    break;
+            }
         }
 
         memcpy(&key[start], &value, end - start);
