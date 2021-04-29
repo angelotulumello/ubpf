@@ -17,7 +17,6 @@ COMMENTS_REGEX = '(;).*?'
 
 MAPS_DEF_STRUCT_FIELD_SZ_B = 4
 
-
 class ELFParsingError(Exception):
     pass
 
@@ -39,12 +38,15 @@ def read_file_elf(filename, secname):
 
         # 1. parse maps relocation section, obtaining instructions to be modified & used maps
         insn_orig_pos_to_map_offset = {}  # insn_orig_pos: offset inside maps section
+        map_to_offsets = {}
         if isinstance(reladyn, RelocationSection):
-            offsets = []
             for reloc in reladyn.iter_relocations():
                 idx = int(reloc['r_offset'] / BPF_INSN_SZ_B)  # instruction original position
                 insn_orig_pos_to_map_offset[idx] = symtab_syms[reloc['r_info_sym']]['st_value']
-                offsets.append(idx)
+                map_id = symtab_syms[reloc['r_info_sym']]['st_value']
+                if map_id not in map_to_offsets:
+                    map_to_offsets[map_id] = []
+                map_to_offsets[map_id].append(idx)
 
             # 1-b. parse maps section
             maps_sec = elffile.get_section_by_name('maps')
@@ -52,7 +54,7 @@ def read_file_elf(filename, secname):
             if maps_sec is None:
                 raise ELFParsingError("invalid ELF file: found relocation sec %s but no maps section" % reladyn_name)
 
-            for mid, map_off in enumerate(sorted(set(insn_orig_pos_to_map_offset.values()))):
+            for mid, map_off in enumerate(set(insn_orig_pos_to_map_offset.values())):
                 maps_data = maps_sec.data()
                 type = int.from_bytes(maps_data[map_off:map_off + MAPS_DEF_STRUCT_FIELD_SZ_B], byteorder='little')
                 key_sz = int.from_bytes(
@@ -65,7 +67,7 @@ def read_file_elf(filename, secname):
                     maps_data[map_off + 3 * MAPS_DEF_STRUCT_FIELD_SZ_B:map_off + 4 * MAPS_DEF_STRUCT_FIELD_SZ_B],
                     byteorder='little')
 
-                maps.append({"offset": offsets[mid],
+                maps.append({"offsets": map_to_offsets[map_off],
                              "type": type,
                              "key_size": key_sz,
                              "value_size": value_sz,
@@ -122,10 +124,10 @@ def print_line(line):
 
 filename = sys.argv[1]
 
-prog_bin, tb_relocated, maps = read_file_elf(filename, "xdp")
+secname = sys.argv[3]
 
-for ins in prog_bin:
-    print("inst-> {}".format(hex(ins)))
+prog_bin, tb_relocated, maps = read_file_elf(filename, secname)
+
 print(tb_relocated)
 print(maps)
 

@@ -31,11 +31,16 @@ typedef uint64_t (*ext_func)(uint64_t arg0, uint64_t arg1, uint64_t arg2, uint64
 
 enum ubfp_func_id {
   MAP_LOOKUP = 1,
-  MAP_UPDATE,
-  MAP_DELETE,
-  MAP_ADD,
-  TIME_GET_NS,
-  HASH,
+  MAP_UPDATE = 2,
+  MAP_DELETE = 3,
+  MAP_ADD = 4,
+  TIME_GET_NS = 5,
+  HASH = 6,
+  GET_SMP_PROCESSOR_ID = 8,
+  CSUM_DIFF = 28,
+  XDP_ADJUST_HEAD = 44,
+  REDIRECT_MAP = 51,
+  XDP_ADJUST_TAIL = 65,
 };
 
 enum ubpf_reg_type {
@@ -65,8 +70,10 @@ struct ubpf_func_proto {
 };
 
 enum ubpf_map_type {
-  UBPF_MAP_TYPE_ARRAY = 1,
-  UBPF_MAP_TYPE_HASHMAP = 2
+  UBPF_MAP_TYPE_HASHMAP = 1,
+  UBPF_MAP_TYPE_ARRAY = 2,
+  UBPF_MAP_TYPE_PER_CPU_HASHMAP = 5,
+  UBPF_MAP_TYPE_PER_CPU_ARRAY = 6,
 };
 
 struct ubpf_map_def {

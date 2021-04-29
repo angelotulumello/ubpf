@@ -26,7 +26,7 @@
 #include <errno.h>
 #include <pcap.h>
 
-#include "jsmn.h"
+#include "cJSON.h"
 
 #include "ubpf.h"
 #include "ubpf_hashmap.h"
@@ -94,29 +94,16 @@ static void usage(const char *name)
     fprintf(stderr, "  -r, --register-offset NUM: Change the mapping from eBPF to x86 registers\n");
 }
 
-static int
-jsoneq(const char *json, jsmntok_t *tok, const char *s) {
-    if (tok->type == JSMN_STRING && (int)strlen(s) == tok->end - tok->start &&
-        strncmp(json + tok->start, s, tok->end - tok->start) == 0) {
-        return 0;
-    }
-    return -1;
-}
-
 static inline int
 parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
 {
     /*
      * Maps parsing from json
      */
-    jsmn_parser jparser;
-    jsmntok_t toks[128];
-    int jret;
+    cJSON *json = NULL;
     FILE *jfile;
     long jsize;
     char *json_str;
-
-    int nb_maps;
 
     jfile = fopen(json_filename, "r");
     fseek(jfile, 0, SEEK_END);
@@ -128,67 +115,46 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
 
     fclose(jfile);
 
-    jsmn_init(&jparser);
-    jret = jsmn_parse(&jparser, json_str, jsize,
-                      toks, sizeof(toks)/sizeof(toks[0]));
-
-    if (jret < 0) {
-        fprintf(stderr, "Failed to parse JSON: %d\n", jret);
-        return 1;
+    json = cJSON_ParseWithLength(json_str, jsize);
+    if (json == NULL) {
+        const char *error_ptr = cJSON_GetErrorPtr();
+        if (error_ptr != NULL)
+            fprintf(stderr, "Error before: %s\n", error_ptr);
+        return -1;
     }
 
-    if (jret < 1 || toks[0].type != JSMN_ARRAY) {
-        printf("Array expected\n");
-        return 1;
+    if (!cJSON_IsArray(json)) {
+        fprintf(stderr, "Root JSON object not an array\n");
+        return -1;
     }
 
-    nb_maps = toks[0].size;
+    cJSON *jmap, *jmaps = json;
 
-    int start = 2;
-    int next = toks[1].end;
-
-    for (int j=0; j<nb_maps; j++) {
-        long offset, type, key_size, value_size, max_entries;
+    cJSON_ArrayForEach(jmap, jmaps) {
+        size_t nb_offsets = 0;
+        unsigned int offset[8], type, key_size, value_size, max_entries;
         struct ubpf_map *map;
         const char *hname = "hashmap";
         const char *aname = "arraymap";
         const char *sym_name;
-        int i;
 
-        for (i = start; i < next; i++) {
-            if (jsoneq(json_str, &toks[i], "offset") == 0) {
-                offset = strtol(json_str + toks[i+1].start,
-                                &json_str + toks[i+1].end, 10);
-                printf("offset: %ld\n", offset);
+        cJSON *jtype = cJSON_GetObjectItemCaseSensitive(jmap, "type");
+        cJSON *jkey_size = cJSON_GetObjectItemCaseSensitive(jmap, "key_size");
+        cJSON *jvalue_size = cJSON_GetObjectItemCaseSensitive(jmap, "value_size");
+        cJSON *jmax_entries = cJSON_GetObjectItemCaseSensitive(jmap, "max_entries");
 
-                i++;
-            } else if (jsoneq(json_str, &toks[i], "type") == 0) {
-                type = strtol(json_str + toks[i+1].start,
-                              (char **) json_str + toks[i+1].end, 10);
-                printf("type: %ld\n", type);
-                i++;
-            } else if (jsoneq(json_str, &toks[i], "key_size") == 0) {
-                key_size = strtol(json_str + toks[i+1].start,
-                                  (char **) json_str + toks[i+1].end, 10);
-                printf("key_size: %ld\n", key_size);
-                i++;
-            } else if (jsoneq(json_str, &toks[i], "value_size") == 0) {
-                value_size = strtol(json_str + toks[i+1].start,
-                                    (char **) json_str + toks[i+1].end, 10);
-                printf("value_size: %ld\n", value_size);
-                i++;
-            } else if (jsoneq(json_str, &toks[i], "max_entries") == 0) {
-                max_entries = strtol(json_str + toks[i+1].start,
-                                     (char **) json_str + toks[i+1].end, 10);
-                printf("max_entries: %ld\n", max_entries);
-                i++;
-            } else if (toks[i].type == JSMN_OBJECT) {
-                break;
-            } else {
-                fprintf(stderr,"Key not recognized\n");
-                continue;
-            }
+        type = (unsigned int) cJSON_GetNumberValue(jtype);
+        key_size = (unsigned int) cJSON_GetNumberValue(jkey_size);
+        value_size = (unsigned int) cJSON_GetNumberValue(jvalue_size);
+        max_entries = (unsigned int) cJSON_GetNumberValue(jmax_entries);
+
+        cJSON *joff, *joffsets = cJSON_GetObjectItemCaseSensitive(jmap, "offsets");
+
+        cJSON_ArrayForEach(joff, joffsets) {
+            offset[nb_offsets] = (unsigned int) cJSON_GetNumberValue(joff);
+            nb_offsets++;
         }
+
         map = malloc(sizeof(struct ubpf_map));
 
         map->type = type;
@@ -197,11 +163,13 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
         map->max_entries = max_entries;
 
         switch (map->type) {
+            case UBPF_MAP_TYPE_PER_CPU_ARRAY:  // per cpu array
             case UBPF_MAP_TYPE_ARRAY:
                 map->ops = ubpf_array_ops;
                 map->data = ubpf_array_create(map);
                 sym_name = aname;
                 break;
+            case UBPF_MAP_TYPE_PER_CPU_HASHMAP:  // per cpu hash
             case UBPF_MAP_TYPE_HASHMAP:
                 map->ops = ubpf_hashmap_ops;
                 map->data = ubpf_hashmap_create(map);
@@ -220,13 +188,13 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
             return 1;
         }
 
-        *(uint32_t *)((uint64_t)code + offset*8 + 4) = (uint32_t)((uint64_t)map);
-        *(uint32_t *)((uint64_t)code + offset*8 + sizeof(struct ebpf_inst) + 4) = (uint32_t)((uint64_t)map >> 32);
+        for (int i=0; i<nb_offsets; i++) {
+            *(uint32_t *) ((uint64_t) code + offset[i] * 8 + 4) = (uint32_t) ((uint64_t) map);
+            *(uint32_t *) ((uint64_t) code + offset[i] * 8 + sizeof(struct ebpf_inst) + 4) =
+                    (uint32_t) ((uint64_t) map >> 32);
+        }
 
         printf("map: %lx\n", (uint64_t) map);
-
-        start = i + 1;
-        next = i + 1 + toks[i].size*2;
     }
 
     free(json_str);
@@ -352,29 +320,40 @@ int main(int argc, char **argv)
         free(mat_string);
     }
 
+    printf("map 0 key_size %d\n", vm->ext_maps[0]->key_size);
+    printf("map 1 key_size %d\n", vm->ext_maps[1]->key_size);
+
+
     /*
      * Create an entry in the hashmap
      */
     void *tmp_key, *value;
 
     tmp_key = malloc(16);
-    *(uint64_t *)tmp_key = 0x0101010102020202;
-    *(uint32_t *)(tmp_key + 8) = 0x35003500;
-    *(uint8_t *)(tmp_key + 12) = 0x11;
+    *(uint64_t *)tmp_key = 0x44332211ddccbbaa;
+    *(uint32_t *)(tmp_key + 8) = 0xddccbbaa;
+    *(uint32_t *)(tmp_key + 12) = 0x11;
 
     value=malloc(4);
-    *(uint32_t *)value = 2;
-
-    ubpf_hashmap_update(vm->ext_maps[0], tmp_key, value);
-
-    // ip.dst | ip.src | udp.sport | udp.dport | ip.proto
-    *(uint64_t *)tmp_key = 0x0a0a0a0a02020202;
-    *(uint32_t *)(tmp_key + 8) = 0x35003500;
-    *(uint8_t *)(tmp_key + 12) = 0x11;
-
     *(uint32_t *)value = 3;
 
-    ubpf_hashmap_update(vm->ext_maps[0], tmp_key, value);
+    ubpf_hashmap_update(vm->ext_maps[1], tmp_key, value);
+
+    // ip.dst | ip.src | udp.sport | udp.dport | ip.proto
+    *(uint64_t *)tmp_key = 0x44332211ddccbbaa;
+    *(uint32_t *)(tmp_key + 8) = 0xddccbbaa;
+    *(uint32_t *)(tmp_key + 12) = 0x06;
+
+    *(uint32_t *)value = 2;
+
+    ubpf_hashmap_update(vm->ext_maps[1], tmp_key, value);
+
+    u_char data[128];
+    unsigned  int c = 0;
+    c = ubpf_hashmap_dump(vm->ext_maps[1], data);
+    (void )c;
+
+    printf("Count: %d\n", c);
 
     free(tmp_key);
     free(value);
@@ -432,15 +411,19 @@ int main(int argc, char **argv)
                     switch (act->op) {
                         case XDP_ABORTED:
                         case XDP_DROP:
+                            ret = XDP_DROP;
                             write_pkt(pkt_ptr, hdr->len, out_drop);
                             break;
                         case XDP_PASS:
+                            ret = XDP_PASS;
                             write_pkt(pkt_ptr, hdr->len, out_pass);
                             break;
                         case XDP_TX:
+                            ret = XDP_TX;
                             write_pkt(pkt_ptr, hdr->len, out_tx);
                             break;
                         case XDP_REDIRECT:
+                            ret = XDP_REDIRECT;
                             write_pkt(pkt_ptr, hdr->len, out_redirect);
                             break;
                         case MAP_ACCESS:
@@ -481,7 +464,8 @@ int main(int argc, char **argv)
                                         break;
                                 }
 
-                                map_id = (uint8_t) key[key_len - 1] - 1;
+                                map_id = (uint8_t) key[key_len - 1];
+                                printf("map id = %d\n", map_id);
 
                                 ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len, in_ctx, out_ctx, map_id);
                                 write_pkt(pkt_ptr, hdr->len, out_map);

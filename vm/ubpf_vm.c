@@ -671,7 +671,7 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len,
             return reg0_tmp;
         case EBPF_OP_CALL:
             reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
-            printf("Calling %d, reg[0]=%lx\n", inst.imm, reg[0] );
+            printf("Calling %d, reg[0]=%lx, map_ip=%d\n", inst.imm, reg[0], (int)reg[1] );
 
             if (out_ctx && inst.imm == MAP_LOOKUP &&
                     reg[1] == (uintptr_t)vm->ext_maps[map_id]) {
