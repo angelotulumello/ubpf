@@ -39,7 +39,9 @@ ubpf_array.o: ubpf_array.c
 
 ubpf_hashmap.o: ubpf_hashmap.c ubpf_hashmap.h
 
-libubpf.a: ubpf_vm.o ubpf_jit_x86_64.o lookup3.o ubpf_array.o ubpf_hashmap.o
+helper_functions.o: helper_functions.c helper_functions.h
+
+libubpf.a: ubpf_vm.o ubpf_jit_x86_64.o lookup3.o ubpf_array.o helper_functions.o ubpf_hashmap.o
 	ar rc $@ $^
 
 cJSON.o: cJSON.c
@@ -47,8 +49,6 @@ cJSON.o: cJSON.c
 match_unit.o: match_unit.c
 
 flow_cache.o: flow_cache.c
-
-test: test.o libubpf.a
 
 acc: acc.o cJSON.o match_unit.o flow_cache.o libubpf.a
 

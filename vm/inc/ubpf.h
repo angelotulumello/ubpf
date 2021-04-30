@@ -30,6 +30,11 @@ typedef uint64_t (*ubpf_jit_fn)(void *mem, size_t mem_len);
 struct ubpf_vm *ubpf_create(void);
 void ubpf_destroy(struct ubpf_vm *vm);
 
+struct xdp_md {
+  uintptr_t data;
+  uintptr_t data_end;
+};
+
 struct map_context {
   uint16_t pc;
   uint64_t *reg;

@@ -25,6 +25,8 @@
 #define STACK_SIZE 512
 #define NB_FUNC_ARGS 5
 #define MAX_SIZE_ARG 8
+#define PKT_HEADROOM 64
+#define PKT_TAILROOM 64
 
 struct ebpf_inst;
 typedef uint64_t (*ext_func)(uint64_t arg0, uint64_t arg1, uint64_t arg2, uint64_t arg3, uint64_t arg4);
@@ -53,6 +55,7 @@ enum ubpf_reg_type {
   PKT_PTR       = 32,
   PKT_SIZE      = 64,
   STACK_PTR     = 128,
+  XDP_MD_PTR    = 256,
 };
 
 enum ubpf_arg_size {

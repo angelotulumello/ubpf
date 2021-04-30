@@ -180,11 +180,6 @@ u32(uint64_t x)
     return x;
 }
 
-struct xdp_md {
-  uintptr_t data;
-  uintptr_t data_end;
-};
-
 static inline void
 dump_stack(uint64_t *stack)
 {
