@@ -80,6 +80,9 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat);
 struct pkt_field *
 parse_pkt_header(const u_char *pkt, struct match_table *mat);
 
+void
+dump_fields(struct pkt_field *parsed_fields, uint8_t nb_fields);
+
 u_char *
 generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len);
 

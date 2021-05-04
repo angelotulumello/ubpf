@@ -194,7 +194,7 @@ dump_stack(uint64_t *stack)
 }
 
 uint64_t
-ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len,
+ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             struct map_context *in_ctx, struct map_context *out_ctx,
             uint16_t map_id)
 {
@@ -203,7 +203,6 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len,
     uint64_t *reg, *reg_tmp;
     uint64_t *stack, *stack_tmp;
     size_t stack_size;
-    struct xdp_md xdp_md = {};
 
     if (!insts) {
         /* Code must be loaded before we can execute */
@@ -227,10 +226,7 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len,
         reg_tmp = malloc(16 * sizeof(uint64_t));
         stack_tmp = malloc(stack_size);
 
-        xdp_md.data = (uintptr_t) mem;
-        xdp_md.data_end = (uintptr_t) mem + mem_len;
-
-        reg[1] = (uintptr_t) &xdp_md;
+        reg[1] = (uintptr_t) xdp;
         reg[10] = (uintptr_t)stack + stack_size;
     }
 
@@ -460,23 +456,23 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len,
          */
 #define BOUNDS_CHECK_LOAD(size) \
     do { \
-        if (!bounds_check(vm, (void *)reg[inst.src] + inst.offset, size, "load", cur_pc, mem, mem_len, stack)) { \
+        if (!bounds_check(vm, (void *)reg[inst.src] + inst.offset, size, "load", cur_pc, (void*) xdp->data, xdp->data_end - xdp->data, stack)) { \
             return UINT64_MAX; \
         } \
     } while (0)
 #define BOUNDS_CHECK_STORE(size) \
     do { \
-        if (!bounds_check(vm, (void *)reg[inst.dst] + inst.offset, size, "store", cur_pc, mem, mem_len, stack)) { \
+        if (!bounds_check(vm, (void *)reg[inst.dst] + inst.offset, size, "store", cur_pc, (void*)xdp->data, xdp->data_end - xdp->data, stack)) { \
             return UINT64_MAX; \
         } \
     } while (0)
 
         case EBPF_OP_LDXW:
             BOUNDS_CHECK_LOAD(4);
-            if ((uintptr_t)(reg[inst.src] + inst.offset) == (uintptr_t)&xdp_md) {
-                reg[inst.dst] = (uintptr_t)(xdp_md.data);
-            } else if ((uintptr_t)(reg[inst.src] + inst.offset) == (uintptr_t)&xdp_md + 4) {
-                reg[inst.dst] = (xdp_md.data_end);
+            if ((uintptr_t)(reg[inst.src] + inst.offset) == (uintptr_t)xdp) {
+                reg[inst.dst] = (uintptr_t)(xdp->data);
+            } else if ((uintptr_t)(reg[inst.src] + inst.offset) == (uintptr_t)xdp + 4) {
+                reg[inst.dst] = (xdp->data_end);
             } else {
                 reg[inst.dst] = *(uint32_t *)(uintptr_t)(reg[inst.src] + inst.offset);
             }
@@ -661,11 +657,18 @@ ubpf_exec(const struct ubpf_vm *vm, void *mem, size_t mem_len,
                 memcpy(out_ctx->reg, reg_tmp, sizeof(uint64_t) * 16);
                 memcpy(out_ctx->stack, stack_tmp, stack_size);
             }
+
             dump_stack(stack);
 
             return reg0_tmp;
         case EBPF_OP_CALL:
+            if(inst.imm == 44)
+                printf("Pre 44 data: %p, data_end: %p\n", (void*)xdp->data, (void*)xdp->data_end);
             reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
+
+            if(inst.imm == 44)
+                printf("Post 44 data: %p, data_end: %p\n", (void*)xdp->data, (void*)xdp->data_end);
+
             printf("Calling %d, reg[0]=%lx, map_ip=%d\n", inst.imm, reg[0], (int)reg[1] );
 
             if (out_ctx && inst.imm == MAP_LOOKUP &&

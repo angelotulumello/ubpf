@@ -35,6 +35,9 @@
 #include "flow_cache.h"
 #include "helper_functions.h"
 
+
+#define PKT_TOTAL_LEN 1642  // headroom (64) + 1514 + tailroom (64)
+
 void ubpf_set_register_offset(int x);
 static void *readfile(const char *path, size_t maxlen, size_t *len);
 static inline void
@@ -94,7 +97,76 @@ static void usage(const char *name)
     fprintf(stderr, "  -r, --register-offset NUM: Change the mapping from eBPF to x86 registers\n");
 }
 
-static inline int
+static void
+configure_map_entries(const char *filename, struct ubpf_vm *vm) {
+    cJSON *json = NULL;
+    FILE *jfile;
+    long jsize;
+    char *json_str;
+
+    jfile = fopen(filename, "r");
+    fseek(jfile, 0, SEEK_END);
+    jsize = ftell(jfile);
+    rewind(jfile);
+
+    json_str = malloc(jsize + 1);
+    fread(json_str, 1, jsize, jfile);
+
+    fclose(jfile);
+
+    json = cJSON_ParseWithLength(json_str, jsize);
+    if (json == NULL) {
+        const char *error_ptr = cJSON_GetErrorPtr();
+        if (error_ptr != NULL)
+            fprintf(stderr, "Error before: %s\n", error_ptr);
+    }
+
+    if (!cJSON_IsArray(json)) {
+        fprintf(stderr, "Root JSON object not an array\n");
+    }
+
+    cJSON *je, *jentries = json;
+
+    cJSON_ArrayForEach(je, jentries) {
+        cJSON *jmap_id, *jkey, *jvalue;
+
+        size_t map_id;
+        char *key, *value, *ktok, *vtok;
+        int ki = 0, vi = 0;
+
+        jmap_id = cJSON_GetObjectItemCaseSensitive(je, "map_id");
+
+        jkey = cJSON_GetObjectItemCaseSensitive(je, "key");
+        jvalue = cJSON_GetObjectItemCaseSensitive(je, "value");
+
+        map_id = (size_t) jmap_id->valueint;
+
+        value = jvalue->valuestring;
+        key = jkey->valuestring;
+
+        ktok = strtok(key, " ");
+        uint8_t out_key[128];
+
+        while (ktok) {
+            out_key[ki] = (uint8_t) strtol(ktok, NULL, 16);
+            ktok = strtok(NULL, " ");
+            ki++;
+        }
+
+        vtok = strtok(value, " ");
+        uint8_t out_value[128];
+
+        while (vtok) {
+            out_value[vi] = (uint8_t) strtol(vtok, NULL, 16);
+            vtok = strtok(NULL, " ");
+            vi++;
+        }
+
+        ubpf_hashmap_update(vm->ext_maps[map_id], out_key, out_value);
+    }
+}
+
+static int
 parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
 {
     /*
@@ -210,15 +282,17 @@ int main(int argc, char **argv)
         { .name = "register-offset", .val = 'r', .has_arg=1 },
         { .name = "maps", .val = 'M', .has_arg=1},
         { .name = "pcap", .val = 'p', .has_arg=1},
+        { .name = "entries-map", .val = 'e', .has_arg=1},
         { }
     };
 
     const char *mat_filename = NULL;
     const char *json_filename = NULL;
     const char *pcap_filename = NULL;
+    const char *map_entries_filename = NULL;
 
     int opt;
-    while ((opt = getopt_long(argc, argv, "hm:p:M:r:", longopts, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hm:p:M:r:e:", longopts, NULL)) != -1) {
         switch (opt) {
         case 'm':
             mat_filename = optarg;
@@ -231,6 +305,9 @@ int main(int argc, char **argv)
             break;
         case 'p':
             pcap_filename = optarg;
+            break;
+        case 'e':
+            map_entries_filename = optarg;
             break;
         case 'h':
             usage(argv[0]);
@@ -287,6 +364,13 @@ int main(int argc, char **argv)
         free(errmsg);
         ubpf_destroy(vm);
         return 1;
+    }
+
+    /*
+     * Parse the json of the map entries to load in the maps, if any
+     */
+    if (map_entries_filename) {
+        configure_map_entries(map_entries_filename, vm);
     }
 
     /*
@@ -364,12 +448,14 @@ int main(int argc, char **argv)
     if (pcap_filename) {
         pcap_t *p;
         char errbuf[PCAP_ERRBUF_SIZE];
-        const u_char *pkt_ptr;
+        const u_char *pkt_ptr_pcap;
+        u_char *pkt_buf, *pkt_data;
         struct pcap_pkthdr *hdr;
         FILE *out_pass, *out_drop, *out_map, *out_tx, *out_redirect;
         int npkts = 1;
         struct cache_queue *cache = NULL;
         struct cache_entry *map_entries = NULL;
+        struct xdp_md xdp_md = {0};
 
         p = pcap_open_offline(pcap_filename, errbuf);
 
@@ -391,19 +477,29 @@ int main(int argc, char **argv)
          */
         cache = create_cache(CACHE_SIZE);
 
+        // allocate packet memory with headroom and tailroom
+        pkt_buf = malloc(PKT_TOTAL_LEN);
+        // set pointer to packet data discarding headroom
+        pkt_data = &pkt_buf[PKT_HEADROOM];
+
         /*
          * Execute the program for each packet
          */
-        while (pcap_next_ex(p, &hdr, &pkt_ptr) > 0) {
+        while (pcap_next_ex(p, &hdr, &pkt_ptr_pcap) > 0) {
             struct pkt_field *extracted_fields;
             struct action_entry *act;
             u_char *key = NULL;
             size_t key_len = 0;
+            size_t new_pkt_len;
+
+            memcpy(pkt_data, pkt_ptr_pcap, hdr->len);
+            xdp_md.data = (uintptr_t) pkt_data;
+            xdp_md.data_end = (uintptr_t) (pkt_data + hdr->len);
 
             printf( "\n--------- Packet #%d\n\n", npkts);
 
             if (mat) {
-                extracted_fields = parse_pkt_header(pkt_ptr, mat);
+                extracted_fields = parse_pkt_header(pkt_data, mat);
 
                 act = lookup_entry(mat, extracted_fields);
 
@@ -412,22 +508,22 @@ int main(int argc, char **argv)
                         case XDP_ABORTED:
                         case XDP_DROP:
                             ret = XDP_DROP;
-                            write_pkt(pkt_ptr, hdr->len, out_drop);
+                            write_pkt(pkt_data, hdr->len, out_drop);
                             break;
                         case XDP_PASS:
                             ret = XDP_PASS;
-                            write_pkt(pkt_ptr, hdr->len, out_pass);
+                            write_pkt(pkt_data, hdr->len, out_pass);
                             break;
                         case XDP_TX:
                             ret = XDP_TX;
-                            write_pkt(pkt_ptr, hdr->len, out_tx);
+                            write_pkt(pkt_data, hdr->len, out_tx);
                             break;
                         case XDP_REDIRECT:
                             ret = XDP_REDIRECT;
-                            write_pkt(pkt_ptr, hdr->len, out_redirect);
+                            write_pkt(pkt_data, hdr->len, out_redirect);
                             break;
                         case MAP_ACCESS:
-                            key = generate_key(act, pkt_ptr, &key_len);
+                            key = generate_key(act, pkt_data, &key_len);
                             if (key) {
                                 enum cache_result res;
                                 struct cache_entry *entry;
@@ -467,14 +563,15 @@ int main(int argc, char **argv)
                                 map_id = (uint8_t) key[key_len - 1];
                                 printf("map id = %d\n", map_id);
 
-                                ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len, in_ctx, out_ctx, map_id);
-                                write_pkt(pkt_ptr, hdr->len, out_map);
+                                ret = ubpf_exec(vm, &xdp_md, in_ctx, out_ctx, map_id);
+                                new_pkt_len = xdp_md.data_end - xdp_md.data;
+                                write_pkt((u_char *)xdp_md.data, new_pkt_len, out_map);
                             }
                             break;
                     }
                 }
             } else {  // no MAT, standard processing
-                ret = ubpf_exec(vm, (void *) pkt_ptr, hdr->len, NULL, NULL, 0);
+                ret = ubpf_exec(vm, &xdp_md, NULL, NULL, 0);
             }
 
             printf("return 0x%"PRIx64"\n\n", ret);
@@ -486,6 +583,8 @@ int main(int argc, char **argv)
         fclose(out_tx);
         fclose(out_map);
         fclose(out_redirect);
+
+        free(pkt_buf);
     }
 
     ubpf_destroy(vm);

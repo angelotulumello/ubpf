@@ -6,7 +6,6 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
-#include <arpa/inet.h>
 #include "cJSON.h"
 
 #include "match_unit.h"
@@ -310,29 +309,20 @@ field_manipulation(enum alu_ops op, uint64_t imm,
     uint64_t out_value;
 
     switch (op) {
+        case ALU_OPS_BE:
         case ALU_OPS_LE:
             switch (fld_len_in_bytes) {
+                case 8:
+                    out_value = be64toh(value);
+                    break;
                 case 4:
-                    out_value = ntohl(value);
+                    out_value = be32toh(value);
                     break;
                 case 2:
-                    out_value = ntohs(value);
+                    out_value = be16toh(value);
                     break;
                 default:
                     fprintf(stderr, "Cannot perform le on this field length\n");
-                    return 0xdeafbeefcafebabe;
-            }
-            break;
-        case ALU_OPS_BE:
-            switch (fld_len_in_bytes) {
-                case 4:
-                    out_value = htonl(value);
-                    break;
-                case 2:
-                    out_value = htons(value);
-                    break;
-                default:
-                    fprintf(stderr, "Cannot perform be on this field length\n");
                     return 0xdeafbeefcafebabe;
             }
             break;
@@ -390,6 +380,19 @@ parse_pkt_header(const u_char *pkt, struct match_table *mat)
     return ext_flds;
 }
 
+void
+dump_fields(struct pkt_field *parsed_fields, uint8_t nb_fields)
+{
+    printf("Parsed fields:\n");
+    for (int i=0; i<nb_fields; i++) {
+        if (parsed_fields[i].value) {
+            printf("\t#%d: %lx\n", i, *(uint64_t *) parsed_fields[i].value);
+        } else {
+            printf("\t#%d: DONTCARE\n", i);
+        }
+    }
+}
+
 static inline bool
 match_field(struct pkt_field *parsed_field, struct pkt_field *entry_field, int size)
 {
@@ -419,8 +422,9 @@ lookup_entry(struct match_table *mat, struct pkt_field *parsed_fields)
             } else
                 break;
         }
-        if (found)
+        if (found) {
             return mat->entries[i].act;
+        }
     }
 
     return NULL;
