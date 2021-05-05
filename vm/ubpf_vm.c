@@ -23,6 +23,7 @@
 #include <inttypes.h>
 #include <sys/mman.h>
 #include "ubpf_int.h"
+#include "inc/sclog4c.h"
 
 #define MAX_EXT_FUNCS 64
 #define MAX_EXT_MAPS 64
@@ -184,7 +185,7 @@ static inline void
 dump_stack(uint64_t *stack)
 {
     for (int i=0; i < (STACK_SIZE+7)/8; i++) {
-        printf("%016lx ", stack[i]);
+        printf( "%016lx ", stack[i]);
         if (i%4 == 0) {
             printf("\n%04x:\t", i*8);
         }
@@ -234,7 +235,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
         const uint16_t cur_pc = pc;
         struct ebpf_inst inst = insts[pc++];
 
-        printf("PC: %d, inst=0x%x\n", pc, inst.opcode);
+        logm(SL4C_INFO, "PC: %d, inst=0x%x", pc, inst.opcode);
 
         switch (inst.opcode) {
         case EBPF_OP_ADD_IMM:
@@ -267,7 +268,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             break;
         case EBPF_OP_DIV_REG:
             if (reg[inst.src] == 0) {
-                fprintf(stderr, "uBPF error: division by zero at PC %u\n", cur_pc);
+                logm(SL4C_ERROR, "uBPF error: division by zero at PC %u\n", cur_pc);
                 return UINT64_MAX;
             }
             reg[inst.dst] = u32(reg[inst.dst]) / u32(reg[inst.src]);
@@ -315,7 +316,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             break;
         case EBPF_OP_MOD_REG:
             if (reg[inst.src] == 0) {
-                fprintf(stderr, "uBPF error: division by zero at PC %u\n", cur_pc);
+                logm(SL4C_ERROR, "uBPF error: division by zero at PC %u\n", cur_pc);
                 return UINT64_MAX;
             }
             reg[inst.dst] = u32(reg[inst.dst]) % u32(reg[inst.src]);
@@ -388,7 +389,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             break;
         case EBPF_OP_DIV64_REG:
             if (reg[inst.src] == 0) {
-                fprintf(stderr, "uBPF error: division by zero at PC %u\n", cur_pc);
+                logm(SL4C_ERROR, "uBPF error: division by zero at PC %u", cur_pc);
                 return UINT64_MAX;
             }
             reg[inst.dst] /= reg[inst.src];
@@ -425,7 +426,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             break;
         case EBPF_OP_MOD64_REG:
             if (reg[inst.src] == 0) {
-                fprintf(stderr, "uBPF error: division by zero at PC %u\n", cur_pc);
+                logm(SL4C_ERROR, "uBPF error: division by zero at PC %u", cur_pc);
                 return UINT64_MAX;
             }
             reg[inst.dst] %= reg[inst.src];
@@ -642,10 +643,10 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             }
             break;
         case EBPF_OP_EXIT:
-            printf("------- R0: %016lx | R1: %016lx | R2: %016lx\n", reg[0], reg[1], reg[2]);
-            printf("------- R3: %016lx | R4: %016lx | R5: %016lx\n", reg[3], reg[4], reg[5]);
-            printf("------- R6: %016lx | R7: %016lx | R8: %016lx\n", reg[6], reg[7], reg[8]);
-            printf("------- R9: %016lx | R10: %016lx\n\n", reg[9], reg[10]);
+            logm(SL4C_DEBUG, "------- R0: %016lx | R1: %016lx | R2: %016lx", reg[0], reg[1], reg[2]);
+            logm(SL4C_DEBUG, "------- R3: %016lx | R4: %016lx | R5: %016lx", reg[3], reg[4], reg[5]);
+            logm(SL4C_DEBUG, "------- R6: %016lx | R7: %016lx | R8: %016lx", reg[6], reg[7], reg[8]);
+            logm(SL4C_DEBUG, "------- R9: %016lx | R10: %016lx\n", reg[9], reg[10]);
 
             uint64_t reg0_tmp = reg[0];
 
@@ -658,18 +659,14 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
                 memcpy(out_ctx->stack, stack_tmp, stack_size);
             }
 
-            dump_stack(stack);
+            if (sclog4c_level <= SL4C_DEBUG)
+                dump_stack(stack);
 
             return reg0_tmp;
         case EBPF_OP_CALL:
-            if(inst.imm == 44)
-                printf("Pre 44 data: %p, data_end: %p\n", (void*)xdp->data, (void*)xdp->data_end);
             reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
 
-            if(inst.imm == 44)
-                printf("Post 44 data: %p, data_end: %p\n", (void*)xdp->data, (void*)xdp->data_end);
-
-            printf("Calling %d, reg[0]=%lx, map_ip=%d\n", inst.imm, reg[0], (int)reg[1] );
+            logm(SL4C_DEBUG, "Calling %d, reg[0]=%lx, map_ip=%d", inst.imm, reg[0], (int)reg[1] );
 
             if (out_ctx && inst.imm == MAP_LOOKUP &&
                     reg[1] == (uintptr_t)vm->ext_maps[map_id]) {
@@ -680,18 +677,18 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
                 out_ctx->old_reg = reg_tmp;
                 out_ctx->old_stack = stack_tmp;
 
-                printf("\nSaving state...\n\n");
+                logm(SL4C_DEBUG, "\nSaving state...\n");
             }
 
             if (reg[0])
-                printf("There's a match\n");
+                logm(SL4C_DEBUG, "There's a match");
             break;
         }
 
-        printf("------- R0: %016lx | R1: %016lx | R2: %016lx\n", reg[0], reg[1], reg[2]);
-        printf("------- R3: %016lx | R4: %016lx | R5: %016lx\n", reg[3], reg[4], reg[5]);
-        printf("------- R6: %016lx | R7: %016lx | R8: %016lx\n", reg[6], reg[7], reg[8]);
-        printf("------- R9: %016lx | R10: %016lx\n\n", reg[9], reg[10]);
+        logm(SL4C_DEBUG, "------- R0: %016lx | R1: %016lx | R2: %016lx", reg[0], reg[1], reg[2]);
+        logm(SL4C_DEBUG, "------- R3: %016lx | R4: %016lx | R5: %016lx", reg[3], reg[4], reg[5]);
+        logm(SL4C_DEBUG, "------- R6: %016lx | R7: %016lx | R8: %016lx", reg[6], reg[7], reg[8]);
+        logm(SL4C_DEBUG, "------- R9: %016lx | R10: %016lx\n", reg[9], reg[10]);
     }
 }
 
@@ -884,8 +881,8 @@ bounds_check(const struct ubpf_vm *vm, void *addr, int size, const char *type, u
         /* Stack access */
         return true;
     } else {
-        fprintf(stderr, "uBPF error: out of bounds memory %s at PC %u, addr %p, size %d\n", type, cur_pc, addr, size);
-        fprintf(stderr, "mem %p/%zd stack %p/%d\n", mem, mem_len, stack, STACK_SIZE);
+        logm(SL4C_ERROR, "uBPF error: out of bounds memory %s at PC %u, addr %p, size %d\n", type, cur_pc, addr, size);
+        logm(SL4C_ERROR, "mem %p/%zd stack %p/%d\n", mem, mem_len, stack, STACK_SIZE);
         return false;
     }
 }

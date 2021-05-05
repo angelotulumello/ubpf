@@ -34,6 +34,7 @@
 #include "match_unit.h"
 #include "flow_cache.h"
 #include "helper_functions.h"
+#include "inc/sclog4c.h"
 
 
 #define PKT_TOTAL_LEN 1642  // headroom (64) + 1514 + tailroom (64)
@@ -85,16 +86,16 @@ pcaprec_hdr_t pcaprec_hdr = {0};
 
 static void usage(const char *name)
 {
-    fprintf(stderr, "usage: %s [-h] [-j|--jit] [-M|--maps MAP_FILE] [-p|--pcap PATH]"
+    logm(SL4C_ERROR, "usage: %s [-h] [-j|--jit] [-M|--maps MAP_FILE] [-p|--pcap PATH]"
                     " [-m|--mat MAT_FILE] BINARY\n", name);
-    fprintf(stderr, "\nExecutes the eBPF code in BINARY and prints the result to stdout.\n");
-    fprintf(stderr, "If --mem is given then the specified file will be read and a pointer\nto its data passed in r1.\n");
-    fprintf(stderr, "\nIf --pcap is given then the specified trace will be read and the ubpf \nprogram is "
+    logm(SL4C_ERROR, "\nExecutes the eBPF code in BINARY and prints the result to stdout.\n");
+    logm(SL4C_ERROR, "If --mem is given then the specified file will be read and a pointer\nto its data passed in r1.\n");
+    logm(SL4C_ERROR, "\nIf --pcap is given then the specified trace will be read and the ubpf \nprogram is "
                     "executed for each packet in the trace\n");
-    fprintf(stderr, "\nIf --maps is given then the specified file will be read and the encoded\nmaps will "
+    logm(SL4C_ERROR, "\nIf --maps is given then the specified file will be read and the encoded\nmaps will "
                     "be created in the ubpf VM\n");
-    fprintf(stderr, "\nOther options:\n");
-    fprintf(stderr, "  -r, --register-offset NUM: Change the mapping from eBPF to x86 registers\n");
+    logm(SL4C_ERROR, "\nOther options:\n");
+    logm(SL4C_ERROR, "  -r, --register-offset NUM: Change the mapping from eBPF to x86 registers\n");
 }
 
 static void
@@ -118,11 +119,11 @@ configure_map_entries(const char *filename, struct ubpf_vm *vm) {
     if (json == NULL) {
         const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL)
-            fprintf(stderr, "Error before: %s\n", error_ptr);
+            logm(SL4C_ERROR, "Error before: %s\n", error_ptr);
     }
 
     if (!cJSON_IsArray(json)) {
-        fprintf(stderr, "Root JSON object not an array\n");
+        logm(SL4C_ERROR, "Root JSON object not an array\n");
     }
 
     cJSON *je, *jentries = json;
@@ -191,12 +192,12 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
     if (json == NULL) {
         const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL)
-            fprintf(stderr, "Error before: %s\n", error_ptr);
+            logm(SL4C_ERROR, "Error before: %s\n", error_ptr);
         return -1;
     }
 
     if (!cJSON_IsArray(json)) {
-        fprintf(stderr, "Root JSON object not an array\n");
+        logm(SL4C_ERROR, "Root JSON object not an array\n");
         return -1;
     }
 
@@ -266,7 +267,7 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
                     (uint32_t) ((uint64_t) map >> 32);
         }
 
-        printf("map: %lx\n", (uint64_t) map);
+        logm(SL4C_DEBUG, "map: %lx\n", (uint64_t) map);
     }
 
     free(json_str);
@@ -283,6 +284,7 @@ int main(int argc, char **argv)
         { .name = "maps", .val = 'M', .has_arg=1},
         { .name = "pcap", .val = 'p', .has_arg=1},
         { .name = "entries-map", .val = 'e', .has_arg=1},
+        { .name = "log-level", .val = 'l', .has_arg=1},
         { }
     };
 
@@ -290,9 +292,10 @@ int main(int argc, char **argv)
     const char *json_filename = NULL;
     const char *pcap_filename = NULL;
     const char *map_entries_filename = NULL;
+    int log_level = 0;
 
     int opt;
-    while ((opt = getopt_long(argc, argv, "hm:p:M:r:e:", longopts, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hm:p:M:r:e:l:", longopts, NULL)) != -1) {
         switch (opt) {
         case 'm':
             mat_filename = optarg;
@@ -309,6 +312,9 @@ int main(int argc, char **argv)
         case 'e':
             map_entries_filename = optarg;
             break;
+        case 'l':
+            log_level = atoi(optarg);
+            break;
         case 'h':
             usage(argv[0]);
             return 0;
@@ -323,6 +329,20 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    switch (log_level) {
+        case 1:
+            sclog4c_level = SL4C_INFO;
+            break;
+        case 2:
+            sclog4c_level = SL4C_DEBUG;
+            break;
+        case 3:
+            sclog4c_level = SL4C_ALL;
+            break;
+        default:
+            sclog4c_level = SL4C_ERROR;
+    }
+
     const char *code_filename = argv[optind];
     size_t code_len;
     void *code = readfile(code_filename, 1024*1024, &code_len);
@@ -334,7 +354,7 @@ int main(int argc, char **argv)
 
     struct ubpf_vm *vm = ubpf_create();
     if (!vm) {
-        fprintf(stderr, "Failed to create VM\n");
+        logm(SL4C_ERROR, "Failed to create VM");
         return 1;
     }
 
@@ -344,7 +364,7 @@ int main(int argc, char **argv)
 
     ret = parse_prog_maps(json_filename, vm, code);
     if (ret != 0) {
-        fprintf(stderr,"Error in parsing maps and bpf code\n");
+        logm(SL4C_ERROR,"Error in parsing maps and bpf code");
         ubpf_destroy(vm);
         return ret;
     }
@@ -360,7 +380,7 @@ int main(int argc, char **argv)
     free(code);
 
     if (rv < 0) {
-        fprintf(stderr, "Failed to load code: %s\n", errmsg);
+        logm(SL4C_ERROR, "Failed to load code: %s\n", errmsg);
         free(errmsg);
         ubpf_destroy(vm);
         return 1;
@@ -396,51 +416,13 @@ int main(int argc, char **argv)
         mat = malloc(sizeof(struct match_table));
 
         if (parse_mat_json(mat_string, mat_size, mat) < 0){
-            fprintf(stderr, "error in parsing MAT\n");
+            logm(SL4C_ERROR, "error in parsing MAT");
             free(mat);
             free(mat_string);
             return -1;
         }
         free(mat_string);
     }
-
-    printf("map 0 key_size %d\n", vm->ext_maps[0]->key_size);
-    printf("map 1 key_size %d\n", vm->ext_maps[1]->key_size);
-
-
-    /*
-     * Create an entry in the hashmap
-     */
-    void *tmp_key, *value;
-
-    tmp_key = malloc(16);
-    *(uint64_t *)tmp_key = 0x44332211ddccbbaa;
-    *(uint32_t *)(tmp_key + 8) = 0xddccbbaa;
-    *(uint32_t *)(tmp_key + 12) = 0x11;
-
-    value=malloc(4);
-    *(uint32_t *)value = 3;
-
-    ubpf_hashmap_update(vm->ext_maps[1], tmp_key, value);
-
-    // ip.dst | ip.src | udp.sport | udp.dport | ip.proto
-    *(uint64_t *)tmp_key = 0x44332211ddccbbaa;
-    *(uint32_t *)(tmp_key + 8) = 0xddccbbaa;
-    *(uint32_t *)(tmp_key + 12) = 0x06;
-
-    *(uint32_t *)value = 2;
-
-    ubpf_hashmap_update(vm->ext_maps[1], tmp_key, value);
-
-    u_char data[128];
-    unsigned  int c = 0;
-    c = ubpf_hashmap_dump(vm->ext_maps[1], data);
-    (void )c;
-
-    printf("Count: %d\n", c);
-
-    free(tmp_key);
-    free(value);
 
     /*
      * Pcap trace parsing and main processing loop
@@ -460,7 +442,7 @@ int main(int argc, char **argv)
         p = pcap_open_offline(pcap_filename, errbuf);
 
         if (p == NULL) {
-            fprintf(stderr, "pcap_open_offline failed: %s\n", errbuf);
+            logm(SL4C_ERROR, "pcap_open_offline failed: %s", errbuf);
             return -1;
         }
 
@@ -496,7 +478,7 @@ int main(int argc, char **argv)
             xdp_md.data = (uintptr_t) pkt_data;
             xdp_md.data_end = (uintptr_t) (pkt_data + hdr->len);
 
-            printf( "\n--------- Packet #%d\n\n", npkts);
+            logm(SL4C_INFO, "\n--------- Packet #%d\n", npkts);
 
             if (mat) {
                 extracted_fields = parse_pkt_header(pkt_data, mat);
@@ -534,24 +516,24 @@ int main(int argc, char **argv)
 
                                 switch (res) {
                                     case NOT_IN_HASH:
-                                        printf("NOT_IN_HASH\n");
+                                        logm(SL4C_DEBUG, "NOT_IN_HASH");
                                         in_ctx = NULL;
                                         out_ctx = entry->ctx;
                                         break;
                                     case NOT_IN_CACHE:
-                                        printf("NOT_IN_CACHE\n");
+                                        logm(SL4C_DEBUG, "NOT_IN_CACHE");
 
                                         in_ctx = entry->ctx;
                                         out_ctx = NULL;
                                         break;
                                     case NOT_IN_CACHE_FRONT:
-                                        printf("NOT_IN_CACHE_FRONT\n");
+                                        logm(SL4C_DEBUG, "NOT_IN_CACHE_FRONT");
 
                                         in_ctx = entry->ctx;
                                         out_ctx = NULL;
                                         break;
                                     case IN_CACHE_FRONT:
-                                        printf("IN_CACHE_FRONT\n");
+                                        logm(SL4C_DEBUG, "IN_CACHE_FRONT");
 
                                         in_ctx = entry->ctx;
                                         out_ctx = NULL;
@@ -561,7 +543,7 @@ int main(int argc, char **argv)
                                 }
 
                                 map_id = (uint8_t) key[key_len - 1];
-                                printf("map id = %d\n", map_id);
+                                logm(SL4C_DEBUG, "map id = %d", map_id);
 
                                 ret = ubpf_exec(vm, &xdp_md, in_ctx, out_ctx, map_id);
                                 new_pkt_len = xdp_md.data_end - xdp_md.data;
@@ -569,12 +551,14 @@ int main(int argc, char **argv)
                             }
                             break;
                     }
+                } else { //No ACT
+                    logm(SL4C_WARNING, "Match not found in lookup entry");
                 }
             } else {  // no MAT, standard processing
                 ret = ubpf_exec(vm, &xdp_md, NULL, NULL, 0);
             }
 
-            printf("return 0x%"PRIx64"\n\n", ret);
+            logm(SL4C_INFO, "return 0x%"PRIx64"\n", ret);
             npkts++;
         }
 
@@ -599,7 +583,7 @@ init_output_pcap (FILE **fp, const char *filename) {
     fwrite(&pcap_global_hdr, 1, sizeof(pcap_hdr_t), *fp);
 
     if(!*fp) {
-        printf("Error cannot open %s\n", filename);
+        logm(SL4C_ERROR, "Error cannot open %s", filename);
         exit(-1);
     }
 }
@@ -625,7 +609,7 @@ static void *readfile(const char *path, size_t maxlen, size_t *len)
     }
 
     if (file == NULL) {
-        fprintf(stderr, "Failed to open %s: %s\n", path, strerror(errno));
+        logm(SL4C_ERROR, "Failed to open %s: %s", path, strerror(errno));
         return NULL;
     }
 
@@ -637,14 +621,14 @@ static void *readfile(const char *path, size_t maxlen, size_t *len)
     }
 
     if (ferror(file)) {
-        fprintf(stderr, "Failed to read %s: %s\n", path, strerror(errno));
+        logm(SL4C_ERROR, "Failed to read %s: %s", path, strerror(errno));
         fclose(file);
         free(data);
         return NULL;
     }
 
     if (!feof(file)) {
-        fprintf(stderr, "Failed to read %s because it is too large (max %u bytes)\n",
+        logm(SL4C_ERROR, "Failed to read %s because it is too large (max %u bytes)",
                 path, (unsigned)maxlen);
         fclose(file);
         free(data);

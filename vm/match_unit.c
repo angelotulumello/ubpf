@@ -9,6 +9,7 @@
 #include "cJSON.h"
 
 #include "match_unit.h"
+#include "inc/sclog4c.h"
 
 int
 parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
@@ -22,12 +23,12 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
     if (json == NULL) {
         const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL)
-            fprintf(stderr, "Error before: %s\n", error_ptr);
+            logm(SL4C_ERROR, "Error before: %s\n", error_ptr);
         return -1;
     }
 
     if (!cJSON_IsArray(json)) {
-        fprintf(stderr, "Root JSON object not an array\n");
+        logm(SL4C_ERROR, "Root JSON object not an array\n");
         return -1;
     }
 
@@ -106,7 +107,7 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
                             pkt_field_defs[i].op[nb_ops] = ALU_OPS_RSH;
                             pkt_field_defs[i].imm[nb_ops] = fld_immediate->valueint;
                         } else {
-                            fprintf(stderr, "ALU operation not supported\n");
+                            logm(SL4C_ERROR, "ALU operation not supported\n");
                             return -1;
                         }
                         nb_ops++;
@@ -122,7 +123,7 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
                 pkt_field_defs[i].len = jlen->valueint;
 
             } else {  // No operand 0
-                fprintf(stderr, "No operand 0\n");
+                logm(SL4C_ERROR, "No operand 0\n");
                 return -1;
             }
 
@@ -147,7 +148,7 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
                     fld->value = malloc(round_up_to_8(pkt_field_defs[i].len)/8);
                     memcpy(fld->value, &val->valueint, round_up_to_8(pkt_field_defs[i].len)/8);
                 } else {
-                    fprintf(stderr, "Operand 1 type not supported\n");
+                    logm(SL4C_ERROR, "Operand 1 type not supported\n");
                     return -1;
                 }
             }
@@ -183,7 +184,7 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
             } else if (strcmp(xdp_act->valuestring, "xdp_aborted") == 0) {
                 act->op = XDP_ABORTED;
             } else {
-                fprintf(stderr, "XDP Action not recognized\n");
+                logm(SL4C_ERROR, "XDP Action not recognized\n");
                 return -1;
             }
         } else if (strcmp(act_type->valuestring, "MapAccess") == 0) {
@@ -260,7 +261,7 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
                                 key_field->pkt_fld.op[nb_ops] = ALU_OPS_RSH;
                                 key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
                             } else {
-                                fprintf(stderr, "ALU operation not supported\n");
+                                logm(SL4C_ERROR, "ALU operation not supported\n");
                                 return -1;
                             }
                             nb_ops++;
@@ -279,13 +280,13 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
                     key_field->imm = val->valueint;
                     key_field->has_imm = true;
                 } else {
-                    fprintf(stderr, "Action value type not supported\n");
+                    logm(SL4C_ERROR, "Action value type not supported\n");
                     return -1;
                 }
                 j++;
             }
         } else {
-            fprintf(stderr, "Action type not supported\n");
+            logm(SL4C_ERROR, "Action type not supported\n");
             return -1;
         }
 
@@ -322,7 +323,7 @@ field_manipulation(enum alu_ops op, uint64_t imm,
                     out_value = be16toh(value);
                     break;
                 default:
-                    fprintf(stderr, "Cannot perform le on this field length\n");
+                    logm(SL4C_ERROR, "Cannot perform le on this field length\n");
                     return 0xdeafbeefcafebabe;
             }
             break;
@@ -342,7 +343,7 @@ field_manipulation(enum alu_ops op, uint64_t imm,
             out_value = value;
             break;
         default:
-            fprintf(stderr, "Unrecognized operation on pkt field\n");
+            logm(SL4C_ERROR, "Unrecognized operation on pkt field\n");
             break;
     }
     return out_value;
@@ -383,12 +384,12 @@ parse_pkt_header(const u_char *pkt, struct match_table *mat)
 void
 dump_fields(struct pkt_field *parsed_fields, uint8_t nb_fields)
 {
-    printf("Parsed fields:\n");
+    logm(SL4C_DEBUG, "Parsed fields:\n");
     for (int i=0; i<nb_fields; i++) {
         if (parsed_fields[i].value) {
-            printf("\t#%d: %lx\n", i, *(uint64_t *) parsed_fields[i].value);
+            logm(SL4C_DEBUG, "\t#%d: %lx\n", i, *(uint64_t *) parsed_fields[i].value);
         } else {
-            printf("\t#%d: DONTCARE\n", i);
+            logm(SL4C_DEBUG, "\t#%d: DONTCARE\n", i);
         }
     }
 }
