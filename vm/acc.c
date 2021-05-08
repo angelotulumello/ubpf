@@ -556,6 +556,8 @@ int main(int argc, char **argv)
                 }
             } else {  // no MAT, standard processing
                 ret = ubpf_exec(vm, &xdp_md, NULL, NULL, 0);
+                new_pkt_len = xdp_md.data_end - xdp_md.data;
+                write_pkt((u_char *)xdp_md.data, new_pkt_len, out_map);
             }
 
             logm(SL4C_INFO, "return 0x%"PRIx64"\n", ret);

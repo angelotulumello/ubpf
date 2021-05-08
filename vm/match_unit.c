@@ -439,8 +439,6 @@ generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len)
     *key_len = act->key_len + 1;
     key = malloc(act->key_len + 1);
 
-    memset(&key[act->key_len], act->map_id, 1);
-
     for (int i = 0; i < act->nb_key_fields; i++) {
         size_t start, end, offset, fld_len_in_bytes, nb_ops;
         enum alu_ops op;
@@ -469,6 +467,8 @@ generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len)
 
         memcpy(&key[start], &value, end - start);
     }
+
+    memset(&key[act->key_len], act->map_id, 1);
 
     return key;
 }

@@ -5,34 +5,68 @@
 #include <stdbool.h>
 #include "flow_cache.h"
 #include "ubpf_int.h"
+#include "inc/sclog4c.h"
+
+static inline void
+dump_hashtable(struct cache_entry *flows) {
+    struct cache_entry *element, *tmp;
+    logm(SL4C_DEBUG, "Dumping hashtable");
+    if (sclog4c_level <= SL4C_DEBUG) {
+        HASH_ITER(hh, flows, element, tmp) {
+            for (int i=0; i<element->key_len; i++) {
+                fprintf(stderr,"%02x", element->key[i]);
+            }
+            fprintf(stderr, "\n");
+        }
+    }
+}
 
 static inline struct cache_entry *
 add_cache_entry_to_hash(struct cache_entry** flows,
-                    u_char *key, size_t key_len)
+                    u_char *in_key, size_t key_len)
 {
     struct cache_entry *cache_entry = malloc(sizeof(struct cache_entry));
-
+    cache_entry->ctx = malloc(sizeof(struct map_context));
     cache_entry->key = malloc(sizeof(key_len));
+
     cache_entry->key_len = key_len;
 
-    memcpy(cache_entry->key, key, key_len);
-
-    cache_entry->ctx = malloc(sizeof(struct map_context));
+    memcpy(cache_entry->key, in_key, key_len);
 
     cache_entry->prev = NULL;
     cache_entry->next = NULL;
 
-    HASH_ADD_KEYPTR(hh, *flows, cache_entry->key, cache_entry->key_len, cache_entry);
+    if (sclog4c_level <= SL4C_DEBUG) {
+        logm(SL4C_DEBUG, "Adding a new key to the hash, key len is %lu\n", key_len);
+
+        for (int i=0; i<cache_entry->key_len; i++) {
+            fprintf(stderr,"%02x", cache_entry->key[i]);
+        }
+        fprintf(stderr, "\n\n");
+    }
+
+    HASH_ADD_KEYPTR(hh, *flows, in_key, key_len, cache_entry);
+
+    dump_hashtable(*flows);
 
     return cache_entry;
 }
 
 static inline struct cache_entry *
-find_cache_entry_in_hash(struct cache_entry *flows, u_char *key, size_t key_len)
+find_cache_entry_in_hash(struct cache_entry *flows, u_char *in_key, size_t key_len)
 {
     struct cache_entry *found = NULL;
 
-    HASH_FIND(hh, flows, key, key_len, found);
+    if (sclog4c_level <= SL4C_DEBUG) {
+        logm(SL4C_DEBUG, "FINDING cache entry in the hash\n------->");
+
+        for (int i=0; i<key_len; i++) {
+            fprintf(stderr,"%02x", in_key[i]);
+        }
+        fprintf(stderr, "\n\n");
+    }
+
+    HASH_FIND(hh, flows, in_key, key_len, found);
 
     if (found)
         return found;
