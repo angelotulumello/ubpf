@@ -433,7 +433,7 @@ int main(int argc, char **argv)
         const u_char *pkt_ptr_pcap;
         u_char *pkt_buf, *pkt_data;
         struct pcap_pkthdr *hdr;
-        FILE *out_pass, *out_drop, *out_map, *out_tx, *out_redirect;
+        FILE *out_pass, *out_drop, *out_tx, *out_redirect;
         int npkts = 1;
         struct cache_queue *cache = NULL;
         struct cache_entry *map_entries = NULL;
@@ -446,11 +446,10 @@ int main(int argc, char **argv)
             return -1;
         }
 
-        out_pass = out_drop = out_map = out_tx = out_redirect = NULL;
+        out_pass = out_drop = out_tx = out_redirect = NULL;
         // Init the output pcap with the pcap header
         init_output_pcap(&out_pass, "pass.pcap");
         init_output_pcap(&out_drop, "drop.pcap");
-        init_output_pcap(&out_map, "map_access.pcap");
         init_output_pcap(&out_tx, "tx.pcap");
         init_output_pcap(&out_redirect, "redirect.pcap");
 
@@ -486,78 +485,82 @@ int main(int argc, char **argv)
                 act = lookup_entry(mat, extracted_fields);
 
                 if (act) {
-                    switch (act->op) {
-                        case XDP_ABORTED:
-                        case XDP_DROP:
-                            ret = XDP_DROP;
-                            write_pkt(pkt_data, hdr->len, out_drop);
-                            break;
-                        case XDP_PASS:
-                            ret = XDP_PASS;
-                            write_pkt(pkt_data, hdr->len, out_pass);
-                            break;
-                        case XDP_TX:
-                            ret = XDP_TX;
-                            write_pkt(pkt_data, hdr->len, out_tx);
-                            break;
-                        case XDP_REDIRECT:
-                            ret = XDP_REDIRECT;
-                            write_pkt(pkt_data, hdr->len, out_redirect);
-                            break;
-                        case MAP_ACCESS:
-                            key = generate_key(act, pkt_data, &key_len);
-                            if (key) {
-                                enum cache_result res;
-                                struct cache_entry *entry;
-                                struct map_context *in_ctx, *out_ctx;
-                                uint16_t map_id;
+                    if (act->op == MAP_ACCESS) {
+                        key = generate_key(act, pkt_data, &key_len);
+                        if (key) {
+                            enum cache_result res;
+                            struct cache_entry *entry;
+                            struct map_context *in_ctx, *out_ctx;
+                            uint16_t map_id;
 
-                                res = reference_cache(cache, &map_entries, key, key_len, &entry);
+                            res = reference_cache(cache, &map_entries, key, key_len, &entry);
 
-                                switch (res) {
-                                    case NOT_IN_HASH:
-                                        logm(SL4C_DEBUG, "NOT_IN_HASH");
-                                        in_ctx = NULL;
-                                        out_ctx = entry->ctx;
-                                        break;
-                                    case NOT_IN_CACHE:
-                                        logm(SL4C_DEBUG, "NOT_IN_CACHE");
+                            switch (res) {
+                                case NOT_IN_HASH:
+                                    logm(SL4C_DEBUG, "NOT_IN_HASH");
+                                    in_ctx = NULL;
+                                    out_ctx = entry->ctx;
+                                    break;
+                                case NOT_IN_CACHE:
+                                    logm(SL4C_DEBUG, "NOT_IN_CACHE");
 
-                                        in_ctx = entry->ctx;
-                                        out_ctx = NULL;
-                                        break;
-                                    case NOT_IN_CACHE_FRONT:
-                                        logm(SL4C_DEBUG, "NOT_IN_CACHE_FRONT");
+                                    in_ctx = entry->ctx;
+                                    out_ctx = NULL;
+                                    break;
+                                case NOT_IN_CACHE_FRONT:
+                                    logm(SL4C_DEBUG, "NOT_IN_CACHE_FRONT");
 
-                                        in_ctx = entry->ctx;
-                                        out_ctx = NULL;
-                                        break;
-                                    case IN_CACHE_FRONT:
-                                        logm(SL4C_DEBUG, "IN_CACHE_FRONT");
+                                    in_ctx = entry->ctx;
+                                    out_ctx = NULL;
+                                    break;
+                                case IN_CACHE_FRONT:
+                                    logm(SL4C_DEBUG, "IN_CACHE_FRONT");
 
-                                        in_ctx = entry->ctx;
-                                        out_ctx = NULL;
-                                        break;
-                                    default:
-                                        break;
-                                }
-
-                                map_id = (uint8_t) key[key_len - 1];
-                                logm(SL4C_DEBUG, "map id = %d", map_id);
-
-                                ret = ubpf_exec(vm, &xdp_md, in_ctx, out_ctx, map_id);
-                                new_pkt_len = xdp_md.data_end - xdp_md.data;
-                                write_pkt((u_char *)xdp_md.data, new_pkt_len, out_map);
+                                    in_ctx = entry->ctx;
+                                    out_ctx = NULL;
+                                    break;
+                                default:
+                                    break;
                             }
-                            break;
+
+                            map_id = (uint8_t) key[key_len - 1];
+                            logm(SL4C_DEBUG, "map id = %d", map_id);
+
+                            ret = ubpf_exec(vm, &xdp_md, in_ctx, out_ctx, map_id);
+                        }
+                    } else {
+                        ret = act->op;
                     }
                 } else { //No ACT
                     logm(SL4C_WARNING, "Match not found in lookup entry");
                 }
             } else {  // no MAT, standard processing
                 ret = ubpf_exec(vm, &xdp_md, NULL, NULL, 0);
-                new_pkt_len = xdp_md.data_end - xdp_md.data;
-                write_pkt((u_char *)xdp_md.data, new_pkt_len, out_map);
+            }
+
+            // Update the packet length, that could have been modified in the program
+            new_pkt_len = xdp_md.data_end - xdp_md.data;
+
+            switch (ret) {
+                case XDP_ABORTED:
+                case XDP_DROP:
+                    write_pkt(pkt_data, new_pkt_len, out_drop);
+                    break;
+                case XDP_PASS:
+                    write_pkt(pkt_data, new_pkt_len, out_pass);
+                    break;
+                case XDP_TX:
+                    write_pkt(pkt_data, new_pkt_len, out_tx);
+                    break;
+                case XDP_REDIRECT:
+                    write_pkt(pkt_data, new_pkt_len, out_redirect);
+                    break;
+                case MAP_ACCESS:
+                    logm(SL4C_ERROR, "Map access here is illegal");
+                    break;
+                default:
+                    logm(SL4C_ERROR, "XDP return code unknown");
+                    break;
             }
 
             logm(SL4C_INFO, "return 0x%"PRIx64"\n", ret);
@@ -567,7 +570,6 @@ int main(int argc, char **argv)
         fclose(out_pass);
         fclose(out_drop);
         fclose(out_tx);
-        fclose(out_map);
         fclose(out_redirect);
 
         free(pkt_buf);

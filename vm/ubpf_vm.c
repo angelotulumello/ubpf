@@ -185,13 +185,13 @@ static inline void
 dump_stack(uint64_t *stack)
 {
     for (int i=0; i < (STACK_SIZE+7)/8; i++) {
-        printf( "%016lx ", stack[i]);
+        fprintf(stderr, "%016lx ", stack[i]);
         if (i%4 == 0) {
-            printf("\n%04x:\t", i*8);
+            fprintf(stderr, "\n%04x:\t", i*8);
         }
     }
 
-    printf("\n");
+    fprintf(stderr, "\n");
 }
 
 uint64_t
