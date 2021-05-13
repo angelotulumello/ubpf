@@ -253,6 +253,11 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
                 map->data = ubpf_lpm_create(map);
                 sym_name = "lpmmap";
                 break;
+            case UBPF_MAP_TYPE_ARRAY_OF_MAPS:
+                map->ops = ubpf_array_ops;
+                if (map->value_size < 8)
+                    map->value_size = 8;
+                map->data = ubpf_array_create(map);
             default:
                 ubpf_error("unrecognized map type: %d", map->type);
                 free(map);

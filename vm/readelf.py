@@ -139,7 +139,7 @@ for ins in prog_bin:
 file.close()
 
 json_file = open(sys.argv[2]+"_maps.json", "w")
-json_file.write(json.dumps(maps))
+json_file.write(json.dumps(maps, indent=4))
 json_file.close()
 
 print("Saved program in "+sys.argv[2]+".bin and map definitions in "+sys.argv[2]+"_maps.json")

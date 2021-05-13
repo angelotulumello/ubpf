@@ -204,6 +204,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
     uint64_t *reg, *reg_tmp;
     uint64_t *stack, *stack_tmp;
     size_t stack_size;
+    unsigned int insts_count = 0;
 
     if (!insts) {
         /* Code must be loaded before we can execute */
@@ -235,7 +236,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
         const uint16_t cur_pc = pc;
         struct ebpf_inst inst = insts[pc++];
 
-        logm(SL4C_INFO, "PC: %d, inst=0x%x", pc, inst.opcode);
+        logm(SL4C_INFO, "opcode=0x%02X, PC: %d", inst.opcode, pc-1);
 
         switch (inst.opcode) {
         case EBPF_OP_ADD_IMM:
@@ -662,11 +663,35 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             if (sclog4c_level <= SL4C_DEBUG)
                 dump_stack(stack);
 
+            insts_count++;
+            logm(SL4C_INFO, "######## Instructions count: %u", insts_count);
+
             return reg0_tmp;
         case EBPF_OP_CALL:
             reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
 
-            logm(SL4C_DEBUG, "Calling %d, reg[0]=%lx, map_ip=%d", inst.imm, reg[0], (int)reg[1] );
+            logm(SL4C_DEBUG, "Calling %d, reg[0]=%lx, map_ip=%d", inst.imm, reg[0], (int)reg[1]);
+
+            if (inst.imm == MAP_LOOKUP) {
+                struct ubpf_map *map;
+                size_t key_size;
+
+                for (int m=0; m<vm->nb_maps; m++) {
+                    if ((uintptr_t)vm->ext_maps[m] == reg[1]) {
+                        map = vm->ext_maps[m];
+                        break;
+                    }
+                }
+                if (map) {
+                    key_size = map->key_size;
+
+                    logm(SL4C_INFO, "Dumping map key");
+                    if (reg[0]) {
+                        for (int ki=0; ki<key_size; ki++)
+                            logm(SL4C_INFO, "key[%d]: 0x%02x", ki, *(uint8_t*)(reg[0] + ki));
+                    }
+                }
+            }
 
             if (out_ctx && inst.imm == MAP_LOOKUP &&
                     reg[1] == (uintptr_t)vm->ext_maps[map_id]) {
@@ -689,6 +714,8 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
         logm(SL4C_DEBUG, "------- R3: %016lx | R4: %016lx | R5: %016lx", reg[3], reg[4], reg[5]);
         logm(SL4C_DEBUG, "------- R6: %016lx | R7: %016lx | R8: %016lx", reg[6], reg[7], reg[8]);
         logm(SL4C_DEBUG, "------- R9: %016lx | R10: %016lx\n", reg[9], reg[10]);
+
+        insts_count++;
     }
 }
 
