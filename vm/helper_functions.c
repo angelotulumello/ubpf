@@ -423,6 +423,30 @@ ubpf_xdp_adjust_tail(void *xdp, uint64_t size) {
     }
 }
 
+struct ubpf_func_proto ubpf_redirect_map_proto = {
+        .func = (ext_func)ubpf_redirect_map,
+        .arg_types = {
+                0xff,
+                0xff,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .arg_sizes = {
+                0xff,
+                0xff,
+                0xff,
+                0xff,
+                0xff,
+        },
+        .ret = UNKNOWN,
+};
+
+uint64_t
+ubpf_redirect_map() {
+    return 3;
+}
+
 void
 register_functions(struct ubpf_vm *vm)
 {
@@ -436,4 +460,6 @@ register_functions(struct ubpf_vm *vm)
     ubpf_register_function(vm, CSUM_DIFF, "ubpf_csum_diff", ubpf_csum_diff_proto);
     ubpf_register_function(vm, XDP_ADJUST_HEAD, "ubpf_adjust_head", ubpf_xdp_adjust_head_proto);
     ubpf_register_function(vm, XDP_ADJUST_TAIL, "ubpf_adjust_tail", ubpf_xdp_adjust_tail_proto);
+    ubpf_register_function(vm, REDIRECT_MAP, "ubpf_redirect_map", ubpf_redirect_map_proto);
+
 }

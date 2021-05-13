@@ -41,9 +41,11 @@ ubpf_array.o: ubpf_array.c
 
 ubpf_hashmap.o: ubpf_hashmap.c ubpf_hashmap.h
 
+ubpf_lpm.o: ubpf_lpm.c ubpf_lpm.h
+
 helper_functions.o: helper_functions.c helper_functions.h
 
-libubpf.a: ubpf_vm.o ubpf_jit_x86_64.o sclog4c.o lookup3.o ubpf_array.o helper_functions.o ubpf_hashmap.o
+libubpf.a: ubpf_vm.o ubpf_jit_x86_64.o sclog4c.o lookup3.o ubpf_array.o helper_functions.o ubpf_hashmap.o ubpf_lpm.o
 	ar rc $@ $^
 
 cJSON.o: cJSON.c

@@ -73,10 +73,13 @@ struct ubpf_func_proto {
 };
 
 enum ubpf_map_type {
+  UBPF_MAP_TYPE_UNSPEC = 0,
   UBPF_MAP_TYPE_HASHMAP = 1,
   UBPF_MAP_TYPE_ARRAY = 2,
   UBPF_MAP_TYPE_PER_CPU_HASHMAP = 5,
   UBPF_MAP_TYPE_PER_CPU_ARRAY = 6,
+  UBPF_MAP_TYPE_LPM_TRIE = 11,
+  UBPF_MAP_TYPE_DEVMAP = 14,
 };
 
 struct ubpf_map_def {

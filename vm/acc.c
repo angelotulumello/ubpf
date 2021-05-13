@@ -35,6 +35,7 @@
 #include "flow_cache.h"
 #include "helper_functions.h"
 #include "inc/sclog4c.h"
+#include "ubpf_lpm.h"
 
 
 #define PKT_TOTAL_LEN 1642  // headroom (64) + 1514 + tailroom (64)
@@ -163,7 +164,7 @@ configure_map_entries(const char *filename, struct ubpf_vm *vm) {
             vi++;
         }
 
-        ubpf_hashmap_update(vm->ext_maps[map_id], out_key, out_value);
+        vm->ext_maps[map_id]->ops.map_update(vm->ext_maps[map_id], out_key, out_value);
     }
 }
 
@@ -207,8 +208,6 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
         size_t nb_offsets = 0;
         unsigned int offset[8], type, key_size, value_size, max_entries;
         struct ubpf_map *map;
-        const char *hname = "hashmap";
-        const char *aname = "arraymap";
         const char *sym_name;
 
         cJSON *jtype = cJSON_GetObjectItemCaseSensitive(jmap, "type");
@@ -236,17 +235,23 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
         map->max_entries = max_entries;
 
         switch (map->type) {
+            case UBPF_MAP_TYPE_DEVMAP:  // device map array
             case UBPF_MAP_TYPE_PER_CPU_ARRAY:  // per cpu array
             case UBPF_MAP_TYPE_ARRAY:
                 map->ops = ubpf_array_ops;
                 map->data = ubpf_array_create(map);
-                sym_name = aname;
+                sym_name = "arraymap";
                 break;
             case UBPF_MAP_TYPE_PER_CPU_HASHMAP:  // per cpu hash
             case UBPF_MAP_TYPE_HASHMAP:
                 map->ops = ubpf_hashmap_ops;
                 map->data = ubpf_hashmap_create(map);
-                sym_name = hname;
+                sym_name = "hashmap";
+                break;
+            case UBPF_MAP_TYPE_LPM_TRIE:
+                map->ops = ubpf_lpm_ops;
+                map->data = ubpf_lpm_create(map);
+                sym_name = "lpmmap";
                 break;
             default:
                 ubpf_error("unrecognized map type: %d", map->type);

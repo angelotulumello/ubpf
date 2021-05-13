@@ -39,6 +39,9 @@ ubpf_xdp_adjust_head(void *xdp, uint64_t size);
 uint64_t
 ubpf_xdp_adjust_tail(void *xdp, uint64_t size);
 
+uint64_t
+ubpf_redirect_map();
+
 void
 register_functions(struct ubpf_vm *vm);
 
