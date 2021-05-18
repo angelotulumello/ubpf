@@ -16,6 +16,9 @@ dump_hashtable(struct cache_entry *flows) {
             for (int i=0; i<element->key_len; i++) {
                 fprintf(stderr,"%02x", element->key[i]);
             }
+
+            fprintf(stderr," hash value: 0x%08x", element->hh.hashv);
+
             fprintf(stderr, "\n");
         }
     }
@@ -27,7 +30,7 @@ add_cache_entry_to_hash(struct cache_entry** flows,
 {
     struct cache_entry *cache_entry = malloc(sizeof(struct cache_entry));
     cache_entry->ctx = malloc(sizeof(struct map_context));
-    cache_entry->key = malloc(sizeof(key_len));
+    cache_entry->key = malloc(key_len);
 
     cache_entry->key_len = key_len;
 
@@ -45,7 +48,7 @@ add_cache_entry_to_hash(struct cache_entry** flows,
         fprintf(stderr, "\n\n");
     }
 
-    HASH_ADD_KEYPTR(hh, *flows, in_key, key_len, cache_entry);
+    HASH_ADD_KEYPTR(hh, *flows, cache_entry->key, key_len, cache_entry);
 
     dump_hashtable(*flows);
 

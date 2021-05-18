@@ -492,6 +492,8 @@ int main(int argc, char **argv)
             if (mat) {
                 extracted_fields = parse_pkt_header(pkt_data, mat);
 
+                dump_fields(extracted_fields, mat->entries[0].nb_pkt_fields);
+
                 act = lookup_entry(mat, extracted_fields);
 
                 if (act) {

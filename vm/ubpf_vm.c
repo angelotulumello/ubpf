@@ -675,6 +675,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             if (inst.imm == MAP_LOOKUP) {
                 struct ubpf_map *map;
                 size_t key_size;
+                int ki;
 
                 for (int m=0; m<vm->nb_maps; m++) {
                     if ((uintptr_t)vm->ext_maps[m] == reg[1]) {
@@ -685,9 +686,15 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
                 if (map) {
                     key_size = map->key_size;
 
+                    /*logm(SL4C_DEBUG, "Dumping requested map key");
+                    if (reg[2]) {
+                        for (ki=0; ki<key_size; ki++)
+                            logm(SL4C_DEBUG, "key[%d]: 0x%02x", ki, *(uint8_t*)(reg[2] + ki));
+                    }*/
+
                     logm(SL4C_INFO, "Dumping map key");
                     if (reg[0]) {
-                        for (int ki=0; ki<key_size; ki++)
+                        for (ki=0; ki<key_size; ki++)
                             logm(SL4C_INFO, "key[%d]: 0x%02x", ki, *(uint8_t*)(reg[0] + ki));
                     }
                 }

@@ -384,12 +384,12 @@ parse_pkt_header(const u_char *pkt, struct match_table *mat)
 void
 dump_fields(struct pkt_field *parsed_fields, uint8_t nb_fields)
 {
-    logm(SL4C_DEBUG, "Parsed fields:\n");
+    logm(SL4C_DEBUG, "Parsed fields:");
     for (int i=0; i<nb_fields; i++) {
         if (parsed_fields[i].value) {
-            logm(SL4C_DEBUG, "\t#%d: %lx\n", i, *(uint64_t *) parsed_fields[i].value);
+            logm(SL4C_DEBUG, "\t#%d: %x", i, *(uint32_t *) parsed_fields[i].value);
         } else {
-            logm(SL4C_DEBUG, "\t#%d: DONTCARE\n", i);
+            logm(SL4C_DEBUG, "\t#%d: DONTCARE", i);
         }
     }
 }
@@ -411,6 +411,10 @@ struct action_entry *
 lookup_entry(struct match_table *mat, struct pkt_field *parsed_fields)
 {
     for (int i=0; i<mat->nb_entries; i++) {
+        logm(SL4C_DEBUG, "Nb entries: %d", mat->nb_entries);
+
+        dump_fields(mat->entries[i].fields, mat->entries->nb_pkt_fields);
+
         bool found = false;
         for (int j=0; j<mat->entries[i].nb_pkt_fields; j++) {
             struct pkt_field *entry_field = &mat->entries[i].fields[j];
