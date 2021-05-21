@@ -33,12 +33,15 @@ def read_file_elf(filename, secname):
         symtab = elffile.get_section_by_name(".symtab")
         symtab_syms = list(symtab.iter_symbols())
 
+        strtab = elffile.get_section_by_name(".strtab")
+
         reladyn_name = ".rel" + secname
         reladyn = elffile.get_section_by_name(reladyn_name)
 
         # 1. parse maps relocation section, obtaining instructions to be modified & used maps
         insn_orig_pos_to_map_offset = {}  # insn_orig_pos: offset inside maps section
         map_to_offsets = {}
+        map_names = {}
         if isinstance(reladyn, RelocationSection):
             for reloc in reladyn.iter_relocations():
                 idx = int(reloc['r_offset'] / BPF_INSN_SZ_B)  # instruction original position
@@ -47,6 +50,9 @@ def read_file_elf(filename, secname):
                 if map_id not in map_to_offsets:
                     map_to_offsets[map_id] = []
                 map_to_offsets[map_id].append(idx)
+
+                name_off = symtab_syms[reloc['r_info_sym']]['st_name']
+                map_names[map_id] = strtab.get_string(name_off)
 
             # 1-b. parse maps section
             maps_sec = elffile.get_section_by_name('maps')
@@ -67,11 +73,13 @@ def read_file_elf(filename, secname):
                     maps_data[map_off + 3 * MAPS_DEF_STRUCT_FIELD_SZ_B:map_off + 4 * MAPS_DEF_STRUCT_FIELD_SZ_B],
                     byteorder='little')
 
-                maps.append({"offsets": map_to_offsets[map_off],
+                maps.append({"id": mid,
+                             "offsets": map_to_offsets[map_off],
                              "type": type,
                              "key_size": key_sz,
                              "value_size": value_sz,
-                             "max_entries": max_entries})
+                             "max_entries": max_entries,
+                             "name": map_names[map_off]})
 
         # 3. parse instruction section
         elf = lief.parse(filename)
