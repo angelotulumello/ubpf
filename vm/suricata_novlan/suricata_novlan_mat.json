@@ -1,0 +1,3626 @@
+[
+    {
+        "matches": [
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 27,
+        "rule_metadata": {
+            "jumped_insns": 21
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 26,
+        "rule_metadata": {
+            "jumped_insns": 31
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 6,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 22,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 30,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 38,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 46,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 54,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 56,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 1,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 25,
+        "rule_metadata": {
+            "jumped_insns": 67
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 17,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 22,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 30,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 38,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 46,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 54,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 56,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 24,
+        "rule_metadata": {
+            "jumped_insns": 66
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 23,
+        "rule_metadata": {
+            "jumped_insns": 26
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 22,
+        "rule_metadata": {
+            "jumped_insns": 36
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 6,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 26,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 34,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 42,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 50,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 58,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 60,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 1,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 21,
+        "rule_metadata": {
+            "jumped_insns": 72
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 17,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 26,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 34,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 42,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 50,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 58,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 60,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 20,
+        "rule_metadata": {
+            "jumped_insns": 71
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 19,
+        "rule_metadata": {
+            "jumped_insns": 35
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 18,
+        "rule_metadata": {
+            "jumped_insns": 45
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 6,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 30,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 38,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 46,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 54,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 62,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 64,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 1,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 17,
+        "rule_metadata": {
+            "jumped_insns": 81
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 17,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 30,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 38,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 46,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 54,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 62,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 64,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 16,
+        "rule_metadata": {
+            "jumped_insns": 80
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 15,
+        "rule_metadata": {
+            "jumped_insns": 34
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 14,
+        "rule_metadata": {
+            "jumped_insns": 44
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 6,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 30,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 38,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 46,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 54,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 62,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 64,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 1,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 13,
+        "rule_metadata": {
+            "jumped_insns": 80
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 17,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 30,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 38,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 46,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 54,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 62,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 64,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 12,
+        "rule_metadata": {
+            "jumped_insns": 79
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 11,
+        "rule_metadata": {
+            "jumped_insns": 24
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 10,
+        "rule_metadata": {
+            "jumped_insns": 34
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 6,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 26,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 34,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 42,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 50,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 58,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 60,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 1,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 9,
+        "rule_metadata": {
+            "jumped_insns": 70
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 17,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 26,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 34,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 42,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 50,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 58,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 60,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 8,
+        "rule_metadata": {
+            "jumped_insns": 69
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 7,
+        "rule_metadata": {
+            "jumped_insns": 33
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 6,
+        "rule_metadata": {
+            "jumped_insns": 43
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 6,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 30,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 38,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 46,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 54,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 62,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 64,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 1,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 5,
+        "rule_metadata": {
+            "jumped_insns": 79
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 129,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 17,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 30,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 38,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 46,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 54,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 62,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 64,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 4,
+        "rule_metadata": {
+            "jumped_insns": 78
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 3,
+        "rule_metadata": {
+            "jumped_insns": 32
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            }
+        ],
+        "action": {
+            "type": "XDPAction",
+            "xdp_action": "xdp_pass"
+        },
+        "priority": 2,
+        "rule_metadata": {
+            "jumped_insns": 42
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 6,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 30,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 38,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 46,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 54,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 62,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 64,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 1,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 1,
+        "rule_metadata": {
+            "jumped_insns": 78
+        }
+    },
+    {
+        "matches": [
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 12,
+                    "len": 16,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 16,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 43144,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 20,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 20,
+                    "len": 16,
+                    "field_manipulations": [
+                        {
+                            "alu_op": "AluOps.bit_and",
+                            "immediate": 65535
+                        }
+                    ],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 56710,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            },
+            {
+                "type": "DontCare",
+                "operand0": {
+                    "offset": 24,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                }
+            },
+            {
+                "match_op": "==",
+                "operand0": {
+                    "offset": 28,
+                    "len": 8,
+                    "field_manipulations": [],
+                    "type": "PacketField"
+                },
+                "operand1": {
+                    "val": 17,
+                    "type": "Immediate"
+                },
+                "type": "ACLMatch"
+            }
+        ],
+        "action": {
+            "map_id": 0,
+            "key": [
+                {
+                    "start": 0,
+                    "end": 8,
+                    "value_type": {
+                        "offset": 30,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 8,
+                    "end": 16,
+                    "value_type": {
+                        "offset": 38,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 16,
+                    "end": 24,
+                    "value_type": {
+                        "offset": 46,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 32,
+                    "value_type": {
+                        "offset": 54,
+                        "len": 64,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 32,
+                    "end": 34,
+                    "value_type": {
+                        "offset": 62,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 34,
+                    "end": 36,
+                    "value_type": {
+                        "offset": 64,
+                        "len": 16,
+                        "field_manipulations": [],
+                        "type": "PacketField"
+                    }
+                },
+                {
+                    "start": 36,
+                    "end": 38,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                },
+                {
+                    "start": 38,
+                    "end": 40,
+                    "value_type": {
+                        "val": 0,
+                        "type": "Immediate"
+                    }
+                }
+            ],
+            "key_len": 40,
+            "type": "MapAccess"
+        },
+        "priority": 0,
+        "rule_metadata": {
+            "jumped_insns": 77
+        }
+    }
+]

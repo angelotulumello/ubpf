@@ -117,4 +117,4 @@ dmypy.json
 # CLion and CMake files
 cmake-build-debug/
 CMakeLists.txt
-
+.idea
