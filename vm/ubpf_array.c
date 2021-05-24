@@ -45,13 +45,19 @@ static void *
 ubpf_array_lookup(const struct ubpf_map *map, const void *key)
 {
     uint64_t mask = (1u << (map->key_size*8)) - 1;
+    uintptr_t ret;
 
     uint64_t idx = *((const uint64_t *)key) & mask;
     if (idx >= map->max_entries) {
         printf("Nulletto\n");
         return NULL;
     }
-    return (void *)((uint64_t)map->data + idx * map->value_size);
+    if (map->type == UBPF_MAP_TYPE_ARRAY_OF_MAPS)
+        ret = *(uintptr_t*)((uint64_t)map->data + idx * map->value_size);
+    else
+        return (void *)((uint64_t)map->data + idx * map->value_size);
+
+    return (void *)(ret);
 }
 
 static int
