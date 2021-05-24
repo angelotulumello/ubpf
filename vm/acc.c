@@ -130,21 +130,24 @@ configure_map_entries(const char *filename, struct ubpf_vm *vm) {
     cJSON *je, *jentries = json;
 
     cJSON_ArrayForEach(je, jentries) {
-        cJSON *jmap_id, *jkey, *jvalue;
+        cJSON *jmap_id, *jkey, *jvalue, *jcomment = NULL;
 
         size_t map_id;
-        char *key, *value, *ktok, *vtok;
+        char *key, *value, *comment = NULL, *ktok, *vtok;
         int ki = 0, vi = 0;
 
         jmap_id = cJSON_GetObjectItemCaseSensitive(je, "map_id");
 
         jkey = cJSON_GetObjectItemCaseSensitive(je, "key");
         jvalue = cJSON_GetObjectItemCaseSensitive(je, "value");
+        jcomment = cJSON_GetObjectItemCaseSensitive(je, "comment");
 
         map_id = (size_t) jmap_id->valueint;
 
         value = jvalue->valuestring;
         key = jkey->valuestring;
+        if (jcomment)
+            comment = jcomment->valuestring;
 
         ktok = strtok(key, " ");
         uint8_t out_key[128];
@@ -164,7 +167,21 @@ configure_map_entries(const char *filename, struct ubpf_vm *vm) {
             vi++;
         }
 
-        vm->ext_maps[map_id]->ops.map_update(vm->ext_maps[map_id], out_key, out_value);
+        if (comment) {
+            if (strncmp(comment, "array_of_maps", 13) == 0) {
+                uintptr_t map_ptr = (uintptr_t) vm->ext_maps[out_value[0]];
+                char value[8] = {0};
+
+                *(uintptr_t *)value = map_ptr;
+
+                vm->ext_maps[map_id]->ops.map_update(vm->ext_maps[map_id], out_key, (void *)value);
+                logm(SL4C_DEBUG, "Configuring array of maps with %lx", map_ptr);
+            } else {
+                vm->ext_maps[map_id]->ops.map_update(vm->ext_maps[map_id], out_key, out_value);
+            }
+        } else {
+            vm->ext_maps[map_id]->ops.map_update(vm->ext_maps[map_id], out_key, out_value);
+        }
     }
 }
 
@@ -258,23 +275,26 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
                 if (map->value_size < 8)
                     map->value_size = 8;
                 map->data = ubpf_array_create(map);
+                break;
             default:
-                ubpf_error("unrecognized map type: %d", map->type);
+                logm(SL4C_ERROR, "unrecognized map type: %d", map->type);
                 free(map);
                 return 1;
         }
 
         int result = ubpf_register_map(vm, sym_name, map);
         if (result == -1) {
-            ubpf_error("failed to register variable '%s'", sym_name);
+            logm(SL4C_ERROR, "failed to register variable '%s'", sym_name);
             free(map);
             return 1;
         }
 
-        for (int i=0; i<nb_offsets; i++) {
-            *(uint32_t *) ((uint64_t) code + offset[i] * 8 + 4) = (uint32_t) ((uint64_t) map);
-            *(uint32_t *) ((uint64_t) code + offset[i] * 8 + sizeof(struct ebpf_inst) + 4) =
-                    (uint32_t) ((uint64_t) map >> 32);
+        if (nb_offsets != 0) {
+            for (int i = 0; i < nb_offsets; i++) {
+                *(uint32_t *) ((uint64_t) code + offset[i] * 8 + 4) = (uint32_t) ((uint64_t) map);
+                *(uint32_t *) ((uint64_t) code + offset[i] * 8 + sizeof(struct ebpf_inst) + 4) =
+                        (uint32_t) ((uint64_t) map >> 32);
+            }
         }
 
         logm(SL4C_DEBUG, "map: %lx\n", (uint64_t) map);
@@ -487,7 +507,7 @@ int main(int argc, char **argv)
             xdp_md.data = (uintptr_t) pkt_data;
             xdp_md.data_end = (uintptr_t) (pkt_data + hdr->len);
 
-            logm(SL4C_INFO, "\n--------- Packet #%d\n", npkts);
+            logm(SL4C_INFO, "Packet #%d", npkts);
 
             if (mat) {
                 extracted_fields = parse_pkt_header(pkt_data, mat);
@@ -556,16 +576,16 @@ int main(int argc, char **argv)
             switch (ret) {
                 case XDP_ABORTED:
                 case XDP_DROP:
-                    write_pkt(pkt_data, new_pkt_len, out_drop);
+                    write_pkt((u_char *)xdp_md.data, new_pkt_len, out_drop);
                     break;
                 case XDP_PASS:
-                    write_pkt(pkt_data, new_pkt_len, out_pass);
+                    write_pkt((u_char *)xdp_md.data, new_pkt_len, out_pass);
                     break;
                 case XDP_TX:
-                    write_pkt(pkt_data, new_pkt_len, out_tx);
+                    write_pkt((u_char *)xdp_md.data, new_pkt_len, out_tx);
                     break;
                 case XDP_REDIRECT:
-                    write_pkt(pkt_data, new_pkt_len, out_redirect);
+                    write_pkt((u_char *)xdp_md.data, new_pkt_len, out_redirect);
                     break;
                 case MAP_ACCESS:
                     logm(SL4C_ERROR, "Map access here is illegal");
@@ -575,7 +595,7 @@ int main(int argc, char **argv)
                     break;
             }
 
-            logm(SL4C_INFO, "return 0x%"PRIx64"\n", ret);
+            logm(SL4C_INFO, "return 0x%"PRIx64"", ret);
             npkts++;
         }
 
