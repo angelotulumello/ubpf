@@ -40,7 +40,8 @@ enum action_ops {
   XDP_PASS,
   XDP_TX,
   XDP_REDIRECT,
-  MAP_ACCESS
+  MAP_ACCESS,
+  ABANDON
 };
 
 struct key_field {

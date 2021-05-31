@@ -557,6 +557,8 @@ int main(int argc, char **argv)
 
                             ret = ubpf_exec(vm, &xdp_md, in_ctx, out_ctx, act->pc);
                         }
+                    } else if (act->op == ABANDON) {  // usuual standard processing
+                        ret = ubpf_exec(vm, &xdp_md, NULL, NULL, 0);
                     } else {
                         ret = act->op;
                     }
@@ -584,8 +586,9 @@ int main(int argc, char **argv)
                 case XDP_REDIRECT:
                     write_pkt((u_char *)xdp_md.data, new_pkt_len, out_redirect);
                     break;
+                case ABANDON:
                 case MAP_ACCESS:
-                    logm(SL4C_ERROR, "Map access here is illegal");
+                    logm(SL4C_ERROR, "This action here is illegal");
                     break;
                 default:
                     logm(SL4C_ERROR, "XDP return code unknown");

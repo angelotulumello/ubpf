@@ -187,6 +187,8 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
                 logm(SL4C_ERROR, "XDP Action not recognized\n");
                 return -1;
             }
+        } else if (strcmp(act_type->valuestring, "AbandonAction") == 0) {
+            act->op = ABANDON;
         } else if (strcmp(act_type->valuestring, "MapAccess") == 0) {
             const cJSON *key_len = NULL, *map_id = NULL, *keys = NULL, *key_fld;
             const cJSON *pc = NULL;
