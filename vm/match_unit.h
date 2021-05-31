@@ -54,6 +54,7 @@ struct key_field {
 struct action_entry {
     enum action_ops op;
     uint8_t map_id;
+    uint16_t pc;
     uint8_t key_len;
     uint8_t nb_key_fields;
     struct key_field *key_fields;

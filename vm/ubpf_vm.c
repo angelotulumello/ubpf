@@ -197,7 +197,7 @@ dump_stack(uint64_t *stack)
 uint64_t
 ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             struct map_context *in_ctx, struct map_context *out_ctx,
-            uint16_t map_id)
+            uint16_t pc_save)
 {
     uint16_t pc = 0, pc_tmp = 0;
     const struct ebpf_inst *insts = vm->insts;
@@ -664,13 +664,13 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
                 dump_stack(stack);
 
             insts_count++;
-            logm(SL4C_INFO, "######## Instructions count: %u", insts_count);
+            logm(SL4C_INFO, "Instructions count: %u", insts_count);
 
             return reg0_tmp;
         case EBPF_OP_CALL:
             reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
 
-            logm(SL4C_DEBUG, "Calling %d, reg[0]=%lx, map_ip=%d", inst.imm, reg[0], (int)reg[1]);
+            logm(SL4C_DEBUG, "Calling %d, reg[0]=%lx, map_id=%d", inst.imm, reg[0], (int)reg[1]);
 
             if (inst.imm == MAP_LOOKUP) {
                 struct ubpf_map *map;
@@ -686,22 +686,16 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
                 if (map) {
                     key_size = map->key_size;
 
-                    /*logm(SL4C_DEBUG, "Dumping requested map key");
+                    logm(SL4C_DEBUG, "Dumping requested map key");
                     if (reg[2]) {
                         for (ki=0; ki<key_size; ki++)
                             logm(SL4C_DEBUG, "key[%d]: 0x%02x", ki, *(uint8_t*)(reg[2] + ki));
-                    }*/
-
-                    logm(SL4C_INFO, "Dumping map key");
-                    if (reg[0]) {
-                        for (ki=0; ki<key_size; ki++)
-                            logm(SL4C_INFO, "key[%d]: 0x%02x", ki, *(uint8_t*)(reg[0] + ki));
                     }
                 }
             }
 
             if (out_ctx && inst.imm == MAP_LOOKUP &&
-                    reg[1] == (uintptr_t)vm->ext_maps[map_id]) {
+                    pc_save == pc - 1) {
                 pc_tmp = pc - 1;
                 memcpy(reg_tmp, reg, sizeof(uint64_t) * 16);
                 memcpy(stack_tmp, stack, stack_size);

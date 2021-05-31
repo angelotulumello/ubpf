@@ -223,7 +223,7 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
 
     cJSON_ArrayForEach(jmap, jmaps) {
         size_t nb_offsets = 0;
-        unsigned int offset[8], type, key_size, value_size, max_entries;
+        unsigned int offset[64], type, key_size, value_size, max_entries;
         struct ubpf_map *map;
         const char *sym_name;
 
@@ -260,6 +260,7 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
                 sym_name = "arraymap";
                 break;
             case UBPF_MAP_TYPE_PER_CPU_HASHMAP:  // per cpu hash
+            case UBPF_MAP_TYPE_PER_CPU_LRU_HASH:
             case UBPF_MAP_TYPE_HASHMAP:
                 map->ops = ubpf_hashmap_ops;
                 map->data = ubpf_hashmap_create(map);
@@ -523,7 +524,6 @@ int main(int argc, char **argv)
                             enum cache_result res;
                             struct cache_entry *entry;
                             struct map_context *in_ctx, *out_ctx;
-                            uint16_t map_id;
 
                             res = reference_cache(cache, &map_entries, key, key_len, &entry);
 
@@ -555,10 +555,7 @@ int main(int argc, char **argv)
                                     break;
                             }
 
-                            map_id = (uint8_t) key[key_len - 1];
-                            logm(SL4C_DEBUG, "map id = %d", map_id);
-
-                            ret = ubpf_exec(vm, &xdp_md, in_ctx, out_ctx, map_id);
+                            ret = ubpf_exec(vm, &xdp_md, in_ctx, out_ctx, act->pc);
                         }
                     } else {
                         ret = act->op;

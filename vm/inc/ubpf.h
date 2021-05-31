@@ -108,7 +108,7 @@ int ubpf_load_elf(struct ubpf_vm *vm, const void *elf, size_t elf_len, char **er
 
 uint64_t ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
                     struct map_context *in_ctx, struct map_context *out_ctx,
-                    uint16_t map_id);
+                    uint16_t pc_save);
 
 ubpf_jit_fn ubpf_compile(struct ubpf_vm *vm, char **errmsg);
 

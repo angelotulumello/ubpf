@@ -189,10 +189,12 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
             }
         } else if (strcmp(act_type->valuestring, "MapAccess") == 0) {
             const cJSON *key_len = NULL, *map_id = NULL, *keys = NULL, *key_fld;
+            const cJSON *pc = NULL;
 
             key_len = cJSON_GetObjectItemCaseSensitive(action, "key_len");
             keys = cJSON_GetObjectItemCaseSensitive(action, "key");
             map_id = cJSON_GetObjectItemCaseSensitive(action, "map_id");
+            pc = cJSON_GetObjectItemCaseSensitive(action, "pc");
 
             nb_key_fields = cJSON_GetArraySize(keys);
 
@@ -201,6 +203,7 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
             act->key_len = key_len->valueint;
             act->op = MAP_ACCESS;
             act->map_id = map_id->valueint;
+            act->pc = pc->valueint;
 
             act->key_fields = malloc(nb_key_fields * sizeof(struct key_field));
 
