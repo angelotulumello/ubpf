@@ -150,7 +150,7 @@ configure_map_entries(const char *filename, struct ubpf_vm *vm) {
             comment = jcomment->valuestring;
 
         ktok = strtok(key, " ");
-        uint8_t out_key[128];
+        uint8_t out_key[512] = {0};
 
         while (ktok) {
             out_key[ki] = (uint8_t) strtol(ktok, NULL, 16);
@@ -159,7 +159,7 @@ configure_map_entries(const char *filename, struct ubpf_vm *vm) {
         }
 
         vtok = strtok(value, " ");
-        uint8_t out_value[128];
+        uint8_t out_value[512] = {0};
 
         while (vtok) {
             out_value[vi] = (uint8_t) strtol(vtok, NULL, 16);
@@ -311,7 +311,6 @@ int main(int argc, char **argv)
     struct option longopts[] = {
         { .name = "help", .val = 'h', },
         { .name = "mat", .val = 'm', .has_arg=1 },
-        { .name = "register-offset", .val = 'r', .has_arg=1 },
         { .name = "maps", .val = 'M', .has_arg=1},
         { .name = "pcap", .val = 'p', .has_arg=1},
         { .name = "entries-map", .val = 'e', .has_arg=1},
@@ -326,13 +325,10 @@ int main(int argc, char **argv)
     int log_level = 0;
 
     int opt;
-    while ((opt = getopt_long(argc, argv, "hm:p:M:r:e:l:", longopts, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hm:p:M:e:l:", longopts, NULL)) != -1) {
         switch (opt) {
         case 'm':
             mat_filename = optarg;
-            break;
-        case 'r':
-            ubpf_set_register_offset(atoi(optarg));
             break;
         case 'M':
             json_filename = optarg;

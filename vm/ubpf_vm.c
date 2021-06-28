@@ -25,7 +25,7 @@
 #include "ubpf_int.h"
 #include "inc/sclog4c.h"
 
-#define MAX_EXT_FUNCS 64
+#define MAX_EXT_FUNCS 128
 #define MAX_EXT_MAPS 64
 
 static bool validate(const struct ubpf_vm *vm, const struct ebpf_inst *insts, uint32_t num_insts, char **errmsg);
@@ -670,7 +670,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
         case EBPF_OP_CALL:
             reg[0] = vm->ext_funcs[inst.imm].func(reg[1], reg[2], reg[3], reg[4], reg[5]);
 
-            logm(SL4C_DEBUG, "Calling %d, reg[0]=%lx, map_id=%d", inst.imm, reg[0], (int)reg[1]);
+            logm(SL4C_DEBUG, "Calling %d, reg[0]=%lx, map_id=%lx", inst.imm, reg[0], (long)reg[1]);
 
             if (inst.imm == MAP_LOOKUP) {
                 struct ubpf_map *map;
