@@ -6,12 +6,7 @@
                 "operand0": {
                     "offset": 12,
                     "len": 16,
-                    "field_manipulations": [
-                        {
-                            "alu_op": "AluOps.le",
-                            "immediate": null
-                        }
-                    ],
+                    "field_manipulations": [],
                     "type": "PacketField"
                 }
             },
@@ -55,16 +50,11 @@
                 "operand0": {
                     "offset": 12,
                     "len": 16,
-                    "field_manipulations": [
-                        {
-                            "alu_op": "AluOps.le",
-                            "immediate": null
-                        }
-                    ],
+                    "field_manipulations": [],
                     "type": "PacketField"
                 },
                 "operand1": {
-                    "val": 2048,
+                    "val": 8,
                     "type": "Immediate"
                 },
                 "type": "ACLMatch"
@@ -109,16 +99,11 @@
                 "operand0": {
                     "offset": 12,
                     "len": 16,
-                    "field_manipulations": [
-                        {
-                            "alu_op": "AluOps.le",
-                            "immediate": null
-                        }
-                    ],
+                    "field_manipulations": [],
                     "type": "PacketField"
                 },
                 "operand1": {
-                    "val": 2048,
+                    "val": 8,
                     "type": "Immediate"
                 },
                 "type": "ACLMatch"
@@ -168,16 +153,11 @@
                 "operand0": {
                     "offset": 12,
                     "len": 16,
-                    "field_manipulations": [
-                        {
-                            "alu_op": "AluOps.le",
-                            "immediate": null
-                        }
-                    ],
+                    "field_manipulations": [],
                     "type": "PacketField"
                 },
                 "operand1": {
-                    "val": 2048,
+                    "val": 8,
                     "type": "Immediate"
                 },
                 "type": "ACLMatch"
@@ -279,6 +259,7 @@
                 }
             ],
             "key_len": 16,
+            "pc": 45,
             "type": "MapAccess"
         },
         "priority": 1,
@@ -293,16 +274,11 @@
                 "operand0": {
                     "offset": 12,
                     "len": 16,
-                    "field_manipulations": [
-                        {
-                            "alu_op": "AluOps.le",
-                            "immediate": null
-                        }
-                    ],
+                    "field_manipulations": [],
                     "type": "PacketField"
                 },
                 "operand1": {
-                    "val": 2048,
+                    "val": 8,
                     "type": "Immediate"
                 },
                 "type": "ACLMatch"
@@ -404,6 +380,7 @@
                 }
             ],
             "key_len": 16,
+            "pc": 45,
             "type": "MapAccess"
         },
         "priority": 0,

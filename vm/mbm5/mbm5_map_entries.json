@@ -1,0 +1,10 @@
+[
+	{
+		"map_id": 1, "key": "aa bb cc dd 11 22 33 44 aa bb cc dd 11 00 00 00", 
+ 		"value": "03 00 00 00"
+ 	},
+ 	{
+		"map_id": 1, "key": "aa bb cc dd 11 22 33 44 aa bb cc dd 06 00 00 00", 
+ 		"value": "03 00 00 00"
+ 	}
+ ]

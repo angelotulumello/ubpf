@@ -1,0 +1,30 @@
+acc.c:507: info: In function main: Packet #1
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 60
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #2
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 63
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #3
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 23
+acc.c:594: info: In function main: return 0x1
+acc.c:507: info: In function main: Packet #4
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 33
+acc.c:594: info: In function main: return 0x2
+acc.c:507: info: In function main: Packet #5
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 18
+acc.c:594: info: In function main: return 0x2
+acc.c:507: info: In function main: Packet #6
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 60
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #7
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 63
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #8
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 23
+acc.c:594: info: In function main: return 0x1
+acc.c:507: info: In function main: Packet #9
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 33
+acc.c:594: info: In function main: return 0x2
+acc.c:507: info: In function main: Packet #10
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 18
+acc.c:594: info: In function main: return 0x2
