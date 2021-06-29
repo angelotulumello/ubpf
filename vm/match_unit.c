@@ -416,8 +416,6 @@ struct action_entry *
 lookup_entry(struct match_table *mat, struct pkt_field *parsed_fields)
 {
     for (int i=0; i<mat->nb_entries; i++) {
-        logm(SL4C_DEBUG, "Nb entries: %d", mat->nb_entries);
-
         dump_fields(mat->entries[i].fields, mat->entries->nb_pkt_fields);
 
         bool found = false;
@@ -433,6 +431,7 @@ lookup_entry(struct match_table *mat, struct pkt_field *parsed_fields)
                 break;
         }
         if (found) {
+            logm(SL4C_INFO, "Matched entry number: %d", i);
             return mat->entries[i].act;
         }
     }

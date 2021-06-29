@@ -236,7 +236,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
         const uint16_t cur_pc = pc;
         struct ebpf_inst inst = insts[pc++];
 
-        logm(SL4C_INFO, "opcode=0x%02X, PC: %d", inst.opcode, pc-1);
+        logm(SL4C_DEBUG, "opcode=0x%02X, PC: %d", inst.opcode, pc-1);
 
         switch (inst.opcode) {
         case EBPF_OP_ADD_IMM:
