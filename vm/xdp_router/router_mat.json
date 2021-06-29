@@ -85,6 +85,7 @@
                 }
             ],
             "key_len": 4,
+            "pc": 38,
             "type": "MapAccess"
         },
         "priority": 7,
@@ -228,6 +229,7 @@
                 }
             ],
             "key_len": 4,
+            "pc": 38,
             "type": "MapAccess"
         },
         "priority": 4,
@@ -371,6 +373,7 @@
                 }
             ],
             "key_len": 4,
+            "pc": 38,
             "type": "MapAccess"
         },
         "priority": 1,
