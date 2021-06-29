@@ -138,6 +138,7 @@
                 }
             ],
             "key_len": 24,
+            "pc": 62,
             "type": "MapAccess"
         },
         "priority": 5,
@@ -252,6 +253,7 @@
                 }
             ],
             "key_len": 24,
+            "pc": 62,
             "type": "MapAccess"
         },
         "priority": 4,
@@ -366,6 +368,7 @@
                 }
             ],
             "key_len": 24,
+            "pc": 62,
             "type": "MapAccess"
         },
         "priority": 3,
@@ -417,12 +420,7 @@
                     "value_type": {
                         "offset": 38,
                         "len": 64,
-                        "field_manipulations": [
-                            {
-                                "alu_op": "AluOps.le",
-                                "immediate": null
-                            }
-                        ],
+                        "field_manipulations": [],
                         "type": "PacketField"
                     }
                 },
@@ -432,12 +430,7 @@
                     "value_type": {
                         "offset": 46,
                         "len": 64,
-                        "field_manipulations": [
-                            {
-                                "alu_op": "AluOps.le",
-                                "immediate": null
-                            }
-                        ],
+                        "field_manipulations": [],
                         "type": "PacketField"
                     }
                 },
@@ -477,6 +470,7 @@
                 }
             ],
             "key_len": 24,
+            "pc": 186,
             "type": "MapAccess"
         },
         "priority": 2,
@@ -533,12 +527,7 @@
                     "value_type": {
                         "offset": 38,
                         "len": 64,
-                        "field_manipulations": [
-                            {
-                                "alu_op": "AluOps.le",
-                                "immediate": null
-                            }
-                        ],
+                        "field_manipulations": [],
                         "type": "PacketField"
                     }
                 },
@@ -548,12 +537,7 @@
                     "value_type": {
                         "offset": 46,
                         "len": 64,
-                        "field_manipulations": [
-                            {
-                                "alu_op": "AluOps.le",
-                                "immediate": null
-                            }
-                        ],
+                        "field_manipulations": [],
                         "type": "PacketField"
                     }
                 },
@@ -595,6 +579,7 @@
                 }
             ],
             "key_len": 24,
+            "pc": 186,
             "type": "MapAccess"
         },
         "priority": 1,
@@ -651,12 +636,7 @@
                     "value_type": {
                         "offset": 38,
                         "len": 64,
-                        "field_manipulations": [
-                            {
-                                "alu_op": "AluOps.le",
-                                "immediate": null
-                            }
-                        ],
+                        "field_manipulations": [],
                         "type": "PacketField"
                     }
                 },
@@ -666,12 +646,7 @@
                     "value_type": {
                         "offset": 46,
                         "len": 64,
-                        "field_manipulations": [
-                            {
-                                "alu_op": "AluOps.le",
-                                "immediate": null
-                            }
-                        ],
+                        "field_manipulations": [],
                         "type": "PacketField"
                     }
                 },
@@ -713,6 +688,7 @@
                 }
             ],
             "key_len": 24,
+            "pc": 186,
             "type": "MapAccess"
         },
         "priority": 0,
