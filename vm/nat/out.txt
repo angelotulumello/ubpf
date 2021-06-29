@@ -1,0 +1,72 @@
+acc.c:507: info: In function main: Packet #1
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 0
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 198
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #2
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 0
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 198
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #3
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 0
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 101
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #4
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 1
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 203
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #5
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 1
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 203
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #6
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 1
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 104
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #7
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 2
+acc.c:594: info: In function main: return 0x1
+acc.c:507: info: In function main: Packet #8
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 3
+acc.c:594: info: In function main: return 0x1
+acc.c:507: info: In function main: Packet #9
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 4
+acc.c:594: info: In function main: return 0x1
+acc.c:507: info: In function main: Packet #10
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 5
+acc.c:594: info: In function main: return 0x2
+acc.c:507: info: In function main: Packet #11
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 0
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 101
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #12
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 0
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 101
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #13
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 0
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 101
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #14
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 1
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 104
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #15
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 1
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 104
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #16
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 1
+ubpf_vm.c:667: info: In function ubpf_exec: Instructions count: 104
+acc.c:594: info: In function main: return 0x3
+acc.c:507: info: In function main: Packet #17
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 2
+acc.c:594: info: In function main: return 0x1
+acc.c:507: info: In function main: Packet #18
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 3
+acc.c:594: info: In function main: return 0x1
+acc.c:507: info: In function main: Packet #19
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 4
+acc.c:594: info: In function main: return 0x1
+acc.c:507: info: In function main: Packet #20
+match_unit.c:434: info: In function lookup_entry: Matched entry number: 5
+acc.c:594: info: In function main: return 0x2
