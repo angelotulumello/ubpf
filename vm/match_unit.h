@@ -29,6 +29,8 @@ enum reg_def_ops {
   REG_DEF_STACK_PTR,
   REG_DEF_PKT_PTR,
   REG_DEF_PKT_FLD,
+  REG_DEF_PKT_LEN,
+  REG_DEF_CTX_PTR,
 };
 
 struct pkt_field_def {

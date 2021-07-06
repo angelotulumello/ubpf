@@ -222,6 +222,12 @@ restore_context(struct reg_def *regs_def, struct stack_def *stack_def,
             case REG_DEF_PKT_PTR:
                 reg[i] = pkt_ptr + regs_def[i].offset;
                 break;
+            case REG_DEF_PKT_LEN:
+                reg[i] = xdp->data_end - xdp->data;
+                break;
+            case REG_DEF_CTX_PTR:
+                reg[i] = (uintptr_t) xdp;
+                break;
             case REG_DEF_PKT_FLD:
             {
                 size_t fld_len_in_bytes, offset, nb_ops, op, imm;

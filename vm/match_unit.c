@@ -45,6 +45,10 @@ parse_context(struct action_entry *act, const cJSON *context) {
 
                 rdef->type = REG_DEF_PKT_PTR;
                 rdef->offset = roffset->valueint;
+            } else if (strcmp(rtype->valuestring, "PacketLen") == 0) {
+                rdef->type = REG_DEF_PKT_LEN;
+            } else if (strcmp(rtype->valuestring, "ContextPointer") == 0) {
+                rdef->type = REG_DEF_CTX_PTR;
             } else if (strcmp(rtype->valuestring, "PacketField") == 0) {
                 const cJSON *offset, *len, *fld_manipulations = NULL;
 
