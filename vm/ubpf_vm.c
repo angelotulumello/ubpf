@@ -271,7 +271,15 @@ restore_context(struct reg_def *regs_def, struct stack_def *stack_def,
         len = end - start;
 
         if (stack_def->key_fields[i].has_imm) {
-            memcpy((void *)(stack_ptr + start), &stack_def->key_fields[i].imm, len);
+            if (len > sizeof(uint64_t)) {
+                if (stack_def->key_fields[i].imm != 0) {
+                    logm(SL4C_ERROR, "Immediate is greater than zero but len is greater than 8 bytes");
+                    return;
+                }
+                memset((void *) (stack_ptr + start), 0, len);
+            }
+            else
+                memcpy((void *)(stack_ptr + start), &stack_def->key_fields[i].imm, len);
             continue;
         }
 
