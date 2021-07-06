@@ -1,0 +1,80 @@
+[
+    {
+        "id": 0,
+        "offsets": [
+            87,
+            253
+        ],
+        "type": 6,
+        "key_size": 4,
+        "value_size": 16,
+        "max_entries": 1024,
+        "name": "stats"
+    },
+    {
+        "id": 1,
+        "offsets": [
+            139
+        ],
+        "type": 2,
+        "key_size": 4,
+        "value_size": 8,
+        "max_entries": 16,
+        "name": "ctl_array"
+    },
+    {
+        "id": 2,
+        "offsets": [
+            265
+        ],
+        "type": 6,
+        "key_size": 4,
+        "value_size": 16,
+        "max_entries": 4096,
+        "name": "reals_stats"
+    },
+    {
+        "id": 3,
+        "offsets": [
+            132
+        ],
+        "type": 2,
+        "key_size": 4,
+        "value_size": 20,
+        "max_entries": 4096,
+        "name": "reals"
+    },
+    {
+        "id": 4,
+        "offsets": [
+            104
+        ],
+        "type": 12,
+        "key_size": 4,
+        "value_size": 4,
+        "max_entries": 128,
+        "name": "lru_mapping"
+    },
+    {
+        "id": 5,
+        "offsets": [
+            68,
+            77
+        ],
+        "type": 1,
+        "key_size": 20,
+        "value_size": 8,
+        "max_entries": 512,
+        "name": "vip_map"
+    },
+    {
+        "comment": "ADDED_BY_HAND",
+        "id": 6,
+        "offsets": [],
+        "type": 1,
+        "key_size": 40,
+        "value_size": 12,
+        "max_entries": 1024,
+        "name": "lru_cache_0"
+    }
+]
