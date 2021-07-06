@@ -21,6 +21,8 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#include "../match_unit.h"
+
 struct ubpf_vm;
 struct ubpf_map;
 struct ubpf_func_proto;
@@ -107,8 +109,8 @@ int ubpf_load(struct ubpf_vm *vm, const void *code, uint32_t code_len, char **er
 int ubpf_load_elf(struct ubpf_vm *vm, const void *elf, size_t elf_len, char **errmsg);
 
 uint64_t ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
-                    struct map_context *in_ctx, struct map_context *out_ctx,
-                    uint16_t pc_save);
+                   struct reg_def *regs_def, struct stack_def *stack,
+                   uint16_t pc_start, uint8_t map_id);
 
 ubpf_jit_fn ubpf_compile(struct ubpf_vm *vm, char **errmsg);
 

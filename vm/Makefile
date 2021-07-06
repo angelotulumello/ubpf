@@ -50,9 +50,7 @@ cJSON.o: cJSON.c
 
 match_unit.o: match_unit.c
 
-flow_cache.o: flow_cache.c
-
-acc: acc.o cJSON.o match_unit.o flow_cache.o libubpf.a
+acc: acc.o cJSON.o match_unit.o libubpf.a
 
 install:
 	$(INSTALL) -d $(DESTDIR)$(PREFIX)/lib

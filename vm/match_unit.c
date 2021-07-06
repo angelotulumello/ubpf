@@ -12,6 +12,193 @@
 #include "inc/sclog4c.h"
 
 int
+parse_context(struct action_entry *act, const cJSON *context) {
+    const cJSON *registers = NULL, *stack = NULL;
+    const cJSON *r, *s;
+    int i, j = 0;
+    int nb_stack_fields;
+    char num[3];
+    struct reg_def *rdef;
+
+    registers = cJSON_GetObjectItemCaseSensitive(context, "registers");
+
+    for (i = 0; i <= 10; i++) {
+        sprintf(num,"%d", i);
+        r = cJSON_GetObjectItemCaseSensitive(registers, num);
+
+        if (r) {
+            const cJSON *rtype = cJSON_GetObjectItemCaseSensitive(r, "type");
+            rdef = &act->reg_def[i];
+
+            if (strcmp(rtype->valuestring, "Immediate") == 0) {
+                const cJSON *rval = cJSON_GetObjectItemCaseSensitive(r, "val");
+
+                rdef->type = REG_DEF_IMM;
+                rdef->val = rval->valueint;
+            } else if (strcmp(rtype->valuestring, "StackPointer") == 0) {
+                const cJSON *roffset = cJSON_GetObjectItemCaseSensitive(r, "offset");
+
+                rdef->type = REG_DEF_STACK_PTR;
+                rdef->offset = roffset->valueint;
+            } else if (strcmp(rtype->valuestring, "PacketPointer") == 0) {
+                const cJSON *roffset = cJSON_GetObjectItemCaseSensitive(r, "offset");
+
+                rdef->type = REG_DEF_PKT_PTR;
+                rdef->offset = roffset->valueint;
+            } else if (strcmp(rtype->valuestring, "PacketField") == 0) {
+                const cJSON *offset, *len, *fld_manipulations = NULL;
+
+                offset = cJSON_GetObjectItemCaseSensitive(r, "offset");
+                len = cJSON_GetObjectItemCaseSensitive(r, "len");
+                fld_manipulations = cJSON_GetObjectItemCaseSensitive(r, "field_manipulations");
+
+                // Process field manipulations if any
+                if (cJSON_GetArraySize(fld_manipulations) > 0) {
+                    const cJSON *fld_alu_op = NULL;
+                    const cJSON *fld_immediate = NULL;
+                    const cJSON *fld_man = NULL;
+                    unsigned int nb_ops = 0;
+
+                    cJSON_ArrayForEach(fld_man, fld_manipulations) {
+                        fld_alu_op = cJSON_GetObjectItemCaseSensitive(fld_man, "alu_op");
+                        fld_immediate = cJSON_GetObjectItemCaseSensitive(fld_man, "immediate");
+
+                        if (strcmp(fld_alu_op->valuestring, "AluOps.le") == 0) {
+                            rdef->pkt_fld.op[nb_ops] = ALU_OPS_LE;
+                            rdef->pkt_fld.imm[nb_ops] = 0;
+                        } else if (strcmp(fld_alu_op->valuestring, "AluOps.be") == 0) {
+                            rdef->pkt_fld.op[nb_ops] = ALU_OPS_BE;
+                            rdef->pkt_fld.imm[nb_ops] = 0;
+                        } else if (strcmp(fld_alu_op->valuestring, "AluOps.bit_and") == 0) {
+                            rdef->pkt_fld.op[nb_ops] = ALU_OPS_AND;
+                            rdef->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                        } else if (strcmp(fld_alu_op->valuestring, "AluOps.bit_or") == 0) {
+                            rdef->pkt_fld.op[nb_ops] = ALU_OPS_OR;
+                            rdef->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                        } else if (strcmp(fld_alu_op->valuestring, "AluOps.lsh") == 0) {
+                            rdef->pkt_fld.op[nb_ops] = ALU_OPS_LSH;
+                            rdef->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                        } else if (strcmp(fld_alu_op->valuestring, "AluOps.rsh") == 0) {
+                            rdef->pkt_fld.op[nb_ops] = ALU_OPS_RSH;
+                            rdef->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                        } else {
+                            logm(SL4C_ERROR, "ALU operation not supported\n");
+                            return -1;
+                        }
+                        nb_ops++;
+                    }
+                    rdef->pkt_fld.nb_ops = nb_ops;
+                } else {  // no packet field manipulations
+                    rdef->pkt_fld.op[0] = ALU_OPS_NULL;
+                    rdef->pkt_fld.nb_ops = 1;
+                }
+                rdef->pkt_fld.offset = offset->valueint;
+                rdef->pkt_fld.len = len->valueint;
+            } else {  // Not recognized register type
+                logm(SL4C_ERROR, "Not recognized register type\n");
+                return -1;
+            }
+        } else {  // No register restoration at this position
+            act->reg_def[i].type = REG_DEF_NULL;
+            continue;
+        }
+    }
+
+    /*
+     * Stack definition parsing
+     */
+    stack = cJSON_GetObjectItemCaseSensitive(context, "stack");
+
+    nb_stack_fields = cJSON_GetArraySize(stack);
+
+    act->stack_def.nb_fields = nb_stack_fields;
+    act->stack_def.key_fields = malloc(nb_stack_fields * sizeof(struct key_field));
+
+    cJSON_ArrayForEach(s, stack) {
+        const cJSON *start = NULL, *end = NULL, *value_type = NULL;
+        const cJSON *fld_type = NULL;
+
+        struct key_field *key_field = &act->stack_def.key_fields[j];
+
+        start = cJSON_GetObjectItemCaseSensitive(s, "start");
+        end = cJSON_GetObjectItemCaseSensitive(s, "end");
+        value_type = cJSON_GetObjectItemCaseSensitive(s, "value_type");
+        fld_type = cJSON_GetObjectItemCaseSensitive(value_type, "type");
+
+        key_field->kstart = start->valueint;
+        key_field->kend = end->valueint;
+
+        if (strcmp(fld_type->valuestring, "PacketField") == 0) {
+            const cJSON *offset, *len, *fld_manipulations = NULL;
+
+            key_field->has_imm = false;
+
+            offset = cJSON_GetObjectItemCaseSensitive(value_type, "offset");
+            len = cJSON_GetObjectItemCaseSensitive(value_type, "len");
+            fld_manipulations = cJSON_GetObjectItemCaseSensitive(value_type, "field_manipulations");
+
+            key_field->pkt_fld.offset = offset->valueint;
+            key_field->pkt_fld.len = len->valueint;
+
+            // Process field manipulations if any
+            if (cJSON_GetArraySize(fld_manipulations) > 0) {
+                const cJSON *fld_alu_op = NULL;
+                const cJSON *fld_immediate = NULL;
+                const cJSON *fld_man = NULL;
+                unsigned int nb_ops = 0;
+
+                cJSON_ArrayForEach(fld_man, fld_manipulations) {
+                    fld_alu_op = cJSON_GetObjectItemCaseSensitive(fld_man, "alu_op");
+                    fld_immediate = cJSON_GetObjectItemCaseSensitive(fld_man, "immediate");
+
+                    if (strcmp(fld_alu_op->valuestring, "AluOps.le") == 0) {
+                        key_field->pkt_fld.op[nb_ops] = ALU_OPS_LE;
+                        key_field->pkt_fld.imm[nb_ops] = 0;
+                    } else if (strcmp(fld_alu_op->valuestring, "AluOps.be") == 0) {
+                        key_field->pkt_fld.op[nb_ops] = ALU_OPS_BE;
+                        key_field->pkt_fld.imm[nb_ops] = 0;
+                    } else if (strcmp(fld_alu_op->valuestring, "AluOps.bit_and") == 0) {
+                        key_field->pkt_fld.op[nb_ops] = ALU_OPS_AND;
+                        key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                    } else if (strcmp(fld_alu_op->valuestring, "AluOps.bit_or") == 0) {
+                        key_field->pkt_fld.op[nb_ops] = ALU_OPS_OR;
+                        key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                    } else if (strcmp(fld_alu_op->valuestring, "AluOps.lsh") == 0) {
+                        key_field->pkt_fld.op[nb_ops] = ALU_OPS_LSH;
+                        key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                    } else if (strcmp(fld_alu_op->valuestring, "AluOps.rsh") == 0) {
+                        key_field->pkt_fld.op[nb_ops] = ALU_OPS_RSH;
+                        key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                    } else {
+                        logm(SL4C_ERROR, "ALU operation not supported\n");
+                        return -1;
+                    }
+                    nb_ops++;
+                }
+                key_field->pkt_fld.nb_ops = nb_ops;
+            } else {
+                key_field->pkt_fld.op[0] = ALU_OPS_NULL;
+                key_field->pkt_fld.nb_ops = 1;
+                key_field->pkt_fld.imm[0] = 0;
+            }
+        } else if (strcmp(fld_type->valuestring, "Immediate") == 0) {
+            const cJSON *val = NULL;
+
+            val = cJSON_GetObjectItemCaseSensitive(value_type, "val");
+
+            key_field->imm = val->valueint;
+            key_field->has_imm = true;
+        } else {
+            logm(SL4C_ERROR, "Action value type not supported\n");
+            return -1;
+        }
+        j++;
+    }
+
+    return 0;
+}
+
+int
 parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
 {
     cJSON *json = NULL;
@@ -45,7 +232,7 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
     {
         const cJSON *matches = NULL, *field = NULL;
         const cJSON *priority = NULL, *action = NULL;
-        int pri, nb_pkt_fields, nb_key_fields, i = 0;
+        int pri, nb_pkt_fields, i = 0;
 
         matches = cJSON_GetObjectItemCaseSensitive(entry, "matches");
         priority = cJSON_GetObjectItemCaseSensitive(entry, "priority");
@@ -58,6 +245,7 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
         pkt_field_defs = malloc(nb_pkt_fields * sizeof(struct pkt_field_def));
         mat->entries[pri].fields = malloc(nb_pkt_fields * sizeof(struct pkt_field));
         mat->entries[pri].nb_pkt_fields = nb_pkt_fields;
+        mat->entries[pri].cnt = 0;
 
         // Iterate over match fields
         cJSON_ArrayForEach(field, matches) {
@@ -190,106 +378,19 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
         } else if (strcmp(act_type->valuestring, "AbandonAction") == 0) {
             act->op = ABANDON;
         } else if (strcmp(act_type->valuestring, "MapAccess") == 0) {
-            const cJSON *key_len = NULL, *map_id = NULL, *keys = NULL, *key_fld;
-            const cJSON *pc = NULL;
+            const cJSON *map_id = NULL;
+            const cJSON *pc = NULL, *context = NULL;
 
-            key_len = cJSON_GetObjectItemCaseSensitive(action, "key_len");
-            keys = cJSON_GetObjectItemCaseSensitive(action, "key");
             map_id = cJSON_GetObjectItemCaseSensitive(action, "map_id");
             pc = cJSON_GetObjectItemCaseSensitive(action, "pc");
+            context = cJSON_GetObjectItemCaseSensitive(action, "context");
 
-            nb_key_fields = cJSON_GetArraySize(keys);
+            if (parse_context(act, context))
+                return -1;
 
-            act->nb_key_fields = nb_key_fields;
-
-            act->key_len = key_len->valueint;
             act->op = MAP_ACCESS;
-            act->map_id = map_id->valueint;
             act->pc = pc->valueint;
-
-            act->key_fields = malloc(nb_key_fields * sizeof(struct key_field));
-
-            int j=0;
-            cJSON_ArrayForEach(key_fld, keys) {
-                const cJSON *start = NULL, *end = NULL, *value_type = NULL;
-                const cJSON *fld_type = NULL;
-
-                struct key_field *key_field = &act->key_fields[j];
-
-                start = cJSON_GetObjectItemCaseSensitive(key_fld, "start");
-                end = cJSON_GetObjectItemCaseSensitive(key_fld, "end");
-                value_type = cJSON_GetObjectItemCaseSensitive(key_fld, "value_type");
-                fld_type = cJSON_GetObjectItemCaseSensitive(value_type, "type");
-
-                key_field->kstart = start->valueint;
-                key_field->kend = end->valueint;
-
-                if (strcmp(fld_type->valuestring, "PacketField") == 0) {
-                    const cJSON *offset, *len, *fld_manipulations = NULL;
-
-                    key_field->has_imm = false;
-
-                    offset = cJSON_GetObjectItemCaseSensitive(value_type, "offset");
-                    len = cJSON_GetObjectItemCaseSensitive(value_type, "len");
-                    fld_manipulations = cJSON_GetObjectItemCaseSensitive(value_type, "field_manipulations");
-
-                    key_field->pkt_fld.offset = offset->valueint;
-                    key_field->pkt_fld.len = len->valueint;
-
-                    // Process field manipulations if any
-                    if (cJSON_GetArraySize(fld_manipulations) > 0) {
-                        const cJSON *fld_alu_op = NULL;
-                        const cJSON *fld_immediate = NULL;
-                        const cJSON *fld_man = NULL;
-                        unsigned int nb_ops = 0;
-
-                        cJSON_ArrayForEach(fld_man, fld_manipulations) {
-                            fld_alu_op = cJSON_GetObjectItemCaseSensitive(fld_man, "alu_op");
-                            fld_immediate = cJSON_GetObjectItemCaseSensitive(fld_man, "immediate");
-
-                            if (strcmp(fld_alu_op->valuestring, "AluOps.le") == 0) {
-                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_LE;
-                                key_field->pkt_fld.imm[nb_ops] = 0;
-                            } else if (strcmp(fld_alu_op->valuestring, "AluOps.be") == 0) {
-                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_BE;
-                                key_field->pkt_fld.imm[nb_ops] = 0;
-                            } else if (strcmp(fld_alu_op->valuestring, "AluOps.bit_and") == 0) {
-                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_AND;
-                                key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
-                            } else if (strcmp(fld_alu_op->valuestring, "AluOps.bit_or") == 0) {
-                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_OR;
-                                key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
-                            } else if (strcmp(fld_alu_op->valuestring, "AluOps.lsh") == 0) {
-                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_LSH;
-                                key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
-                            } else if (strcmp(fld_alu_op->valuestring, "AluOps.rsh") == 0) {
-                                key_field->pkt_fld.op[nb_ops] = ALU_OPS_RSH;
-                                key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
-                            } else {
-                                logm(SL4C_ERROR, "ALU operation not supported\n");
-                                return -1;
-                            }
-                            nb_ops++;
-                        }
-                        key_field->pkt_fld.nb_ops = nb_ops;
-                    } else {
-                        key_field->pkt_fld.op[0] = ALU_OPS_NULL;
-                        key_field->pkt_fld.nb_ops = 1;
-                        key_field->pkt_fld.imm[0] = 0;
-                    }
-                } else if (strcmp(fld_type->valuestring, "Immediate") == 0) {
-                    const cJSON *val = NULL;
-
-                    val = cJSON_GetObjectItemCaseSensitive(value_type, "val");
-
-                    key_field->imm = val->valueint;
-                    key_field->has_imm = true;
-                } else {
-                    logm(SL4C_ERROR, "Action value type not supported\n");
-                    return -1;
-                }
-                j++;
-            }
+            act->map_id = map_id->valueint;
         } else {
             logm(SL4C_ERROR, "Action type not supported\n");
             return -1;
@@ -307,7 +408,7 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
     return 0;
 }
 
-static uint64_t
+uint64_t
 field_manipulation(enum alu_ops op, uint64_t imm,
                    uint64_t value,
                    uint8_t fld_len_in_bytes)
@@ -432,6 +533,7 @@ lookup_entry(struct match_table *mat, struct pkt_field *parsed_fields)
         }
         if (found) {
             logm(SL4C_INFO, "Matched entry number: %d", i);
+            mat->entries[i].cnt++;
             return mat->entries[i].act;
         }
     }
@@ -439,6 +541,7 @@ lookup_entry(struct match_table *mat, struct pkt_field *parsed_fields)
     return NULL;
 }
 
+/*
 u_char *
 generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len)
 {
@@ -479,4 +582,4 @@ generate_key(struct action_entry *act, const u_char *pkt, size_t *key_len)
     memset(&key[act->key_len], act->map_id, 1);
 
     return key;
-}
+}*/

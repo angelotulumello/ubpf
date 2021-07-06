@@ -462,8 +462,6 @@ int main(int argc, char **argv)
         struct pcap_pkthdr *hdr;
         FILE *out_pass, *out_drop, *out_tx, *out_redirect;
         int npkts = 1;
-        struct cache_queue *cache = NULL;
-        struct cache_entry *map_entries = NULL;
         struct xdp_md xdp_md = {0};
 
         p = pcap_open_offline(pcap_filename, errbuf);
@@ -480,11 +478,6 @@ int main(int argc, char **argv)
         init_output_pcap(&out_tx, "tx.pcap");
         init_output_pcap(&out_redirect, "redirect.pcap");
 
-        /*
-         * Create the flow cache
-         */
-        cache = create_cache(CACHE_SIZE);
-
         // allocate packet memory with headroom and tailroom
         pkt_buf = malloc(PKT_TOTAL_LEN);
         // set pointer to packet data discarding headroom
@@ -496,8 +489,6 @@ int main(int argc, char **argv)
         while (pcap_next_ex(p, &hdr, &pkt_ptr_pcap) > 0) {
             struct pkt_field *extracted_fields;
             struct action_entry *act;
-            u_char *key = NULL;
-            size_t key_len = 0;
             size_t new_pkt_len;
 
             memcpy(pkt_data, pkt_ptr_pcap, hdr->len);
@@ -515,46 +506,9 @@ int main(int argc, char **argv)
 
                 if (act) {
                     if (act->op == MAP_ACCESS) {
-                        key = generate_key(act, pkt_data, &key_len);
-                        if (key) {
-                            enum cache_result res;
-                            struct cache_entry *entry;
-                            struct map_context *in_ctx, *out_ctx;
-
-                            res = reference_cache(cache, &map_entries, key, key_len, &entry);
-
-                            switch (res) {
-                                case NOT_IN_HASH:
-                                    logm(SL4C_DEBUG, "NOT_IN_HASH");
-                                    in_ctx = NULL;
-                                    out_ctx = entry->ctx;
-                                    break;
-                                case NOT_IN_CACHE:
-                                    logm(SL4C_DEBUG, "NOT_IN_CACHE");
-
-                                    in_ctx = entry->ctx;
-                                    out_ctx = NULL;
-                                    break;
-                                case NOT_IN_CACHE_FRONT:
-                                    logm(SL4C_DEBUG, "NOT_IN_CACHE_FRONT");
-
-                                    in_ctx = entry->ctx;
-                                    out_ctx = NULL;
-                                    break;
-                                case IN_CACHE_FRONT:
-                                    logm(SL4C_DEBUG, "IN_CACHE_FRONT");
-
-                                    in_ctx = entry->ctx;
-                                    out_ctx = NULL;
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                            ret = ubpf_exec(vm, &xdp_md, in_ctx, out_ctx, act->pc);
-                        }
-                    } else if (act->op == ABANDON) {  // usuual standard processing
-                        ret = ubpf_exec(vm, &xdp_md, NULL, NULL, 0);
+                        ret = ubpf_exec(vm, &xdp_md, act->reg_def, &act->stack_def, act->pc, act->map_id);
+                    } else if (act->op == ABANDON) {  // usual standard processing
+                        ret = ubpf_exec(vm, &xdp_md, NULL, NULL, 0, 0);
                     } else {
                         ret = act->op;
                     }
@@ -562,7 +516,7 @@ int main(int argc, char **argv)
                     logm(SL4C_WARNING, "Match not found in lookup entry");
                 }
             } else {  // no MAT, standard processing
-                ret = ubpf_exec(vm, &xdp_md, NULL, NULL, 0);
+                ret = ubpf_exec(vm, &xdp_md, NULL, NULL, 0, 0);
             }
 
             // Update the packet length, that could have been modified in the program

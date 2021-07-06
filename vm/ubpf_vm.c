@@ -194,16 +194,108 @@ dump_stack(uint64_t *stack)
     fprintf(stderr, "\n");
 }
 
+static inline void
+restore_context(struct reg_def *regs_def, struct stack_def *stack_def,
+                uint64_t *reg, uint64_t *stack, struct xdp_md *xdp,
+                const struct ubpf_vm *vm, uint8_t map_id) {
+    int i, j;
+    uintptr_t stack_ptr = (uintptr_t) stack + ((STACK_SIZE+7)/8 * sizeof(uint64_t));
+    uintptr_t pkt_ptr = (uintptr_t) xdp->data;
+
+    /*
+     * Restore registers
+     */
+    for (i = 0; i <= 10; i++) {
+        // register 1, i.e. the relocated map pointer
+        if (i == 1) {
+            reg[i] = (uintptr_t) vm->ext_maps[map_id];
+            continue;
+        }
+
+        switch (regs_def[i].type) {
+            case REG_DEF_IMM:
+                reg[i] = regs_def[i].val;
+                break;
+            case REG_DEF_STACK_PTR:
+                reg[i] = stack_ptr + regs_def[i].offset;
+                break;
+            case REG_DEF_PKT_PTR:
+                reg[i] = pkt_ptr + regs_def[i].offset;
+                break;
+            case REG_DEF_PKT_FLD:
+            {
+                size_t fld_len_in_bytes, offset, nb_ops, op, imm;
+                uint64_t value;
+
+                fld_len_in_bytes = round_up_to_8(regs_def[i].pkt_fld.len) / 8;
+                offset = regs_def[i].pkt_fld.offset;
+                nb_ops = regs_def[i].pkt_fld.nb_ops;
+
+                value = *(uint64_t *) (pkt_ptr + offset);
+
+                for (j = 0; j < nb_ops; j++) {
+                    op = regs_def[i].pkt_fld.op[j];
+                    imm = regs_def[i].pkt_fld.imm[j];
+
+                    value = field_manipulation(op, imm, value, fld_len_in_bytes);
+                }
+
+                memcpy(&reg[i], &value, fld_len_in_bytes);
+
+                break;
+            }
+            case REG_DEF_NULL:
+            default:
+                break;
+        }
+    }
+
+    /*
+     * Restore stack
+     */
+
+    for (i = 0; i < stack_def->nb_fields; i++) {
+        size_t start, end, len;
+        size_t fld_len_in_bytes, offset, nb_ops, op, imm;
+        uint64_t value;
+
+        start = stack_def->key_fields[i].kstart;
+        end = stack_def->key_fields[i].kend;
+
+        len = end - start;
+
+        if (stack_def->key_fields[i].has_imm) {
+            memcpy((void *)(stack_ptr + start), &stack_def->key_fields[i].imm, len);
+            continue;
+        }
+
+        fld_len_in_bytes = round_up_to_8(stack_def->key_fields[i].pkt_fld.len) / 8;
+        offset = stack_def->key_fields[i].pkt_fld.offset;
+        nb_ops = stack_def->key_fields[i].pkt_fld.nb_ops;
+
+        value = *(uint64_t *) (pkt_ptr + offset);
+
+        for (j = 0; j < nb_ops; j++) {
+            op = stack_def->key_fields[i].pkt_fld.op[j];
+            imm = stack_def->key_fields[i].pkt_fld.imm[j];
+
+            value = field_manipulation(op, imm, value, fld_len_in_bytes);
+        }
+
+        memcpy((void *)(stack_ptr + start), &value, len);
+    }
+}
+
 uint64_t
 ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
-            struct map_context *in_ctx, struct map_context *out_ctx,
-            uint16_t pc_save)
+          struct reg_def *regs_def, struct stack_def *stack_def,
+          uint16_t pc_start, uint8_t map_id)
 {
-    uint16_t pc = 0, pc_tmp = 0;
+    uint16_t pc = 0;
     const struct ebpf_inst *insts = vm->insts;
-    uint64_t *reg, *reg_tmp;
-    uint64_t *stack, *stack_tmp;
-    size_t stack_size;
+    uint64_t reg[16] = {0};
+    uint16_t stack_size = ((STACK_SIZE+7)/8) * sizeof(uint64_t);
+    uint64_t stack[((STACK_SIZE+7)/8) * sizeof(uint64_t)] = {0};
     unsigned int insts_count = 0;
 
     if (!insts) {
@@ -211,23 +303,11 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
         return UINT64_MAX;
     }
 
-    stack_size = ((STACK_SIZE+7)/8) * sizeof(uint64_t);
+    if (regs_def && stack_def) {
+        pc = pc_start;
 
-    if (in_ctx) {
-        pc = in_ctx->pc;
-        reg = in_ctx->reg;
-        stack = in_ctx->stack;
-
-        memcpy(in_ctx->reg, in_ctx->old_reg, sizeof(uint64_t) * 64);
-        memcpy(in_ctx->stack, in_ctx->old_stack, stack_size);
-
+        restore_context(regs_def, stack_def, reg, stack, xdp, vm, map_id);
     } else {
-        reg = malloc(16 * sizeof(uint64_t));
-        stack = malloc(stack_size);
-
-        reg_tmp = malloc(16 * sizeof(uint64_t));
-        stack_tmp = malloc(stack_size);
-
         reg[1] = (uintptr_t) xdp;
         reg[10] = (uintptr_t)stack + stack_size;
     }
@@ -236,7 +316,10 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
         const uint16_t cur_pc = pc;
         struct ebpf_inst inst = insts[pc++];
 
-        logm(SL4C_DEBUG, "opcode=0x%02X, PC: %d", inst.opcode, pc-1);
+        logm(SL4C_INFO, "opcode=0x%02X, PC: %d", inst.opcode, pc-1);
+        //printf("pc: %d\n", pc-1);
+        //if (inst.opcode == 0x18)
+        //    printf("pc: %d\n", pc);
 
         switch (inst.opcode) {
         case EBPF_OP_ADD_IMM:
@@ -651,15 +734,6 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
 
             uint64_t reg0_tmp = reg[0];
 
-            if (out_ctx) {
-                out_ctx->pc = pc_tmp;
-                out_ctx->reg = reg;
-                out_ctx->stack = stack;
-
-                memcpy(out_ctx->reg, reg_tmp, sizeof(uint64_t) * 16);
-                memcpy(out_ctx->stack, stack_tmp, stack_size);
-            }
-
             if (sclog4c_level <= SL4C_DEBUG)
                 dump_stack(stack);
 
@@ -675,9 +749,9 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             if (inst.imm == MAP_LOOKUP) {
                 struct ubpf_map *map;
                 size_t key_size;
-                int ki;
+                int ki, m;
 
-                for (int m=0; m<vm->nb_maps; m++) {
+                for (m=0; m<vm->nb_maps; m++) {
                     if ((uintptr_t)vm->ext_maps[m] == reg[1]) {
                         map = vm->ext_maps[m];
                         break;
@@ -686,24 +760,12 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
                 if (map) {
                     key_size = map->key_size;
 
-                    logm(SL4C_DEBUG, "Dumping requested map key");
+                    logm(SL4C_DEBUG, "Dumping requested map (%d) key", m);
                     if (reg[2]) {
                         for (ki=0; ki<key_size; ki++)
                             logm(SL4C_DEBUG, "key[%d]: 0x%02x", ki, *(uint8_t*)(reg[2] + ki));
                     }
                 }
-            }
-
-            if (out_ctx && inst.imm == MAP_LOOKUP &&
-                    pc_save == pc - 1) {
-                pc_tmp = pc - 1;
-                memcpy(reg_tmp, reg, sizeof(uint64_t) * 16);
-                memcpy(stack_tmp, stack, stack_size);
-
-                out_ctx->old_reg = reg_tmp;
-                out_ctx->old_stack = stack_tmp;
-
-                logm(SL4C_DEBUG, "\nSaving state...\n");
             }
 
             if (reg[0])
