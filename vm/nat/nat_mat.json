@@ -332,68 +332,106 @@
         ],
         "action": {
             "map_id": 0,
-            "key": [
-                {
-                    "start": 0,
-                    "end": 4,
-                    "value_type": {
-                        "offset": 26,
-                        "len": 32,
-                        "field_manipulations": [],
-                        "type": "PacketField"
-                    }
-                },
-                {
-                    "start": 4,
-                    "end": 8,
-                    "value_type": {
-                        "offset": 30,
-                        "len": 32,
-                        "field_manipulations": [],
-                        "type": "PacketField"
-                    }
-                },
-                {
-                    "start": 8,
-                    "end": 10,
-                    "value_type": {
-                        "offset": 34,
-                        "len": 16,
-                        "field_manipulations": [],
-                        "type": "PacketField"
-                    }
-                },
-                {
-                    "start": 10,
-                    "end": 12,
-                    "value_type": {
-                        "offset": 36,
-                        "len": 16,
-                        "field_manipulations": [],
-                        "type": "PacketField"
-                    }
-                },
-                {
-                    "start": 12,
-                    "end": 13,
-                    "value_type": {
-                        "offset": 23,
-                        "len": 8,
-                        "field_manipulations": [],
-                        "type": "PacketField"
-                    }
-                },
-                {
-                    "start": 13,
-                    "end": 16,
-                    "value_type": {
+            "pc": 49,
+            "context": {
+                "registers": {
+                    "1": {
                         "val": 0,
                         "type": "Immediate"
+                    },
+                    "2": {
+                        "offset": -24,
+                        "type": "StackPointer"
+                    },
+                    "6": {
+                        "offset": 34,
+                        "type": "PacketPointer"
+                    },
+                    "7": {
+                        "val": 1,
+                        "type": "Immediate"
+                    },
+                    "9": {
+                        "offset": 0,
+                        "type": "PacketPointer"
+                    },
+                    "8": {
+                        "type": "PacketLen"
+                    },
+                    "10": {
+                        "offset": 0,
+                        "type": "StackPointer"
                     }
-                }
-            ],
-            "key_len": 16,
-            "pc": 49,
+                },
+                "stack": [
+                    {
+                        "start": -48,
+                        "end": -28,
+                        "value_type": {
+                            "val": 0,
+                            "type": "Immediate"
+                        }
+                    },
+                    {
+                        "start": -24,
+                        "end": -20,
+                        "value_type": {
+                            "offset": 26,
+                            "len": 32,
+                            "field_manipulations": [],
+                            "type": "PacketField"
+                        }
+                    },
+                    {
+                        "start": -20,
+                        "end": -16,
+                        "value_type": {
+                            "offset": 30,
+                            "len": 32,
+                            "field_manipulations": [],
+                            "type": "PacketField"
+                        }
+                    },
+                    {
+                        "start": -16,
+                        "end": -14,
+                        "value_type": {
+                            "offset": 34,
+                            "len": 16,
+                            "field_manipulations": [],
+                            "type": "PacketField"
+                        }
+                    },
+                    {
+                        "start": -14,
+                        "end": -12,
+                        "value_type": {
+                            "offset": 36,
+                            "len": 16,
+                            "field_manipulations": [],
+                            "type": "PacketField"
+                        }
+                    },
+                    {
+                        "start": -12,
+                        "end": -11,
+                        "value_type": {
+                            "offset": 23,
+                            "len": 8,
+                            "field_manipulations": [],
+                            "type": "PacketField"
+                        }
+                    },
+                    {
+                        "start": -11,
+                        "end": -4,
+                        "value_type": {
+                            "val": 0,
+                            "type": "Immediate"
+                        }
+                    }
+                ]
+            },
             "type": "MapAccess"
         },
         "priority": 1,
@@ -472,68 +510,106 @@
         ],
         "action": {
             "map_id": 0,
-            "key": [
-                {
-                    "start": 0,
-                    "end": 4,
-                    "value_type": {
-                        "offset": 26,
-                        "len": 32,
-                        "field_manipulations": [],
-                        "type": "PacketField"
-                    }
-                },
-                {
-                    "start": 4,
-                    "end": 8,
-                    "value_type": {
-                        "offset": 30,
-                        "len": 32,
-                        "field_manipulations": [],
-                        "type": "PacketField"
-                    }
-                },
-                {
-                    "start": 8,
-                    "end": 10,
-                    "value_type": {
-                        "offset": 34,
-                        "len": 16,
-                        "field_manipulations": [],
-                        "type": "PacketField"
-                    }
-                },
-                {
-                    "start": 10,
-                    "end": 12,
-                    "value_type": {
-                        "offset": 36,
-                        "len": 16,
-                        "field_manipulations": [],
-                        "type": "PacketField"
-                    }
-                },
-                {
-                    "start": 12,
-                    "end": 13,
-                    "value_type": {
-                        "offset": 23,
-                        "len": 8,
-                        "field_manipulations": [],
-                        "type": "PacketField"
-                    }
-                },
-                {
-                    "start": 13,
-                    "end": 16,
-                    "value_type": {
+            "pc": 49,
+            "context": {
+                "registers": {
+                    "1": {
                         "val": 0,
                         "type": "Immediate"
+                    },
+                    "2": {
+                        "offset": -24,
+                        "type": "StackPointer"
+                    },
+                    "6": {
+                        "offset": 34,
+                        "type": "PacketPointer"
+                    },
+                    "7": {
+                        "val": 1,
+                        "type": "Immediate"
+                    },
+                    "9": {
+                        "offset": 0,
+                        "type": "PacketPointer"
+                    },
+                    "8": {
+                        "type": "PacketLen"
+                    },
+                    "10": {
+                        "offset": 0,
+                        "type": "StackPointer"
                     }
-                }
-            ],
-            "key_len": 16,
-            "pc": 49,
+                },
+                "stack": [
+                    {
+                        "start": -48,
+                        "end": -28,
+                        "value_type": {
+                            "val": 0,
+                            "type": "Immediate"
+                        }
+                    },
+                    {
+                        "start": -24,
+                        "end": -20,
+                        "value_type": {
+                            "offset": 26,
+                            "len": 32,
+                            "field_manipulations": [],
+                            "type": "PacketField"
+                        }
+                    },
+                    {
+                        "start": -20,
+                        "end": -16,
+                        "value_type": {
+                            "offset": 30,
+                            "len": 32,
+                            "field_manipulations": [],
+                            "type": "PacketField"
+                        }
+                    },
+                    {
+                        "start": -16,
+                        "end": -14,
+                        "value_type": {
+                            "offset": 34,
+                            "len": 16,
+                            "field_manipulations": [],
+                            "type": "PacketField"
+                        }
+                    },
+                    {
+                        "start": -14,
+                        "end": -12,
+                        "value_type": {
+                            "offset": 36,
+                            "len": 16,
+                            "field_manipulations": [],
+                            "type": "PacketField"
+                        }
+                    },
+                    {
+                        "start": -12,
+                        "end": -11,
+                        "value_type": {
+                            "offset": 23,
+                            "len": 8,
+                            "field_manipulations": [],
+                            "type": "PacketField"
+                        }
+                    },
+                    {
+                        "start": -11,
+                        "end": -4,
+                        "value_type": {
+                            "val": 0,
+                            "type": "Immediate"
+                        }
+                    }
+                ]
+            },
             "type": "MapAccess"
         },
         "priority": 0,
