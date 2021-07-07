@@ -298,7 +298,7 @@ parse_prog_maps(const char *json_filename, struct ubpf_vm *vm, void *code)
             }
         }
 
-        logm(SL4C_DEBUG, "map: %lx\n", (uint64_t) map);
+        logm(SL4C_DEBUG, "map: %lx, # entries: %d\n", (uint64_t) map, map->max_entries);
     }
 
     free(json_str);

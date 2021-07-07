@@ -342,10 +342,10 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
         const uint16_t cur_pc = pc;
         struct ebpf_inst inst = insts[pc++];
 
-        logm(SL4C_INFO, "opcode=0x%02X, PC: %d", inst.opcode, pc-1);
-        //printf("pc: %d\n", pc-1);
-        //if (inst.opcode == 0x18)
-        //    printf("pc: %d\n", pc);
+        logm(SL4C_DEBUG, "opcode=0x%02X, PC: %d", inst.opcode, pc-1);
+        printf("pc: %d\n", pc-1);
+        if (inst.opcode == 0x18)
+            printf("pc: %d\n", pc);
 
         switch (inst.opcode) {
         case EBPF_OP_ADD_IMM:
@@ -944,7 +944,7 @@ validate(const struct ubpf_vm *vm, const struct ebpf_inst *insts, uint32_t num_i
 
         case EBPF_OP_CALL:
             if (inst.imm < 0 || inst.imm >= MAX_EXT_FUNCS) {
-                *errmsg = ubpf_error("invalid call immediate at PC %d", i);
+                *errmsg = ubpf_error("invalid call immediate at PC %d, imm=%u", i, inst.imm);
                 return false;
             }
             if (!vm->ext_funcs[inst.imm].func) {
