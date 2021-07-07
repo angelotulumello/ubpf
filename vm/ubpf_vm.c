@@ -201,6 +201,7 @@ restore_context(struct reg_def *regs_def, struct stack_def *stack_def,
     int i, j;
     uintptr_t stack_ptr = (uintptr_t) stack + ((STACK_SIZE+7)/8 * sizeof(uint64_t));
     uintptr_t pkt_ptr = (uintptr_t) xdp->data;
+    struct key_field *fld;
 
     /*
      * Restore registers
@@ -222,8 +223,8 @@ restore_context(struct reg_def *regs_def, struct stack_def *stack_def,
             case REG_DEF_PKT_PTR:
                 reg[i] = pkt_ptr + regs_def[i].offset;
                 break;
-            case REG_DEF_PKT_LEN:
-                reg[i] = xdp->data_end - xdp->data;
+            case REG_DEF_PKT_END:
+                reg[i] = xdp->data_end;
                 break;
             case REG_DEF_CTX_PTR:
                 reg[i] = (uintptr_t) xdp;
@@ -265,33 +266,44 @@ restore_context(struct reg_def *regs_def, struct stack_def *stack_def,
         size_t fld_len_in_bytes, offset, nb_ops, op, imm;
         uint64_t value;
 
-        start = stack_def->key_fields[i].kstart;
-        end = stack_def->key_fields[i].kend;
+        fld = &stack_def->key_fields[i];
+
+        start = fld->kstart;
+        end = fld->kend;
 
         len = end - start;
 
-        if (stack_def->key_fields[i].has_imm) {
+        if (fld->has_imm) {
+            if (fld->type == REG_DEF_PKT_PTR) {
+                offset = fld->imm;
+                *(uint64_t *)(stack_ptr + start) = (uint64_t) (pkt_ptr + offset);
+                continue;
+            } else if (fld->type == REG_DEF_STACK_PTR) {
+                offset = fld->imm;
+                *(uint64_t *)(stack_ptr + start) = (uint64_t) (stack_ptr + offset);
+                continue;
+            }
             if (len > sizeof(uint64_t)) {
-                if (stack_def->key_fields[i].imm != 0) {
+                if (fld->imm != 0) {
                     logm(SL4C_ERROR, "Immediate is greater than zero but len is greater than 8 bytes");
                     return;
                 }
                 memset((void *) (stack_ptr + start), 0, len);
             }
             else
-                memcpy((void *)(stack_ptr + start), &stack_def->key_fields[i].imm, len);
+                memcpy((void *)(stack_ptr + start), &fld->imm, len);
             continue;
         }
 
-        fld_len_in_bytes = round_up_to_8(stack_def->key_fields[i].pkt_fld.len) / 8;
-        offset = stack_def->key_fields[i].pkt_fld.offset;
-        nb_ops = stack_def->key_fields[i].pkt_fld.nb_ops;
+        fld_len_in_bytes = round_up_to_8(fld->pkt_fld.len) / 8;
+        offset = fld->pkt_fld.offset;
+        nb_ops = fld->pkt_fld.nb_ops;
 
         value = *(uint64_t *) (pkt_ptr + offset);
 
         for (j = 0; j < nb_ops; j++) {
-            op = stack_def->key_fields[i].pkt_fld.op[j];
-            imm = stack_def->key_fields[i].pkt_fld.imm[j];
+            op = fld->pkt_fld.op[j];
+            imm = fld->pkt_fld.imm[j];
 
             value = field_manipulation(op, imm, value, fld_len_in_bytes);
         }

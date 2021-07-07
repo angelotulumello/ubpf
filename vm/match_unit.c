@@ -45,8 +45,8 @@ parse_context(struct action_entry *act, const cJSON *context) {
 
                 rdef->type = REG_DEF_PKT_PTR;
                 rdef->offset = roffset->valueint;
-            } else if (strcmp(rtype->valuestring, "PacketLen") == 0) {
-                rdef->type = REG_DEF_PKT_LEN;
+            } else if (strcmp(rtype->valuestring, "PacketEnd") == 0) {
+                rdef->type = REG_DEF_PKT_END;
             } else if (strcmp(rtype->valuestring, "ContextPointer") == 0) {
                 rdef->type = REG_DEF_CTX_PTR;
             } else if (strcmp(rtype->valuestring, "PacketField") == 0) {
@@ -99,7 +99,7 @@ parse_context(struct action_entry *act, const cJSON *context) {
                 rdef->pkt_fld.offset = offset->valueint;
                 rdef->pkt_fld.len = len->valueint;
             } else {  // Not recognized register type
-                logm(SL4C_ERROR, "Not recognized register type\n");
+                logm(SL4C_ERROR, "Not recognized register type \"%s\"\n", rtype->valuestring);
                 return -1;
             }
         } else {  // No register restoration at this position
@@ -134,6 +134,8 @@ parse_context(struct action_entry *act, const cJSON *context) {
 
         if (strcmp(fld_type->valuestring, "PacketField") == 0) {
             const cJSON *offset, *len, *fld_manipulations = NULL;
+
+            key_field->type = REG_DEF_PKT_FLD;
 
             key_field->has_imm = false;
 
@@ -187,13 +189,30 @@ parse_context(struct action_entry *act, const cJSON *context) {
             }
         } else if (strcmp(fld_type->valuestring, "Immediate") == 0) {
             const cJSON *val = NULL;
+            key_field->type = REG_DEF_IMM;
 
             val = cJSON_GetObjectItemCaseSensitive(value_type, "val");
 
             key_field->imm = val->valueint;
             key_field->has_imm = true;
-        } else {
-            logm(SL4C_ERROR, "Action value type not supported\n");
+        } else if (strcmp(fld_type->valuestring, "PacketPointer") == 0) {
+            const cJSON *offset = NULL;
+
+            offset = cJSON_GetObjectItemCaseSensitive(value_type, "offset");
+
+            key_field->type = REG_DEF_PKT_PTR;
+            key_field->imm = offset->valueint;
+            key_field->has_imm = true;
+        }  else if (strcmp(fld_type->valuestring, "StackPointer") == 0) {
+            const cJSON *offset = NULL;
+
+            offset = cJSON_GetObjectItemCaseSensitive(value_type, "offset");
+
+            key_field->type = REG_DEF_STACK_PTR;
+            key_field->imm = offset->valueint;
+            key_field->has_imm = true;
+        }else {
+            logm(SL4C_ERROR, "Action value type not supported \"%s\"\n", fld_type->valuestring);
             return -1;
         }
         j++;

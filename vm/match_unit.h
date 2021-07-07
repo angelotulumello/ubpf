@@ -29,7 +29,7 @@ enum reg_def_ops {
   REG_DEF_STACK_PTR,
   REG_DEF_PKT_PTR,
   REG_DEF_PKT_FLD,
-  REG_DEF_PKT_LEN,
+  REG_DEF_PKT_END,
   REG_DEF_CTX_PTR,
 };
 
@@ -61,6 +61,7 @@ struct key_field {
   int kend;
   uint64_t imm;
   bool has_imm;
+  enum reg_def_ops type;
   struct pkt_field_def pkt_fld;
 };
 
