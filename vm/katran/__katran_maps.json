@@ -1,0 +1,118 @@
+[
+    {
+        "id": 0,
+        "offsets": [
+            872,
+            1246
+        ],
+        "type": 2,
+        "key_size": 4,
+        "value_size": 8,
+        "max_entries": 16,
+        "name": "ctl_array"
+    },
+    {
+        "id": 1,
+        "offsets": [
+            352,
+            380,
+            479,
+            505,
+            546,
+            882,
+            1092,
+            1255
+        ],
+        "type": 6,
+        "key_size": 4,
+        "value_size": 16,
+        "max_entries": 1024,
+        "name": "stats"
+    },
+    {
+        "id": 2,
+        "offsets": [
+            897,
+            1269
+        ],
+        "type": 6,
+        "key_size": 4,
+        "value_size": 16,
+        "max_entries": 4096,
+        "name": "reals_stats"
+    },
+    {
+        "id": 3,
+        "offsets": [
+            534,
+            844,
+            1080,
+            1219
+        ],
+        "type": 2,
+        "key_size": 4,
+        "value_size": 20,
+        "max_entries": 4096,
+        "name": "reals"
+    },
+    {
+        "id": 4,
+        "offsets": [
+            835,
+            1210
+        ],
+        "type": 2,
+        "key_size": 4,
+        "value_size": 4,
+        "max_entries": 33554944,
+        "name": "ch_rings"
+    },
+    {
+        "id": 5,
+        "offsets": [
+            387,
+            512
+        ],
+        "type": 9,
+        "key_size": 40,
+        "value_size": 16,
+        "max_entries": 1000,
+        "name": "fallback_cache"
+    },
+    {
+        "id": 6,
+        "offsets": [
+            371,
+            497
+        ],
+        "type": 12,
+        "key_size": 4,
+        "value_size": 4,
+        "max_entries": 128,
+        "name": "lru_mapping"
+    },
+    {
+        "id": 7,
+        "offsets": [
+            325,
+            333,
+            448,
+            456
+        ],
+        "type": 1,
+        "key_size": 20,
+        "value_size": 8,
+        "max_entries": 512,
+        "name": "vip_map" 
+    },
+    {
+        "comment": "ADDED_BY_HAND",
+        "id": 8,
+        "offsets": [],
+        "type": 1,
+        "key_size": 40,
+        "value_size": 12,
+        "max_entries": 1024,
+        "name": "lru_cache_0"
+    }
+]

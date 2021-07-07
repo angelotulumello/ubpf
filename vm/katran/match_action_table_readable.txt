@@ -1,0 +1,31 @@
+Write on pkt: fallback abandon branch & emit rule (blck B11)
+ > from here terminators reachable: {335}
+
+<WARN>: unsupported match 2 > Pkt[54, 55) - [AluOps.add -1] (B22 line 130)
+Branch not compilable in MAT: fallback abandon branch & emit rule (blck B22)
+ > from here terminators reachable: {55, 335}
+
+hXDPc-acc Match Action Table:
+> size: 20*13B = 260B
+> fields: [Pkt(off: 12, len: 16b), Pkt(off: 14, len: 8b) [& 15], Pkt(off: 20, len: 8b), Pkt(off: 20, len: 16b) [& 65343], Pkt(off: 23, len: 8b), Pkt(off: 34, len: 8b), Pkt(off: 42, len: 8b) [& 15], Pkt(off: 47, len: 8b) [& 2], Pkt(off: 51, len: 8b), Pkt(off: 67, len: 8b) [& 2], Pkt(off: 75, len: 8b) [& 2]]
+> content: 
+	0: p0 | [56710, X, 44, X, X, X, X, X, X, X, X] | xdp_drop
+	1: p1 | [56710, X, 58, X, X, X, X, X, X, X, X] | abandon
+	2: p2 | [56710, X, 17, X, X, X, X, X, X, X, X] | map #1, pc=338, key=([0, 8): Pkt[38, 46) - [AluOps.le None], [8, 16): Pkt[46, 54) - [AluOps.le None], [16, 18): Pkt[56, 58), [18, 19): Pkt[20, 21), [19, 20): 0)
+	3: p3 | [56710, X, 6, X, X, X, X, X, X, 0, X] | map #1, pc=338, key=([0, 8): Pkt[38, 46) - [AluOps.le None], [8, 16): Pkt[46, 54) - [AluOps.le None], [16, 18): Pkt[56, 58), [18, 19): Pkt[20, 21), [19, 20): 0)
+	4: p4 | [56710, X, 6, X, X, X, X, X, X, X, X] | map #1, pc=338, key=([0, 8): Pkt[38, 46) - [AluOps.le None], [8, 16): Pkt[46, 54) - [AluOps.le None], [16, 18): Pkt[56, 58), [18, 19): Pkt[20, 21), [19, 20): 0)
+	5: p5 | [56710, X, X, X, X, X, X, X, X, X, X] | xdp_pass
+	6: p6 | [8, 5, X, 0, 1, 3, 5, X, 17, X, X] | map #1, pc=439, key=([0, 4): Pkt[54, 58), [4, 8): 0, [8, 16): 0, [16, 18): Pkt[62, 64), [18, 19): Pkt[51, 52), [19, 20): 0)
+	7: p7 | [8, 5, X, 0, 1, 3, 5, X, 6, X, 0] | map #1, pc=439, key=([0, 4): Pkt[54, 58), [4, 8): 0, [8, 16): 0, [16, 18): Pkt[62, 64), [18, 19): Pkt[51, 52), [19, 20): 0)
+	8: p8 | [8, 5, X, 0, 1, 3, 5, X, 6, X, X] | map #1, pc=439, key=([0, 4): Pkt[54, 58), [4, 8): 0, [8, 16): 0, [16, 18): Pkt[62, 64), [18, 19): Pkt[51, 52), [19, 20): 0)
+	9: p9 | [8, 5, X, 0, 1, 3, 5, X, X, X, X] | xdp_pass
+	10: p10 | [8, 5, X, 0, 1, 3, X, X, X, X, X] | xdp_drop
+	11: p11 | [8, 5, X, 0, 1, 8, X, X, X, X, X] | abandon
+	12: p12 | [8, 5, X, 0, 1, X, X, X, X, X, X] | xdp_pass
+	13: p13 | [8, 5, X, 0, 17, X, X, X, X, X, X] | map #1, pc=439, key=([0, 4): Pkt[30, 34), [4, 8): 0, [8, 16): 0, [16, 18): Pkt[36, 38), [18, 19): Pkt[23, 24), [19, 20): 0)
+	14: p14 | [8, 5, X, 0, 6, X, X, 0, X, X, X] | map #1, pc=439, key=([0, 4): Pkt[30, 34), [4, 8): 0, [8, 16): 0, [16, 18): Pkt[36, 38), [18, 19): Pkt[23, 24), [19, 20): 0)
+	15: p15 | [8, 5, X, 0, 6, X, X, X, X, X, X] | map #1, pc=439, key=([0, 4): Pkt[30, 34), [4, 8): 0, [8, 16): 0, [16, 18): Pkt[36, 38), [18, 19): Pkt[23, 24), [19, 20): 0)
+	16: p16 | [8, 5, X, 0, X, X, X, X, X, X, X] | xdp_pass
+	17: p17 | [8, 5, X, X, X, X, X, X, X, X, X] | xdp_drop
+	18: p18 | [8, X, X, X, X, X, X, X, X, X, X] | xdp_drop
+	19: p19 | [X, X, X, X, X, X, X, X, X, X, X] | xdp_pass
