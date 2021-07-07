@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sclog4c.h>
 #include "inttypes.h"
 
 //#include <config.h>
@@ -44,7 +45,7 @@ ubpf_array_create(const struct ubpf_map *map)
 static void *
 ubpf_array_lookup(const struct ubpf_map *map, const void *key)
 {
-    uint64_t mask = (1u << (map->key_size*8)) - 1;
+    uint64_t mask = (1lu << (map->key_size*8lu)) - 1lu;
     uintptr_t ret;
 
     uint64_t idx = *((const uint64_t *)key) & mask;
