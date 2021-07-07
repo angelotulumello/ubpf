@@ -1,0 +1,24 @@
+[
+    {
+        "id": 0,
+        "offsets": [
+            52
+        ],
+        "type": 1,
+        "key_size": 20,
+        "value_size": 8,
+        "max_entries": 65536,
+        "name": "xdns_a_records"
+    },
+    {
+        "id": 1,
+        "offsets": [
+            67
+        ],
+        "type": 2,
+        "key_size": 4,
+        "value_size": 512,
+        "max_entries": 1,
+        "name": "dns_buffer_map"
+    }
+]
