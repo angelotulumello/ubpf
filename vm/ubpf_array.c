@@ -50,7 +50,7 @@ ubpf_array_lookup(const struct ubpf_map *map, const void *key)
 
     uint64_t idx = *((const uint64_t *)key) & mask;
     if (idx >= map->max_entries) {
-        printf("Nulletto\n");
+        logm(SL4C_ERROR, "Nulletto, idx=%lx\n", idx);
         return NULL;
     }
     if (map->type == UBPF_MAP_TYPE_ARRAY_OF_MAPS)

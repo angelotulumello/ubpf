@@ -343,9 +343,9 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
         struct ebpf_inst inst = insts[pc++];
 
         logm(SL4C_DEBUG, "opcode=0x%02X, PC: %d", inst.opcode, pc-1);
-        printf("pc: %d\n", pc-1);
+        /*printf("pc: %d\n", pc-1);
         if (inst.opcode == 0x18)
-            printf("pc: %d\n", pc);
+            printf("pc: %d\n", pc);*/
 
         switch (inst.opcode) {
         case EBPF_OP_ADD_IMM:
