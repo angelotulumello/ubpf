@@ -315,6 +315,7 @@ int main(int argc, char **argv)
         { .name = "pcap", .val = 'p', .has_arg=1},
         { .name = "entries-map", .val = 'e', .has_arg=1},
         { .name = "out-stats", .val = 'o', .has_arg=1},
+        { .name = "out-pcaps", .val = 'O', },
         { .name = "log-level", .val = 'l', .has_arg=1},
         { }
     };
@@ -325,9 +326,10 @@ int main(int argc, char **argv)
     const char *out_filename = NULL;
     const char *map_entries_filename = NULL;
     int log_level = 0;
+    bool out_pcaps = false;
 
     int opt;
-    while ((opt = getopt_long(argc, argv, "hm:p:M:e:o:l:", longopts, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hm:p:M:e:o:Ol:", longopts, NULL)) != -1) {
         switch (opt) {
         case 'm':
             mat_filename = optarg;
@@ -346,6 +348,9 @@ int main(int argc, char **argv)
             break;
         case 'o':
             out_filename = optarg;
+            break;
+        case 'O':
+            out_pcaps = true;
             break;
         case 'h':
             usage(argv[0]);
@@ -476,12 +481,14 @@ int main(int argc, char **argv)
             return -1;
         }
 
-        out_pass = out_drop = out_tx = out_redirect = NULL;
-        // Init the output pcap with the pcap header
-        init_output_pcap(&out_pass, "pass.pcap");
-        init_output_pcap(&out_drop, "drop.pcap");
-        init_output_pcap(&out_tx, "tx.pcap");
-        init_output_pcap(&out_redirect, "redirect.pcap");
+        if (out_pcaps) {
+            out_pass = out_drop = out_tx = out_redirect = NULL;
+            // Init the output pcap with the pcap header
+            init_output_pcap(&out_pass, "pass.pcap");
+            init_output_pcap(&out_drop, "drop.pcap");
+            init_output_pcap(&out_tx, "tx.pcap");
+            init_output_pcap(&out_redirect, "redirect.pcap");
+        }
 
         // allocate packet memory with headroom and tailroom
         pkt_buf = malloc(PKT_TOTAL_LEN);
@@ -527,37 +534,41 @@ int main(int argc, char **argv)
             // Update the packet length, that could have been modified in the program
             new_pkt_len = xdp_md.data_end - xdp_md.data;
 
-            switch (ret) {
-                case XDP_ABORTED:
-                case XDP_DROP:
-                    write_pkt((u_char *)xdp_md.data, new_pkt_len, out_drop);
-                    break;
-                case XDP_PASS:
-                    write_pkt((u_char *)xdp_md.data, new_pkt_len, out_pass);
-                    break;
-                case XDP_TX:
-                    write_pkt((u_char *)xdp_md.data, new_pkt_len, out_tx);
-                    break;
-                case XDP_REDIRECT:
-                    write_pkt((u_char *)xdp_md.data, new_pkt_len, out_redirect);
-                    break;
-                case ABANDON:
-                case MAP_ACCESS:
-                    logm(SL4C_ERROR, "This action here is illegal");
-                    break;
-                default:
-                    logm(SL4C_ERROR, "XDP return code unknown");
-                    break;
+            if (out_pcaps) {
+                switch (ret) {
+                    case XDP_ABORTED:
+                    case XDP_DROP:
+                        write_pkt((u_char *) xdp_md.data, new_pkt_len, out_drop);
+                        break;
+                    case XDP_PASS:
+                        write_pkt((u_char *) xdp_md.data, new_pkt_len, out_pass);
+                        break;
+                    case XDP_TX:
+                        write_pkt((u_char *) xdp_md.data, new_pkt_len, out_tx);
+                        break;
+                    case XDP_REDIRECT:
+                        write_pkt((u_char *) xdp_md.data, new_pkt_len, out_redirect);
+                        break;
+                    case ABANDON:
+                    case MAP_ACCESS:
+                        logm(SL4C_ERROR, "This action here is illegal");
+                        break;
+                    default:
+                        logm(SL4C_ERROR, "XDP return code unknown");
+                        break;
+                }
             }
 
             logm(SL4C_INFO, "return 0x%"PRIx64"", ret);
             npkts++;
         }
 
-        fclose(out_pass);
-        fclose(out_drop);
-        fclose(out_tx);
-        fclose(out_redirect);
+        if (out_pcaps) {
+            fclose(out_pass);
+            fclose(out_drop);
+            fclose(out_tx);
+            fclose(out_redirect);
+        }
 
         free(pkt_buf);
 
