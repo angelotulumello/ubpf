@@ -773,7 +773,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
             logm(SL4C_DEBUG, "Calling %d, reg[0]=%lx, map_id=%lx", inst.imm, reg[0], (long)reg[1]);
 
             if (inst.imm == MAP_LOOKUP) {
-                struct ubpf_map *map;
+                struct ubpf_map *map = NULL;
                 size_t key_size;
                 int ki, m;
 
