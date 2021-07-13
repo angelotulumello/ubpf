@@ -220,12 +220,7 @@
                     "5": {
                         "offset": 12,
                         "len": 16,
-                        "field_manipulations": [
-                            {
-                                "alu_op": "AluOps.le",
-                                "immediate": null
-                            }
-                        ],
+                        "field_manipulations": [],
                         "type": "PacketField"
                     },
                     "10": {
@@ -383,12 +378,7 @@
                     "5": {
                         "offset": 12,
                         "len": 16,
-                        "field_manipulations": [
-                            {
-                                "alu_op": "AluOps.le",
-                                "immediate": null
-                            }
-                        ],
+                        "field_manipulations": [],
                         "type": "PacketField"
                     },
                     "10": {

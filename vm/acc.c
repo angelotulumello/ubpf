@@ -88,7 +88,7 @@ pcaprec_hdr_t pcaprec_hdr = {0};
 static void usage(const char *name)
 {
     logm(SL4C_ERROR, "usage: %s [-h] [-j|--jit] [-M|--maps MAP_FILE] [-p|--pcap PATH]"
-                    " [-m|--mat MAT_FILE] BINARY\n", name);
+                    " [-m|--mat MAT_FILE] [-o|--out-stats OUT_FILE] BINARY\n", name);
     logm(SL4C_ERROR, "\nExecutes the eBPF code in BINARY and prints the result to stdout.\n");
     logm(SL4C_ERROR, "If --mem is given then the specified file will be read and a pointer\nto its data passed in r1.\n");
     logm(SL4C_ERROR, "\nIf --pcap is given then the specified trace will be read and the ubpf \nprogram is "
@@ -314,6 +314,7 @@ int main(int argc, char **argv)
         { .name = "maps", .val = 'M', .has_arg=1},
         { .name = "pcap", .val = 'p', .has_arg=1},
         { .name = "entries-map", .val = 'e', .has_arg=1},
+        { .name = "out-stats", .val = 'o', .has_arg=1},
         { .name = "log-level", .val = 'l', .has_arg=1},
         { }
     };
@@ -321,11 +322,12 @@ int main(int argc, char **argv)
     const char *mat_filename = NULL;
     const char *json_filename = NULL;
     const char *pcap_filename = NULL;
+    const char *out_filename = NULL;
     const char *map_entries_filename = NULL;
     int log_level = 0;
 
     int opt;
-    while ((opt = getopt_long(argc, argv, "hm:p:M:e:l:", longopts, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hm:p:M:e:o:l:", longopts, NULL)) != -1) {
         switch (opt) {
         case 'm':
             mat_filename = optarg;
@@ -341,6 +343,9 @@ int main(int argc, char **argv)
             break;
         case 'l':
             log_level = atoi(optarg);
+            break;
+        case 'o':
+            out_filename = optarg;
             break;
         case 'h':
             usage(argv[0]);
@@ -555,6 +560,18 @@ int main(int argc, char **argv)
         fclose(out_redirect);
 
         free(pkt_buf);
+
+        if (out_filename) {
+            FILE *out_stats;
+            int i;
+
+            out_stats = fopen(out_filename, "w");
+
+            for (i=0; i<mat->nb_entries; i++)
+                fprintf(out_stats, "%d,%lu\n", i, mat->entries[i].cnt);
+
+            fclose(out_stats);
+        }
     }
 
     ubpf_destroy(vm);
