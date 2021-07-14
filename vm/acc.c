@@ -493,14 +493,14 @@ int main(int argc, char **argv)
         // allocate packet memory with headroom and tailroom
         pkt_buf = malloc(PKT_TOTAL_LEN);
         // set pointer to packet data discarding headroom
-        pkt_data = &pkt_buf[PKT_HEADROOM];
+        pkt_data = pkt_buf + PKT_HEADROOM;
 
         /*
          * Execute the program for each packet
          */
         while (pcap_next_ex(p, &hdr, &pkt_ptr_pcap) > 0) {
             struct pkt_field *extracted_fields;
-            struct action_entry *act;
+            struct action_entry *act = NULL;
             size_t new_pkt_len;
 
             memcpy(pkt_data, pkt_ptr_pcap, hdr->len);
