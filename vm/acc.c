@@ -399,11 +399,13 @@ int main(int argc, char **argv)
 
     uint64_t ret;
 
-    ret = parse_prog_maps(json_filename, vm, code);
-    if (ret != 0) {
-        logm(SL4C_ERROR,"Error in parsing maps and bpf code");
-        ubpf_destroy(vm);
-        return ret;
+    if (json_filename) {
+        ret = parse_prog_maps(json_filename, vm, code);
+        if (ret != 0) {
+            logm(SL4C_ERROR, "Error in parsing maps and bpf code");
+            ubpf_destroy(vm);
+            return ret;
+        }
     }
 
     /*
@@ -503,9 +505,9 @@ int main(int argc, char **argv)
             struct action_entry *act = NULL;
             size_t new_pkt_len;
 
-            memcpy(pkt_data, pkt_ptr_pcap, hdr->len);
+            memcpy(pkt_data, pkt_ptr_pcap, hdr->caplen);
             xdp_md.data = (uintptr_t) pkt_data;
-            xdp_md.data_end = (uintptr_t) (pkt_data + hdr->len);
+            xdp_md.data_end = (uintptr_t) (pkt_data + hdr->caplen);
 
             logm(SL4C_INFO, "Packet #%d", npkts);
 
