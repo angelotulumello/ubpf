@@ -4,3 +4,4 @@ acc
 *.gcov
 *.gcda
 *.gcno
+out.txt
