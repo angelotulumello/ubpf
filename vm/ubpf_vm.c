@@ -344,10 +344,10 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
 
         logm(SL4C_DEBUG, "--------------- Restoring context");
 
-        fprintf(stderr, "pkt_head_ptr: %p\n", xdp);
+        /*fprintf(stderr, "pkt_head_ptr: %p\n", xdp);
         fprintf(stderr, "stack_ptr: %p\n", stack + stack_size);
         dump_registers(reg);
-        dump_stack(stack);
+        dump_stack(stack);*/
     } else {
         reg[1] = (uintptr_t) xdp;
         reg[10] = (uintptr_t)stack + stack_size;
