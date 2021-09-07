@@ -312,6 +312,14 @@ restore_context(struct reg_def *regs_def, struct stack_def *stack_def,
     }
 }
 
+static inline void
+dump_registers(uint64_t *reg) {
+    fprintf(stderr, "R0: %016lx \nR1: %016lx \nR2: %016lx\n", reg[0], reg[1], reg[2]);
+    fprintf(stderr, "R3: %016lx \nR4: %016lx \nR5: %016lx\n", reg[3], reg[4], reg[5]);
+    fprintf(stderr, "R6: %016lx \nR7: %016lx \nR8: %016lx\n", reg[6], reg[7], reg[8]);
+    fprintf(stderr, "R9: %016lx \nR10: %016lx\n", reg[9], reg[10]);
+}
+
 uint64_t
 ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
           struct reg_def *regs_def, struct stack_def *stack_def,
@@ -333,6 +341,13 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
         pc = pc_start;
 
         restore_context(regs_def, stack_def, reg, stack, xdp, vm, map_id);
+
+        logm(SL4C_DEBUG, "--------------- Restoring context");
+
+        fprintf(stderr, "pkt_head_ptr: %p\n", xdp);
+        fprintf(stderr, "stack_ptr: %p\n", stack + stack_size);
+        dump_registers(reg);
+        dump_stack(stack);
     } else {
         reg[1] = (uintptr_t) xdp;
         reg[10] = (uintptr_t)stack + stack_size;

@@ -356,7 +356,7 @@
                         "type": "PacketPointer"
                     },
                     "8": {
-                        "type": "PacketLen"
+                        "type": "PacketEnd"
                     },
                     "10": {
                         "offset": 0,
@@ -534,7 +534,7 @@
                         "type": "PacketPointer"
                     },
                     "8": {
-                        "type": "PacketLen"
+                        "type": "PacketEnd"
                     },
                     "10": {
                         "offset": 0,
