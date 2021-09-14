@@ -56,6 +56,8 @@ parse_context(struct action_entry *act, const cJSON *context) {
                 len = cJSON_GetObjectItemCaseSensitive(r, "len");
                 fld_manipulations = cJSON_GetObjectItemCaseSensitive(r, "field_manipulations");
 
+                rdef->type = REG_DEF_PKT_FLD;
+
                 // Process field manipulations if any
                 if (cJSON_GetArraySize(fld_manipulations) > 0) {
                     const cJSON *fld_alu_op = NULL;
