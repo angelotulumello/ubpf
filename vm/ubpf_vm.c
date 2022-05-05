@@ -197,7 +197,7 @@ dump_stack(uint64_t *stack)
 static inline void
 restore_context(struct reg_def *regs_def, struct stack_def *stack_def,
                 uint64_t *reg, uint64_t *stack, struct xdp_md *xdp,
-                const struct ubpf_vm *vm, uint8_t map_id) {
+                const struct ubpf_vm *vm, uint8_t map_id, uint16_t pc) {
     int i, j;
     uintptr_t stack_ptr = (uintptr_t) stack + ((STACK_SIZE+7)/8 * sizeof(uint64_t));
     uintptr_t pkt_ptr = (uintptr_t) xdp->data;
@@ -208,7 +208,7 @@ restore_context(struct reg_def *regs_def, struct stack_def *stack_def,
      */
     for (i = 0; i <= 10; i++) {
         // register 1, i.e. the relocated map pointer
-        if (i == 1) {
+        if (i == 1 && vm->insts[pc].opcode == EBPF_OP_CALL) {
             reg[i] = (uintptr_t) vm->ext_maps[map_id];
             continue;
         }
@@ -340,7 +340,7 @@ ubpf_exec(const struct ubpf_vm *vm, struct xdp_md *xdp,
     if (regs_def && stack_def) {
         pc = pc_start;
 
-        restore_context(regs_def, stack_def, reg, stack, xdp, vm, map_id);
+        restore_context(regs_def, stack_def, reg, stack, xdp, vm, map_id, pc);
 
         logm(SL4C_DEBUG, "--------------- Restoring context");
 

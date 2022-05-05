@@ -87,16 +87,17 @@ pcaprec_hdr_t pcaprec_hdr = {0};
 
 static void usage(const char *name)
 {
-    logm(SL4C_ERROR, "usage: %s [-h] [-j|--jit] [-M|--maps MAP_FILE] [-p|--pcap PATH]"
-                    " [-m|--mat MAT_FILE] [-o|--out-stats OUT_FILE] BINARY\n", name);
-    logm(SL4C_ERROR, "\nExecutes the eBPF code in BINARY and prints the result to stdout.\n");
-    logm(SL4C_ERROR, "If --mem is given then the specified file will be read and a pointer\nto its data passed in r1.\n");
-    logm(SL4C_ERROR, "\nIf --pcap is given then the specified trace will be read and the ubpf \nprogram is "
+    printf("usage: %s [-h] [-j|--jit] [-M|--maps MAP_FILE] [-p|--pcap PATH]"
+                    " [-m|--mat MAT_FILE] [-o|--out-stats OUT_FILE] [-O] BINARY\n", name);
+    printf( "\nExecutes the eBPF code in BINARY and prints the result to stdout.\n");
+    printf("If --mem is given then the specified file will be read and a pointer\nto its data passed in r1.\n");
+    printf("\nIf --pcap is given then the specified trace will be read and the ubpf \nprogram is "
                     "executed for each packet in the trace\n");
-    logm(SL4C_ERROR, "\nIf --maps is given then the specified file will be read and the encoded\nmaps will "
+    printf("\nIf --maps is given then the specified file will be read and the encoded\nmaps will "
                     "be created in the ubpf VM\n");
-    logm(SL4C_ERROR, "\nOther options:\n");
-    logm(SL4C_ERROR, "  -r, --register-offset NUM: Change the mapping from eBPF to x86 registers\n");
+    printf("\nOther options:\n");
+    printf("  -r, --register-offset NUM: Change the mapping from eBPF to x86 registers\n");
+    printf("  -O, Write packets out in different files for each return XDP code\n");
 }
 
 static void
@@ -524,6 +525,7 @@ int main(int argc, char **argv)
                     } else if (act->op == ABANDON) {  // usual standard processing
                         ret = ubpf_exec(vm, &xdp_md, NULL, NULL, 0, 0);
                     } else {
+                        logm(SL4C_WARNING, "Instructions count: 0");
                         ret = act->op;
                     }
                 } else { //No ACT
@@ -561,7 +563,7 @@ int main(int argc, char **argv)
                 }
             }
 
-            logm(SL4C_INFO, "return 0x%"PRIx64"", ret);
+            logm(SL4C_INFO, "return 0x%"PRIx64"\n", ret);
             npkts++;
         }
 

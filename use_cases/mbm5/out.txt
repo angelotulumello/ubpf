@@ -1,0 +1,65 @@
+==10574== Memcheck, a memory error detector
+==10574== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==10574== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==10574== Command: ../acc --maps mbm5_maps.json -e mbm5_map_entries.json -p mbm5_x2.pcap -o stats.txt --mat mbm5_mat.json mbm5.bin -l 1
+==10574== 
+acc.c:510: info: In function main: Packet #1
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 0
+==10574== Conditional jump or move depends on uninitialised value(s)
+==10574==    at 0x1136E4: restore_context (ubpf_vm.c:216)
+==10574==    by 0x113D9E: ubpf_exec (ubpf_vm.c:335)
+==10574==    by 0x10B43A: main (acc.c:521)
+==10574== 
+==10574== Use of uninitialised value of size 8
+==10574==    at 0x1136FB: restore_context (ubpf_vm.c:216)
+==10574==    by 0x113D9E: ubpf_exec (ubpf_vm.c:335)
+==10574==    by 0x10B43A: main (acc.c:521)
+==10574== 
+ubpf_vm.c:767: info: In function ubpf_exec: Instructions count: 19
+acc.c:562: info: In function main: return 0x3
+acc.c:510: info: In function main: Packet #2
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 1
+ubpf_vm.c:767: info: In function ubpf_exec: Instructions count: 19
+acc.c:562: info: In function main: return 0x3
+acc.c:510: info: In function main: Packet #3
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 3
+acc.c:562: info: In function main: return 0x1
+acc.c:510: info: In function main: Packet #4
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 2
+acc.c:562: info: In function main: return 0x2
+acc.c:510: info: In function main: Packet #5
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 4
+acc.c:562: info: In function main: return 0x2
+acc.c:510: info: In function main: Packet #6
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 0
+ubpf_vm.c:767: info: In function ubpf_exec: Instructions count: 19
+acc.c:562: info: In function main: return 0x3
+acc.c:510: info: In function main: Packet #7
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 1
+ubpf_vm.c:767: info: In function ubpf_exec: Instructions count: 19
+acc.c:562: info: In function main: return 0x3
+acc.c:510: info: In function main: Packet #8
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 3
+acc.c:562: info: In function main: return 0x1
+acc.c:510: info: In function main: Packet #9
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 2
+acc.c:562: info: In function main: return 0x2
+acc.c:510: info: In function main: Packet #10
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 4
+acc.c:562: info: In function main: return 0x2
+==10574== 
+==10574== HEAP SUMMARY:
+==10574==     in use at exit: 109,842 bytes in 880 blocks
+==10574==   total heap usage: 899 allocs, 19 frees, 1,210,847 bytes allocated
+==10574== 
+==10574== LEAK SUMMARY:
+==10574==    definitely lost: 3,829 bytes in 22 blocks
+==10574==    indirectly lost: 105,448 bytes in 856 blocks
+==10574==      possibly lost: 13 bytes in 1 blocks
+==10574==    still reachable: 552 bytes in 1 blocks
+==10574==         suppressed: 0 bytes in 0 blocks
+==10574== Rerun with --leak-check=full to see details of leaked memory
+==10574== 
+==10574== For counts of detected and suppressed errors, rerun with: -v
+==10574== Use --track-origins=yes to see where uninitialised values come from
+==10574== ERROR SUMMARY: 8 errors from 2 contexts (suppressed: 0 from 0)

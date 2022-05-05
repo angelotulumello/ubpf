@@ -1,1 +1,0 @@
-acc.c:598: error: In function readfile: Failed to open tun.bin: No such file or directory

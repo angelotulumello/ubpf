@@ -87,6 +87,9 @@ parse_context(struct action_entry *act, const cJSON *context) {
                         } else if (strcmp(fld_alu_op->valuestring, "AluOps.rsh") == 0) {
                             rdef->pkt_fld.op[nb_ops] = ALU_OPS_RSH;
                             rdef->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                        } else if (strcmp(fld_alu_op->valuestring, "AluOps.add") == 0) {
+                            rdef->pkt_fld.op[nb_ops] = ALU_OPS_ADD;
+                            rdef->pkt_fld.imm[nb_ops] = (uint64_t) fld_immediate->valueint;
                         } else {
                             logm(SL4C_ERROR, "ALU operation not supported\n");
                             return -1;
@@ -177,6 +180,9 @@ parse_context(struct action_entry *act, const cJSON *context) {
                     } else if (strcmp(fld_alu_op->valuestring, "AluOps.rsh") == 0) {
                         key_field->pkt_fld.op[nb_ops] = ALU_OPS_RSH;
                         key_field->pkt_fld.imm[nb_ops] = fld_immediate->valueint;
+                    } else if (strcmp(fld_alu_op->valuestring, "AluOps.add") == 0) {
+                        key_field->pkt_fld.op[nb_ops] = ALU_OPS_ADD;
+                        key_field->pkt_fld.imm[nb_ops] = (uint64_t) fld_immediate->valueint;
                     } else {
                         logm(SL4C_ERROR, "ALU operation not supported\n");
                         return -1;
@@ -319,7 +325,10 @@ parse_mat_json(const char *jstring, size_t buf_len, struct match_table *mat)
                         } else if (strcmp(fld_alu_op->valuestring, "AluOps.rsh") == 0) {
                             pkt_field_defs[i].op[nb_ops] = ALU_OPS_RSH;
                             pkt_field_defs[i].imm[nb_ops] = fld_immediate->valueint;
-                        } else {
+                        }  else if (strcmp(fld_alu_op->valuestring, "AluOps.add") == 0) {
+                            pkt_field_defs[i].op[nb_ops] = ALU_OPS_ADD;
+                            pkt_field_defs[i].imm[nb_ops] = (uint64_t) fld_immediate->valueint;
+                        }else {
                             logm(SL4C_ERROR, "ALU operation not supported\n");
                             return -1;
                         }
@@ -469,6 +478,9 @@ field_manipulation(enum alu_ops op, uint64_t imm,
             break;
         case ALU_OPS_RSH:
             out_value = (value) >> imm;
+            break;
+        case ALU_OPS_ADD:
+            out_value = (value) + imm;
             break;
         case ALU_OPS_NULL:
             out_value = value;

@@ -29,7 +29,7 @@ CFLAGS += -fsanitize=address
 LDFLAGS += -fsanitize=address
 endif
 
-all: clean libubpf.a acc
+all: clean libubpf.a hXDP_sim
 
 sclog4c.o: sclog4c.c
 
@@ -50,7 +50,7 @@ cJSON.o: cJSON.c
 
 match_unit.o: match_unit.c
 
-acc: acc.o cJSON.o match_unit.o libubpf.a
+hXDP_sim: hXDP_sim.o cJSON.o match_unit.o libubpf.a
 
 install:
 	$(INSTALL) -d $(DESTDIR)$(PREFIX)/lib
@@ -59,4 +59,4 @@ install:
 	$(INSTALL) -m 644 inc/ubpf.h $(DESTDIR)$(PREFIX)/include
 
 clean:
-	rm -f test libubpf.a *.o
+	rm -f test libubpf.a *.o hXDP_sim

@@ -1,0 +1,2152 @@
+acc.c:301: debug: In function parse_prog_maps: map: 5563bc0dc7e0, # entries: 50
+
+acc.c:301: debug: In function parse_prog_maps: map: 5563bc0dc860, # entries: 100
+
+acc.c:301: debug: In function parse_prog_maps: map: 5563bc0dc8c0, # entries: 50
+
+acc.c:301: debug: In function parse_prog_maps: map: 5563bc0dd1c0, # entries: 50
+
+acc.c:301: debug: In function parse_prog_maps: map: 5563bc0dd650, # entries: 256
+
+acc.c:512: info: In function main: Packet #1
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fdaa888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 0
+acc.c:564: info: In function main: return 0x2
+acc.c:512: info: In function main: Packet #2
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fdaa888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0008
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 1
+ubpf_vm.c:345: debug: In function ubpf_exec: --------------- Restoring context
+pkt_head_ptr: 0x7fff6ad95bf0
+stack_ptr: 0x7fff6ad95aa0
+R0: 0000000000000000 
+R1: 00005563bc0dd1c0 
+R2: 00007fff6ad94c90
+R3: 0000000000000000 
+R4: 00005563bc0e1706 
+R5: 0000000000000000
+R6: 0000000000000000 
+R7: 00005563bc0e16e0 
+R8: 0000000000000000
+R9: 0000000000000000 
+R10: 00007fff6ad94ca0
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8e64110402010a 0000000000000000 
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 38
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=5563bc0dec00, map_id=5563bc0dd1c0
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (3) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x0a
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x01
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x02
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x04
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 0000000000000000 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 39
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 40
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 41
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 42
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 43
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec00
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 44
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 45
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 46
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x55, PC: 47
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 83
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 84
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x61, PC: 85
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 86
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 87
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 88
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 89
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 90
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 91
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 92
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000bc0d | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 93
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000bc0d | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 94
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000d4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 95
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000d4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 96
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000005563 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 97
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000005563 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 98
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000005563 | R2: 00007fff6ad94ca0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 99
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000005563 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 100
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 102
+ubpf_array.c:53: error: In function ubpf_array_lookup: Nulletto, idx=a8e6411
+
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=0, map_id=5563bc0dd650
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (4) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x11
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x64
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x8e
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x0a
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 103
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 107
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 109
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 110
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 111
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 51, reg[0]=3, map_id=5563bc0dc860
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 00005563bc0dc860 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 112
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x05, PC: 113
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 117
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x95, PC: 118
+ubpf_vm.c:771: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0dd4b0
+ubpf_vm.c:772: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:773: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:774: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8e64110402010a 0000000000000000 
+ubpf_vm.c:782: info: In function ubpf_exec: Instructions count: 38
+acc.c:564: info: In function main: return 0x3
+acc.c:512: info: In function main: Packet #3
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fdaa888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fdadd86
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 2
+acc.c:564: info: In function main: return 0x1
+acc.c:512: info: In function main: Packet #4
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fda0081
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 3
+acc.c:564: info: In function main: return 0x2
+acc.c:512: info: In function main: Packet #5
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fda0081
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0008
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 4
+ubpf_vm.c:345: debug: In function ubpf_exec: --------------- Restoring context
+pkt_head_ptr: 0x7fff6ad95bf0
+stack_ptr: 0x7fff6ad95aa0
+R0: 0000000000000000 
+R1: 00005563bc0dd1c0 
+R2: 00007fff6ad94c90
+R3: 0000000000000000 
+R4: 00005563bc0e1706 
+R5: 0000000000000000
+R6: 0000000000000000 
+R7: 00005563bc0e16e0 
+R8: 0000000000000000
+R9: 0000000000000000 
+R10: 00007fff6ad94ca0
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8f64110302010a 0000000000000000 
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 38
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=5563bc0dec30, map_id=5563bc0dd1c0
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (3) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x0a
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x01
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x02
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x03
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 0000000000000000 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 39
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 40
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 41
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 42
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 43
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec30
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 44
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 45
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 46
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x55, PC: 47
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 83
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 84
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x61, PC: 85
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 86
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 87
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 88
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 89
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 90
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 91
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 92
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000008fda | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 93
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000008fda | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 94
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000005109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 95
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000005109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 96
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 97
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 98
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94ca0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 99
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 100
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 102
+ubpf_array.c:53: error: In function ubpf_array_lookup: Nulletto, idx=a8f6411
+
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=0, map_id=5563bc0dd650
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (4) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x11
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x64
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x8f
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x0a
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 103
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 107
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 109
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 110
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 111
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 51, reg[0]=3, map_id=5563bc0dc860
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 112
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x05, PC: 113
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 117
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x95, PC: 118
+ubpf_vm.c:771: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:772: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:773: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:774: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8f64110302010a 0000000000000000 
+ubpf_vm.c:782: info: In function ubpf_exec: Instructions count: 38
+acc.c:564: info: In function main: return 0x3
+acc.c:512: info: In function main: Packet #6
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fda0081
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fdadd86
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 5
+acc.c:564: info: In function main: return 0x1
+acc.c:512: info: In function main: Packet #7
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fda0608
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0008
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 608
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 6
+acc.c:564: info: In function main: return 0x2
+acc.c:512: info: In function main: Packet #8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fda0008
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda1c00
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 608
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 7
+ubpf_vm.c:345: debug: In function ubpf_exec: --------------- Restoring context
+pkt_head_ptr: 0x7fff6ad95bf0
+stack_ptr: 0x7fff6ad95aa0
+R0: 0000000000000000 
+R1: 00005563bc0dd1c0 
+R2: 00007fff6ad94c90
+R3: 0000000000000000 
+R4: 00005563bc0e1702 
+R5: 0000000000000000
+R6: 0000000000000000 
+R7: 00005563bc0e16e0 
+R8: 0000000000000000
+R9: 0000000000000000 
+R10: 00007fff6ad94ca0
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8f64110302010a 0000000000000000 
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 38
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=5563bc0dec30, map_id=5563bc0dd1c0
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (3) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x0a
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x01
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x02
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x03
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 0000000000000000 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 39
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 40
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 41
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 42
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 43
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec30
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 44
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 45
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 46
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x55, PC: 47
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 83
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 84
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x61, PC: 85
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 86
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 87
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 88
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 89
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 90
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 91
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 92
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000008fda | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 93
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000008fda | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 94
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000005109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 95
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000005109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 96
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 97
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 98
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94ca0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 99
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 100
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 102
+ubpf_array.c:53: error: In function ubpf_array_lookup: Nulletto, idx=a8f6411
+
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=0, map_id=5563bc0dd650
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (4) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x11
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x64
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x8f
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x0a
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 103
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 107
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 109
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 110
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 111
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 51, reg[0]=3, map_id=5563bc0dc860
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 112
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x05, PC: 113
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 117
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x95, PC: 118
+ubpf_vm.c:771: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:772: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:773: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:774: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8f64110302010a 0000000000000000 
+ubpf_vm.c:782: info: In function ubpf_exec: Instructions count: 38
+acc.c:564: info: In function main: return 0x3
+acc.c:512: info: In function main: Packet #9
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fdadd86
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0000
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 608
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:521: debug: In function dump_fields: 	#0: DONTCARE
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 8
+acc.c:564: info: In function main: return 0x1
+acc.c:512: info: In function main: Packet #10
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fdaa888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 0
+acc.c:564: info: In function main: return 0x2
+acc.c:512: info: In function main: Packet #11
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fdaa888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0008
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 1
+ubpf_vm.c:345: debug: In function ubpf_exec: --------------- Restoring context
+pkt_head_ptr: 0x7fff6ad95bf0
+stack_ptr: 0x7fff6ad95aa0
+R0: 0000000000000000 
+R1: 00005563bc0dd1c0 
+R2: 00007fff6ad94c90
+R3: 0000000000000000 
+R4: 00005563bc0e1706 
+R5: 0000000000000000
+R6: 0000000000000000 
+R7: 00005563bc0e16e0 
+R8: 0000000000000000
+R9: 0000000000000000 
+R10: 00007fff6ad94ca0
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8e64110402010a 0000000000000000 
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 38
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=5563bc0dec00, map_id=5563bc0dd1c0
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (3) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x0a
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x01
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x02
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x04
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 0000000000000000 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 39
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 40
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 41
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 42
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 43
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec00
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 44
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 45
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 46
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x55, PC: 47
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 83
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 84
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec00 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x61, PC: 85
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 86
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 87
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 88
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 89
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 90
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 91
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 92
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000bc0d | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 93
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000bc0d | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 94
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000d4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 95
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 000000000000d4b0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 96
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000005563 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 97
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000005563 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 98
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000005563 | R2: 00007fff6ad94ca0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 99
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 0000000000005563 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 100
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec00 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 102
+ubpf_array.c:53: error: In function ubpf_array_lookup: Nulletto, idx=a8e6411
+
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=0, map_id=5563bc0dd650
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (4) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x11
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x64
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x8e
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x0a
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 103
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 107
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 109
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 110
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 111
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 51, reg[0]=3, map_id=5563bc0dc860
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 00005563bc0dc860 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 112
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x05, PC: 113
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 117
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0dd4b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x95, PC: 118
+ubpf_vm.c:771: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0dd4b0
+ubpf_vm.c:772: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:773: debug: In function ubpf_exec: ------- R6: 00000000bc0dd4b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec18
+ubpf_vm.c:774: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8e64110402010a 0000000000000000 
+ubpf_vm.c:782: info: In function ubpf_exec: Instructions count: 38
+acc.c:564: info: In function main: return 0x3
+acc.c:512: info: In function main: Packet #12
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fdaa888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fdadd86
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 2
+acc.c:564: info: In function main: return 0x1
+acc.c:512: info: In function main: Packet #13
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fda0081
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 3
+acc.c:564: info: In function main: return 0x2
+acc.c:512: info: In function main: Packet #14
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fda0081
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0008
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 4
+ubpf_vm.c:345: debug: In function ubpf_exec: --------------- Restoring context
+pkt_head_ptr: 0x7fff6ad95bf0
+stack_ptr: 0x7fff6ad95aa0
+R0: 0000000000000000 
+R1: 00005563bc0dd1c0 
+R2: 00007fff6ad94c90
+R3: 0000000000000000 
+R4: 00005563bc0e1706 
+R5: 0000000000000000
+R6: 0000000000000000 
+R7: 00005563bc0e16e0 
+R8: 0000000000000000
+R9: 0000000000000000 
+R10: 00007fff6ad94ca0
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8f64110302010a 0000000000000000 
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 38
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=5563bc0dec30, map_id=5563bc0dd1c0
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (3) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x0a
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x01
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x02
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x03
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 0000000000000000 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 39
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 40
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 41
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 42
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 43
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec30
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 44
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 45
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 46
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x55, PC: 47
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 83
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 84
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x61, PC: 85
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 86
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 87
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 88
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 89
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 90
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 91
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 92
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000008fda | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 93
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000008fda | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 94
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000005109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 95
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000005109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 96
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 97
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 98
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94ca0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 99
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 100
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 102
+ubpf_array.c:53: error: In function ubpf_array_lookup: Nulletto, idx=a8f6411
+
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=0, map_id=5563bc0dd650
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (4) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x11
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x64
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x8f
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x0a
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 103
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 107
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 109
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 110
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 111
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 51, reg[0]=3, map_id=5563bc0dc860
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 112
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x05, PC: 113
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 117
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x95, PC: 118
+ubpf_vm.c:771: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:772: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1706 | R5: 0000000000000000
+ubpf_vm.c:773: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:774: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8f64110302010a 0000000000000000 
+ubpf_vm.c:782: info: In function ubpf_exec: Instructions count: 38
+acc.c:564: info: In function main: return 0x3
+acc.c:512: info: In function main: Packet #15
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fda0081
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fdadd86
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 5
+acc.c:564: info: In function main: return 0x1
+acc.c:512: info: In function main: Packet #16
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fda0608
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0008
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 608
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 6
+acc.c:564: info: In function main: return 0x2
+acc.c:512: info: In function main: Packet #17
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fda0008
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda1c00
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 608
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 7
+ubpf_vm.c:345: debug: In function ubpf_exec: --------------- Restoring context
+pkt_head_ptr: 0x7fff6ad95bf0
+stack_ptr: 0x7fff6ad95aa0
+R0: 0000000000000000 
+R1: 00005563bc0dd1c0 
+R2: 00007fff6ad94c90
+R3: 0000000000000000 
+R4: 00005563bc0e1702 
+R5: 0000000000000000
+R6: 0000000000000000 
+R7: 00005563bc0e16e0 
+R8: 0000000000000000
+R9: 0000000000000000 
+R10: 00007fff6ad94ca0
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8f64110302010a 0000000000000000 
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 38
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=5563bc0dec30, map_id=5563bc0dd1c0
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (3) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x0a
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x01
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x02
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x03
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 0000000000000000 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 39
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 40
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd1c0 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 41
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 42
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 0000000000000000
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 43
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec30
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 44
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00007f178fda5109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x79, PC: 45
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 46
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x55, PC: 47
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000cccccccccccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 83
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 84
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00005563bc0dec30 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x61, PC: 85
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000000001 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 86
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 87
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 88
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 89
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 90
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 91
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 000000000000cccc | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 92
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000008fda | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 93
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000008fda | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 94
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000005109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 95
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000005109 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x69, PC: 96
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x6B, PC: 97
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c90
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 98
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94ca0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x07, PC: 99
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 0000000000007f17 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 100
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 00005563bc0dec30 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 102
+ubpf_array.c:53: error: In function ubpf_array_lookup: Nulletto, idx=a8f6411
+
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 1, reg[0]=0, map_id=5563bc0dd650
+ubpf_vm.c:804: debug: In function ubpf_exec: Dumping requested map (4) key
+ubpf_vm.c:807: debug: In function ubpf_exec: key[0]: 0x11
+ubpf_vm.c:807: debug: In function ubpf_exec: key[1]: 0x64
+ubpf_vm.c:807: debug: In function ubpf_exec: key[2]: 0x8f
+ubpf_vm.c:807: debug: In function ubpf_exec: key[3]: 0x0a
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x15, PC: 103
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dd650 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x18, PC: 107
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00007fff6ad94c94
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 109
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xB7, PC: 110
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000000 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x85, PC: 111
+ubpf_vm.c:788: debug: In function ubpf_exec: Calling 51, reg[0]=3, map_id=5563bc0dc860
+ubpf_vm.c:813: debug: In function ubpf_exec: There's a match
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 00005563bc0dc860 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 112
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x05, PC: 113
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0xBF, PC: 117
+ubpf_vm.c:817: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:818: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:819: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:820: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+ubpf_vm.c:360: debug: In function ubpf_exec: opcode=0x95, PC: 118
+ubpf_vm.c:771: debug: In function ubpf_exec: ------- R0: 0000000000000003 | R1: 0000000000000003 | R2: 00000000bc0ee3b0
+ubpf_vm.c:772: debug: In function ubpf_exec: ------- R3: 0000000000000000 | R4: 00005563bc0e1702 | R5: 0000000000000000
+ubpf_vm.c:773: debug: In function ubpf_exec: ------- R6: 00000000bc0ee3b0 | R7: 00005563bc0e16e0 | R8: 00005563bc0dec48
+ubpf_vm.c:774: debug: In function ubpf_exec: ------- R9: 0000000000000000 | R10: 00007fff6ad94ca0
+
+0000000000000000 
+0000:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0020:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0040:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0060:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0080:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+00e0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0100:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0120:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0140:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0160:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+0180:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01a0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01c0:	0000000000000000 0000000000000000 0000000000000000 0000000000000000 
+01e0:	0000000000000000 0a8f64110302010a 0000000000000000 
+ubpf_vm.c:782: info: In function ubpf_exec: Instructions count: 38
+acc.c:564: info: In function main: return 0x3
+acc.c:512: info: In function main: Packet #18
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8fdadd86
+match_unit.c:519: debug: In function dump_fields: 	#1: 8fda0000
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: a888
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 608
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:519: debug: In function dump_fields: 	#1: 8
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 81
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 608
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:519: debug: In function dump_fields: 	#0: 8
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:516: debug: In function dump_fields: Parsed fields:
+match_unit.c:521: debug: In function dump_fields: 	#0: DONTCARE
+match_unit.c:521: debug: In function dump_fields: 	#1: DONTCARE
+match_unit.c:558: info: In function lookup_entry: Matched entry number: 8
+acc.c:564: info: In function main: return 0x1

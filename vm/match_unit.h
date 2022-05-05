@@ -21,6 +21,7 @@ enum alu_ops {
   ALU_OPS_OR,
   ALU_OPS_LSH,
   ALU_OPS_RSH,
+  ALU_OPS_ADD,
 };
 
 enum reg_def_ops {
