@@ -1,5 +1,6 @@
 /*
  * Copyright 2018 Orange
+ * Copyright 2022 Axbryd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +30,15 @@ static void *ubpf_array_lookup(const struct ubpf_map *map, const void *key);
 static int ubpf_array_update(struct ubpf_map *map, const void *key,
                              void *value);
 
+static inline uint64_t
+log2u(uint64_t x) {
+    uint64_t res = 0;
+
+    while(x >>= 1) res++;
+
+    return res;
+}
+
 const struct ubpf_map_ops ubpf_array_ops = {
     .map_lookup = ubpf_array_lookup,
     .map_update = ubpf_array_update,
@@ -45,12 +55,12 @@ ubpf_array_create(const struct ubpf_map *map)
 static void *
 ubpf_array_lookup(const struct ubpf_map *map, const void *key)
 {
-    uint64_t mask = (1lu << (map->key_size*8lu)) - 1lu;
+    uint64_t mask = (1lu << (log2u(map->max_entries))) - 1lu;
     uintptr_t ret;
 
     uint64_t idx = *((const uint64_t *)key) & mask;
     if (idx >= map->max_entries) {
-        logm(SL4C_ERROR, "Nulletto, idx=%lx\n", idx);
+        logm(SL4C_ERROR, "Null, idx=%lx, mask=%lx, key_size=%u\n", idx, mask, map->key_size);
         return NULL;
     }
     if (map->type == UBPF_MAP_TYPE_ARRAY_OF_MAPS)
